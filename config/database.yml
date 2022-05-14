@@ -24,7 +24,6 @@ test:
   # database: db/test.sqlite3
   # database:  TwitterOutputter_test
 
-# TODO Herokuデプロイ時に見直し
 production:
   <<: *default
   # TODO ここよくわからない 環境変数?

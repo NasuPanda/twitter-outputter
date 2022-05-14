@@ -28,6 +28,10 @@ gem 'jbuilder', '~> 2.7'
 # 日本語辞書データ
 gem 'rails-i18n'
 
+# OAuth
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'omniauth-rails_csrf_protection'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false

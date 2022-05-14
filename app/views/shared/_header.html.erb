@@ -1,14 +1,18 @@
 <ul class="nav">
   <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">アクティブ</a>
+    <%=  link_to "TwitterOutputter", root_path, class: 'navbar-brand' %>
   </li>
+  <% if logged_in? %>
   <li class="nav-item">
-    <a class="nav-link" href="#">リンク1</a>
+    <%# TODO ログアウトパスのルーティング %>
+    <%= link_to "ログアウト", "logout_path", class: "nav-link", method: :delete %>
   </li>
+  <% else %>
+  <li class="nav-item">
+    <%= link_to "Twitterでログイン" , "auth/twitter", class: "nav-link", method: :post %>
+  </li>
+  <% end %>
   <li class="nav-item">
     <a class="nav-link" href="#">リンク2</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link disabled">無効</a>
   </li>
 </ul>
