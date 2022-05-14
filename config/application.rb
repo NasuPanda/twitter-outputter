@@ -36,5 +36,8 @@ module TwitterOutputter
 				helper_specs: false,
 				routing_specs: false
 			end
+
+    # Herokuエラー対策
+    config.assets.initialize_on_precompile = false
   end
 end
