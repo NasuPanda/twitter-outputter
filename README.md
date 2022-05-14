@@ -17,3 +17,4 @@
 - ViewはBootStrap
 - デプロイはHeroku
 - テストはRSpec
+- DBはPostgreSQL
