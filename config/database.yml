@@ -1,8 +1,6 @@
 # sqlite => postgresqlに変更
 
 default: &default
-  # 変更
-  # adapter: sqlite3
   adapter: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
@@ -14,15 +12,11 @@ default: &default
 
 development:
   <<: *default
-  # 変更
-  # database: db/development.sqlite3
   database:  TwitterOutputter_development
 
 test:
   <<: *default
-  # 変更
-  # database: db/test.sqlite3
-  # database:  TwitterOutputter_test
+  database:  TwitterOutputter_test
 
 production:
   <<: *default

@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :user do
-    provider { "MyString" }
+    provider { "twitter" }
+    sequence(:uid) { |i| "uid#{i}" }
   end
 end
