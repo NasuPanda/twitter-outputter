@@ -4,8 +4,7 @@
   </li>
   <% if logged_in? %>
   <li class="nav-item">
-    <%# TODO ログアウトパスのルーティング %>
-    <%= link_to "ログアウト", "logout_path", class: "nav-link", method: :delete %>
+    <%= link_to "ログアウト", logout_path, class: "nav-link", method: :delete %>
   </li>
   <% else %>
   <li class="nav-item">
