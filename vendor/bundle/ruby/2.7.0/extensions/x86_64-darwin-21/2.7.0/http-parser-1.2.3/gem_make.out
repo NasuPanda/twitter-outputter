@@ -1,0 +1,5 @@
+current directory: /Users/westen/rdev/twitter-outputter/twitter_outputter/vendor/bundle/ruby/2.7.0/gems/http-parser-1.2.3/ext
+/Users/westen/.anyenv/envs/rbenv/versions/2.7.0/bin/ruby -I/Users/westen/.anyenv/envs/rbenv/versions/2.7.0/lib/ruby/2.7.0/rubygems -rrubygems /Users/westen/rdev/twitter-outputter/twitter_outputter/vendor/bundle/ruby/2.7.0/gems/rake-13.0.6/exe/rake RUBYARCHDIR\=/Users/westen/rdev/twitter-outputter/twitter_outputter/vendor/bundle/ruby/2.7.0/extensions/x86_64-darwin-21/2.7.0/http-parser-1.2.3 RUBYLIBDIR\=/Users/westen/rdev/twitter-outputter/twitter_outputter/vendor/bundle/ruby/2.7.0/extensions/x86_64-darwin-21/2.7.0/http-parser-1.2.3
+mkdir -p x86_64-darwin/http-parser
+clang -fexceptions -O -fno-omit-frame-pointer -fno-strict-aliasing -Wall -Wextra -O3   -o x86_64-darwin/http-parser/http_parser.o -c ./http-parser/http_parser.c
+clang -bundle -o x86_64-darwin/libhttp-parser-ext.bundle x86_64-darwin/http-parser/http_parser.o -fexceptions 

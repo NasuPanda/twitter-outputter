@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   validates :uid, presence: true, uniqueness: true
   validate :provider_should_be_twitter
+  # TODO access_token, secret をモデル化したものをhas_oneする
 
   def self.find_or_create_from_auth_hash!(auth_hash)
     provider = auth_hash[:provider]

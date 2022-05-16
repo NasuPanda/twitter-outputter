@@ -33,6 +33,9 @@ gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'omniauth-rails_csrf_protection'
 
+# Twitter操作
+gem 'twitter'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
