@@ -5,8 +5,6 @@ ruby '2.7.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3'
-# DB変更
-# gem 'sqlite3', '~> 1.4'
 gem 'pg'
 
 # Use Puma as the app server
@@ -27,14 +25,14 @@ gem 'jbuilder', '~> 2.7'
 
 # 日本語辞書データ
 gem 'rails-i18n'
-
 # OAuth
 gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'omniauth-rails_csrf_protection'
-
 # Twitter操作
 gem 'twitter'
+# apiを叩く
+gem 'httparty'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -57,10 +55,8 @@ group :development do
 end
 
 group :test do
-  # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
-  # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
 
