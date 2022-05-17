@@ -5,6 +5,17 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <%# OneSignalによるWebプッシュ通知 %>
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script>
+      window.OneSignal = window.OneSignal || [];
+      OneSignal.push(function() {
+        OneSignal.init({
+          appId: "7f94c2e3-f773-44f0-b8ea-c8ee9adbcfed",
+        });
+      });
+    </script>
+
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 		<%# Bootstrap用 %>

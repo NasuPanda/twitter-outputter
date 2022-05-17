@@ -5,4 +5,6 @@ Rails.application.routes.draw do
 
   # FIXME twitter controller 自体移す
   get '/tweet' => 'twitter#update'
+  # FIXME 消す
+  get 'welcome/show' => "welcome#show"
 end
