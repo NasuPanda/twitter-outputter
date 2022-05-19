@@ -7,9 +7,10 @@ class CreateNotification
     new(*args).call
   end
 
-  def initialize(contents:, type:)
+  def initialize(contents:, type:, external_user_id:)
     @contents = contents
     @type     = type
+    @external_user_id = external_user_id
   end
 
   def call
@@ -20,7 +21,7 @@ class CreateNotification
 
   private
 
-  attr_reader :contents, :type
+  attr_reader :contents, :type, :external_user_id
 
   def headers
     {
@@ -34,7 +35,8 @@ class CreateNotification
       'app_id' => '7f94c2e3-f773-44f0-b8ea-c8ee9adbcfed',
       'url'    => '127.0.0.1:3000',
       'data'   => { 'type': type },
-      'included_segments' => ['All'],
+      "channel_for_external_user_ids" => "push",
+      'include_external_user_ids' => [external_user_id],
       'contents' => contents
     }.to_json
   end

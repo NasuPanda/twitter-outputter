@@ -1,8 +1,3 @@
-// This file is automatically compiled by Webpack, along with any other files
-// present in this directory. You're encouraged to place your actual application logic in
-// a relevant structure within app/javascript and only use these pack files to reference
-// that code so it'll be compiled.
-
 require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
@@ -19,3 +14,33 @@ require("@rails/activestorage").start()
 import "bootstrap"
 import "bootstrap/scss/bootstrap.scss"
 import "../stylesheets/application.scss"
+
+// document.cookiesは "key=value;key2=value2..."という形式
+function getExternalUserIdFromCookies(key) {
+  const cookies = document.cookie;
+  const cookiesArray = cookies.split(';');
+
+  for(let cookie of cookiesArray){
+      const keyValuePair = cookie.split('=');
+      // cookieが"key=value; key=value2"のように空白を含む事があるのでtrim()しておく
+      if( keyValuePair[0].trim() == key){
+          return keyValuePair[1]
+      }
+  }
+  return null
+}
+
+// TODO 余力があればfetchedExternalUserIdをメモ化する
+OneSignal.push(function() {
+  OneSignal.getExternalUserId().then(function(fetchedExternalUserId) {
+    if (!fetchedExternalUserId) {
+      const externalUserId = getExternalUserIdFromCookies("external_user_id")
+      if (externalUserId) {
+        OneSignal.push(function() {
+          OneSignal.setExternalUserId(externalUserId)
+          console.log("assign", externalUserId, "to external user id")
+        })
+      }
+    }
+  })
+})
