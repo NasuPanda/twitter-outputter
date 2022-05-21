@@ -10,17 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_14_070806) do
+ActiveRecord::Schema.define(version: 2022_05_21_024750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "users", force: :cascade do |t|
-    t.string "provider", null: false
-    t.string "uid", null: false
+  create_table "authentications", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "uid"
+    t.string "access_token"
+    t.string "access_token_secret"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
+    t.index ["user_id"], name: "index_authentications_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "external_user_id"
+    t.index ["external_user_id"], name: "index_users_on_external_user_id", unique: true
   end
 
 end
