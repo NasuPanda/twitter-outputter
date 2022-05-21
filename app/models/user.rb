@@ -18,7 +18,7 @@ class User < ApplicationRecord
     self.update_attribute(:external_user_id, external_user_id)
   end
 
-  # TODO Tweeter関連の処理をモジュールとして切り出す
+  # TODO Twitter関連の処理をモジュールとして切り出す
   # サービスオブジェクト/concernのどちらが最適化はまた考える。
   # サービスオブジェクトは状態を持たないもの。callメソッドだけを持つ。複雑なドメインを分離するために使う。複数のモデルから使われるような場合使う。
   def post_tweet(text)
@@ -41,6 +41,7 @@ class User < ApplicationRecord
     crypt.decrypt_and_verify(self.authentication.access_token_secret)
   end
 
+  # TODO cryptが共通なので、まとめたい
   def crypt
     key_len = ActiveSupport::MessageEncryptor.key_len
     secret = Rails.application.key_generator.generate_key('salt', key_len)

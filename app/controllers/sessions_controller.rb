@@ -6,12 +6,15 @@ class SessionsController < ApplicationController
     end
 
     auth_hash = request.env['omniauth.auth']
-    # 送られてきた認証情報でログイン出来なければユーザを作成する
+    # TODO ロジック分離
+    # User.find_or_create_by_auth_hash!にする。
     unless user = get_user_from_auth(auth_hash[:uid])
       user = User.create
       user.create_authentication_from_auth_hash!(auth_hash)
     end
 
+    # TODO ロジック分離
+    # User.set...にする
     if cookies.signed[:external_user_id].blank?
       set_external_user_id_to_cookies(user)
     end
@@ -36,6 +39,7 @@ class SessionsController < ApplicationController
       user = authentication.user
     end
 
+    # 分離する(上参考)
     def set_external_user_id_to_cookies(user)
       unless external_user_id = user.external_user_id
         external_user_id = SecureRandom.uuid
