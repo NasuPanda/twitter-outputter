@@ -1,8 +1,6 @@
 class SessionsController < ApplicationController
   def create
-    auth_hash = request.env['omniauth.auth']
-
-    user = User.find_or_create_by_auth_hash!(auth_hash)
+    user = User.find_or_create_by_auth_hash(auth_hash)
 
     if cookies.signed[:external_user_id].blank?
       external_user_id = user.find_or_create_external_user_id
@@ -25,5 +23,9 @@ class SessionsController < ApplicationController
   private
     def auth_params
       params.permit(:denied)
+    end
+
+    def auth_hash
+      request.env['omniauth.auth']
     end
 end

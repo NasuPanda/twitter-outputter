@@ -3,14 +3,14 @@ module LoginSupport
   def sign_in_as(user = nil)
     uid = user ? user.authentication.uid : 'random_id'
     twitter_valid_mock(uid)
-    get_oauth_callback
+    create_session
   end
   # ログインでも新規登録でもやることは変わらないため
   alias_method :sign_up, :sign_in_as
 
   def sign_in_with_denied_authentication
     twitter_invalid_mock
-    get_oauth_callback
+    create_session
   end
   alias_method :sign_up_with_denied_authentication, :sign_in_with_denied_authentication
 
@@ -20,7 +20,7 @@ module LoginSupport
   end
 
   private
-    def get_oauth_callback
+    def create_session
       case
       # visit: システムスペックのとき
       when respond_to?(:visit)
