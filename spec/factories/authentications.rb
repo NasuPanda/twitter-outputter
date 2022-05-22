@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :authentication do
-    user_id { 1 }
-    uid { "MyString" }
-    access_token { "MyString" }
-    access_token_secret { "MyString" }
+    sequence(:uid) { |n| "user_#{n}" }
+    sequence(:access_token) { |n| "token_#{n}" }
+    sequence(:access_token_secret) { |n| "token_secret_#{n}" }
+    association :user
   end
 end

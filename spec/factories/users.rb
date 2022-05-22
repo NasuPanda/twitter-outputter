@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :user do
-    provider { "twitter" }
-    sequence(:uid) { |i| "uid#{i}" }
+    external_user_id { "external-user-id" }
   end
 end
