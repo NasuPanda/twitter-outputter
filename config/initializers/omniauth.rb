@@ -5,4 +5,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   {
     :x_auth_access_type => 'write'
   }
+  on_failure do |env|
+    SessionsController.action(:failure).call(env)
+  end
 end
