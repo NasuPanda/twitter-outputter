@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Sessions', type: :request do
-  let(:user) { FactoryBot.create(:authentication).user }
+  let(:user) { FactoryBot.create(:user, :with_authentication) }
 
   describe 'GET /auth/:provider/callback' do
     context '既存のユーザのとき' do

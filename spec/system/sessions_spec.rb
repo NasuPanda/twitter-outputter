@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Sessions', type: :system do
-  let(:user) { FactoryBot.create(:authentication).user }
+  let(:user) { FactoryBot.create(:user, :with_authentication) }
   before do
     driven_by(:rack_test)
   end
