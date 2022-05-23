@@ -3,6 +3,8 @@ class User < ApplicationRecord
     joins(:authentication).merge(Authentication.uid_is(uid))
   }
   has_one :authentication, dependent: :destroy
+  has_many :posts, dependent: :destroy
+  has_many :tags, dependent: :destroy
   accepts_nested_attributes_for :authentication
 
   def find_or_create_external_user_id

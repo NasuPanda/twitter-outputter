@@ -5,7 +5,7 @@ class Authentication < ApplicationRecord
   before_save :encrypt_access_token
   belongs_to :user
 
-  validates :uid, presence: true
+  validates :uid, :access_token, :access_token_secret, presence: true
 
   def encrypt_access_token
     self.access_token = crypt.encrypt_and_sign(access_token)
