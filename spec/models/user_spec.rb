@@ -80,6 +80,18 @@ RSpec.describe User, type: :model do
           returned_user = User.find_or_create_by_auth_hash(@auth_hash)
           expect(returned_user).to eq authenticated_user
         end
+
+        it 'access_token, access_token_secretが更新されること' do
+          new_token = 'updated_token'
+          new_secret = 'updated_token_secret'
+          @auth_hash.credentials.token = new_token
+          @auth_hash.credentials.secret = new_secret
+          returned_user = User.find_or_create_by_auth_hash(@auth_hash)
+
+          # 復号したaccess_tokenと比較したいのでdecrypted**メソッドを使う
+          expect(returned_user.authentication.decrypted_access_token).to eq new_token
+          expect(returned_user.authentication.decrypted_access_token_secret).to eq new_secret
+        end
       end
 
       context "uidを持つUserがレコードに存在しないとき" do

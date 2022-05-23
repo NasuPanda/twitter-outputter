@@ -18,9 +18,27 @@ class User < ApplicationRecord
   end
 
   def self.find_or_create_by_auth_hash(auth_hash)
-    uid = auth_hash[:uid]
-    # scopeの返り値はRelationなので取り出す必要がある
-    unless user = self.find_authentication_uid(uid).first
+    user = self.find_by_auth_hash(auth_hash)
+    if user
+      # 認証解除→再登録時にトークンが無効になるため、ログインし直すたびに更新する
+      user.authentication.update!(
+        access_token: auth_hash.credentials.token,
+        access_token_secret: auth_hash.credentials.secret
+      )
+    else
+      user = self.create_by_auth_hash(auth_hash)
+    end
+    return user
+  end
+
+  private
+    def self.find_by_auth_hash(auth_hash)
+      uid = auth_hash[:uid]
+      user = self.find_authentication_uid(uid).first
+    end
+
+    def self.create_by_auth_hash(auth_hash)
+      uid = auth_hash[:uid]
       user = self.new()
       user.build_authentication(
         uid: uid,
@@ -28,11 +46,9 @@ class User < ApplicationRecord
         access_token_secret: auth_hash.credentials.secret
       )
       user.save
+      return user
     end
-    return user
-  end
 
-  private
     # TODO Twitter関連の処理をモジュールとして切り出す。サービスオブジェクト/concernのどちらが最適かはまた考える。
     # モックでテストしやすいようにメソッドに分離する
     def twitter_client
