@@ -37,38 +37,55 @@ RSpec.describe Authentication, type: :model do
   describe 'メソッドのテスト' do
     describe 'before_save' do
       describe '#encrypt_access_token' do
-        # before_saveの挙動をテストしたいのでbuild→saveする
-        let(:authentication) { FactoryBot.build(:authentication) }
+        let(:authentication_attributes) { FactoryBot.attributes_for(:authentication) }
+        let(:user) { FactoryBot.create(:user) }
 
         it 'access_token, access_token_secretが暗号化されること' do
+          user.build_authentication(
+            uid: authentication_attributes[:uid],
+            access_token: authentication_attributes[:access_token],
+            access_token_secret: authentication_attributes[:access_token_secret]
+          )
           expect {
-            authentication.save!
-          }.to change{authentication.access_token}.and change{authentication.access_token_secret}
+            user.save!
+          }.to change{user.authentication.access_token}.and change{user.authentication.access_token_secret}
         end
       end
     end
 
     describe '#decrypted_access_token' do
-      let(:authentication) { FactoryBot.build(:authentication) }
+      let(:authentication_attributes) { FactoryBot.attributes_for(:authentication) }
+      let(:user) { FactoryBot.create(:user) }
 
       it 'access_tokenが復号されて取り出されること' do
-        token_before_encrypt = authentication.access_token
-        authentication.encrypt_access_token
-        token_decrypted = authentication.decrypted_access_token
+        token_before_encrypt = authentication_attributes[:access_token]
+
+        user.create_authentication(
+          uid: authentication_attributes[:uid],
+          access_token: authentication_attributes[:access_token],
+          access_token_secret: authentication_attributes[:access_token_secret]
+        )
+        token_decrypted = user.authentication.decrypted_access_token
 
         expect(token_decrypted).to eq token_before_encrypt
       end
     end
 
     describe '#decrypted_access_token_secret' do
-      let(:authentication) { FactoryBot.build(:authentication) }
+      let(:authentication_attributes) { FactoryBot.attributes_for(:authentication) }
+      let(:user) { FactoryBot.create(:user) }
 
       it 'access_token_secretが復号されて取り出されること' do
-        secret_before_encrypt = authentication.access_token_secret
-        authentication.encrypt_access_token
-        secret_decrypted = authentication.decrypted_access_token_secret
+        token_before_encrypt = authentication_attributes[:access_token_secret]
 
-        expect(secret_decrypted).to eq secret_before_encrypt
+        user.create_authentication(
+          uid: authentication_attributes[:uid],
+          access_token: authentication_attributes[:access_token],
+          access_token_secret: authentication_attributes[:access_token_secret]
+        )
+        token_decrypted = user.authentication.decrypted_access_token_secret
+
+        expect(token_decrypted).to eq token_before_encrypt
       end
     end
   end
