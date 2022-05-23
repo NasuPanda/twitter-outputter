@@ -20,13 +20,14 @@ class Authentication < ApplicationRecord
     crypt.decrypt_and_verify(self.access_token_secret)
   end
 
-  def crypt
-    @crypt ||= set_crypt
-  end
+  private
+    def crypt
+      @crypt ||= set_crypt
+    end
 
-  def set_crypt
-    key_len = ActiveSupport::MessageEncryptor.key_len
-    secret = Rails.application.key_generator.generate_key('salt', key_len)
-    ActiveSupport::MessageEncryptor.new(secret)
-  end
+    def set_crypt
+      key_len = ActiveSupport::MessageEncryptor.key_len
+      secret = Rails.application.key_generator.generate_key('salt', key_len)
+      ActiveSupport::MessageEncryptor.new(secret)
+    end
 end
