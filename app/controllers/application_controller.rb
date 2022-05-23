@@ -5,10 +5,10 @@ class ApplicationController < ActionController::Base
 
     # 現在ログインしているユーザを返す
     def current_user
-      @user ||= User.find(session[:user_id])
+      @user ||= User.find(cookies.signed[:user_id])
     end
 
     def logged_in?
-      !!session[:user_id]
+      !!cookies.signed[:user_id]
     end
 end

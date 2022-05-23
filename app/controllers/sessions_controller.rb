@@ -2,17 +2,17 @@ class SessionsController < ApplicationController
   def create
     user = User.find_or_create_by_auth_hash(auth_hash)
 
-    if cookies.signed[:external_user_id].blank?
+    if cookies[:external_user_id].blank?
       external_user_id = user.find_or_create_external_user_id
-      cookies.signed.permanent[:external_user_id] = external_user_id
+      cookies.permanent[:external_user_id] = external_user_id
     end
 
-    session[:user_id] = user.id
+    cookies.permanent.signed[:user_id] = user.id
     redirect_to root_url, notice: 'ログインしました'
   end
 
   def destroy
-    reset_session
+    cookies.delete(:user_id)
     redirect_to root_url, notice: 'ログアウトしました'
   end
 
