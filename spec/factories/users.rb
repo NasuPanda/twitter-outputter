@@ -3,7 +3,7 @@ FactoryBot.define do
     sequence(:external_user_id) { |i| "external-user-id#{i}" }
 
     trait :with_authentication do
-      after(:create) { |user| user.authentication = FactoryBot.build(:authentication) }
+      after(:create) { |user| user.authentication = FactoryBot.create(:authentication) }
     end
 
     trait :with_post do
