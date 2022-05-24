@@ -1,24 +1,45 @@
 require 'rails_helper'
 
 RSpec.describe Tag, type: :model do
-  describe 'バリデーションのテスト' do
-    let(:tag) { FactoryBot.create(:tag) }
+  let(:tag) { FactoryBot.create(:tag) }
 
-    context '有効な属性のとき' do
+  describe 'attribute: name' do
+    context "存在するとき" do
       it 'バリデーションに成功すること' do
         expect(tag).to be_valid
       end
     end
 
-    context "無効な属性のとき" do
-      it 'nameが存在しなければバリデーションに失敗すること' do
-        tag.name = ''
-        expect(tag).to_not be_valid
+    context "存在しないとき" do
+      it 'バリデーションに失敗すること' do
+        tag.name = nil
+        expect(tag).to be_invalid
+      end
+    end
+
+    context '空白のとき' do
+      it 'バリデーションに失敗すること' do
+        tag.name = '  '
+        expect(tag).to be_invalid
+      end
+    end
+
+    context "100字のとき" do
+      it 'バリデーションに成功すること' do
+        tag.name = 'a' * 100
+        expect(tag).to be_valid
+      end
+    end
+
+    context "101字のとき" do
+      it 'バリデーションに失敗すること' do
+        tag.name = 'a' * 101
+        expect(tag).to be_invalid
       end
     end
   end
 
-  describe "関連付けのテスト" do
+  describe "belongs_to: User" do
     let!(:user_with_tag) { FactoryBot.create(:user, :with_tag) }
 
     it 'Userが削除されればそれに伴って削除されること' do
