@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :tags, dependent: :destroy
   accepts_nested_attributes_for :authentication
 
-  def find_or_create_external_user_id
+  def get_or_create_external_user_id
     return self.external_user_id if self.external_user_id
     external_user_id = SecureRandom.uuid
     self.update_attribute(:external_user_id, external_user_id)
