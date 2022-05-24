@@ -15,6 +15,16 @@ RSpec.describe Authentication, type: :model do
         authentication.uid = nil
         expect(authentication).to_not be_valid
       end
+
+      it 'access_tokenが存在しなければバリデーションに失敗すること' do
+        authentication.access_token = nil
+        expect(authentication).to_not be_valid
+      end
+
+      it 'access_token_secretが存在しなければバリデーションに失敗すること' do
+        authentication.access_token_secret = nil
+        expect(authentication).to_not be_valid
+      end
     end
   end
 
