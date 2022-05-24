@@ -13,6 +13,11 @@ RSpec.describe Post, type: :model do
         expect(post).to be_valid
       end
 
+      it '下書きかつpost_atが存在しないときバリデーションに成功すること' do
+        draft.post_at = nil
+        expect(draft).to be_valid
+      end
+
       it 'contentが140字のときバリデーションに成功すること' do
         post.content = 'a' * 139
         expect(post).to be_valid
@@ -25,7 +30,7 @@ RSpec.describe Post, type: :model do
         expect(post).to_not be_valid
       end
 
-      it 'post_atが存在しないときバリデーションに失敗すること' do
+      it '投稿済かつpost_atが存在しないときバリデーションに失敗すること' do
         # nilは許容するので空白でテスト
         post.post_at = ''
         expect(post).to_not be_valid

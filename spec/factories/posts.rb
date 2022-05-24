@@ -7,7 +7,6 @@ FactoryBot.define do
 
     trait :draft do
       is_posted { false }
-      post_at { nil }
     end
   end
 end

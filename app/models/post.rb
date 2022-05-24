@@ -2,10 +2,18 @@ class Post < ApplicationRecord
   belongs_to :user
 
   validates :is_posted, inclusion: [true, false]
-  # TODO カスタムバリデーション実装
-  # 投稿済→presence: true, 下書き→存在しなくても良い(存在する場合予約投稿時間)
-  validates :post_at, presence: true, allow_nil: true
   validates :content, presence: true, length: { maximum: 140 }
+  validate :post_at_cannot_be_blank_if_posted
 
   # TODO CRUDの実装
+
+  private
+    # バリデーション : 投稿済のとき、post_atは存在しなければならない
+    def post_at_cannot_be_blank_if_posted
+      if is_posted
+        if post_at.blank?
+          errors.add(:post_at, '投稿済のPostはpost_atカラムを持つ必要があります')
+        end
+      end
+    end
 end
