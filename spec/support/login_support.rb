@@ -16,7 +16,7 @@ module LoginSupport
 
   # ログインしているかどうか判定する
   def is_logged_in?
-    !session[:user_id].nil?
+    !cookies[:user_id].blank?
   end
 
   private
@@ -40,8 +40,8 @@ module LoginSupport
         :twitter,
         uid: uid,
         credentials: {
-          access_token: 'access_token',
-          access_token_secret: 'access_token_secret'
+          token: 'access_token',
+          secret: 'access_token_secret'
         }
       )
     end
