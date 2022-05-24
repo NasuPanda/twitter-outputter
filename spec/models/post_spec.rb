@@ -78,7 +78,7 @@ RSpec.describe Post, type: :model do
     end
   end
 
-  describe "belongs_to: User" do
+  describe 'belongs_to: User' do
     let!(:user_with_post) { FactoryBot.create(:user, :with_post) }
 
     it 'Userが削除されればそれに伴って削除されること' do

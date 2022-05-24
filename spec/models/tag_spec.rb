@@ -4,13 +4,13 @@ RSpec.describe Tag, type: :model do
   let(:tag) { FactoryBot.create(:tag) }
 
   describe 'attribute: name' do
-    context "存在するとき" do
+    context '存在するとき' do
       it 'バリデーションに成功すること' do
         expect(tag).to be_valid
       end
     end
 
-    context "存在しないとき" do
+    context '存在しないとき' do
       it 'バリデーションに失敗すること' do
         tag.name = nil
         expect(tag).to be_invalid
@@ -24,14 +24,14 @@ RSpec.describe Tag, type: :model do
       end
     end
 
-    context "100字のとき" do
+    context '100字のとき' do
       it 'バリデーションに成功すること' do
         tag.name = 'a' * 100
         expect(tag).to be_valid
       end
     end
 
-    context "101字のとき" do
+    context '101字のとき' do
       it 'バリデーションに失敗すること' do
         tag.name = 'a' * 101
         expect(tag).to be_invalid
@@ -39,7 +39,7 @@ RSpec.describe Tag, type: :model do
     end
   end
 
-  describe "belongs_to: User" do
+  describe 'belongs_to: User' do
     let!(:user_with_tag) { FactoryBot.create(:user, :with_tag) }
 
     it 'Userが削除されればそれに伴って削除されること' do
