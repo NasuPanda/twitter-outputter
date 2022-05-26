@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Post, type: :model do
   let(:post) { FactoryBot.build(:post) }
   let(:draft) { FactoryBot.build(:post, :draft) }
+  let(:user_with_post) { FactoryBot.create(:user, :with_post) }
 
   describe 'attribute: is_posted' do
     context '真偽値のとき' do
@@ -52,6 +53,15 @@ RSpec.describe Post, type: :model do
       it 'バリデーションに失敗すること' do
         post.content = 'a' * 141
         expect(post).to be_invalid
+      end
+    end
+
+    context '同一ユーザ内で重複があるとき' do
+      it 'バリデーションに失敗すること' do
+        existing_post = user_with_post.posts.first
+        dup_content = existing_post.content
+        user_with_post.posts.create(content: dup_content)
+        expect(user_with_post).to be_invalid
       end
     end
   end

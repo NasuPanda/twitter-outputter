@@ -2,7 +2,7 @@ class Post < ApplicationRecord
   belongs_to :user
 
   validates :is_posted, inclusion: [true, false]
-  validates :content, presence: true, length: { maximum: 140 }
+  validates :content, presence: true, length: { maximum: 140 }, uniqueness: { scope: :user_id }
   validate :post_at_cannot_be_blank_if_posted
 
   # TODO CRUDの実装

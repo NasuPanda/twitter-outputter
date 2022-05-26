@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Tag, type: :model do
   let(:tag) { FactoryBot.create(:tag) }
+  let(:user_with_tag) { FactoryBot.create(:user, :with_tag) }
 
   describe 'attribute: name' do
     context '存在するとき' do
@@ -35,6 +36,15 @@ RSpec.describe Tag, type: :model do
       it 'バリデーションに失敗すること' do
         tag.name = 'a' * 101
         expect(tag).to be_invalid
+      end
+    end
+
+    context '同一ユーザ内で重複があるとき' do
+      it 'バリデーションに失敗すること' do
+        existing_tag = user_with_tag.tags.first
+        dup_name = existing_tag.name
+        name_dup_tag = user_with_tag.tags.create(name: dup_name)
+        expect(name_dup_tag).to be_invalid
       end
     end
   end
