@@ -28,6 +28,8 @@ gem 'omniauth-rails_csrf_protection'
 gem 'twitter'
 # apiを叩く
 gem 'httparty'
+# バックグラウンドジョブ
+gem 'sidekiq'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false

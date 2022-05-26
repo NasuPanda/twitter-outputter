@@ -39,7 +39,7 @@ module TwitterOutputter
 
     # Herokuエラー対策
     config.assets.initialize_on_precompile = false
-    # publicディレクトリに置かれたあたゆるアセットは静的ファイルとして扱われる
+    # publicディレクトリに置かれたあらゆるアセットは静的ファイルとして扱われる
     config.public_file_server.enabled = true
   end
 end
