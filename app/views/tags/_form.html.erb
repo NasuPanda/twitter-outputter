@@ -1,0 +1,9 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <%= form_with(model: @tag, local: true) do |f| %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <%= f.submit "登録", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
