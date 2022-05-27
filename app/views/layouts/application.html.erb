@@ -23,8 +23,20 @@
   </head>
 
   <body>
-    <%= render 'shared/header' %>
-    <%= render 'shared/flash' %>
-    <%= yield %>
+    <%= render 'layouts/header' %>
+    <%= render 'layouts/flash' %>
+    <%= render 'shared/tags_modal' %>
+      <div class="row">
+        <div class="col-3">
+          <%= render 'shared/tags_sidebar' %>
+        </div>
+        <div class="col-6">
+          <%= yield %>
+        </div>
+        <div class="col-3">
+          <%# <%= render 'shared/post-sidebar' %>
+          <a href="#">POST SIDEBAR</a>
+        </div>
+    </div>
   </body>
 </html>
