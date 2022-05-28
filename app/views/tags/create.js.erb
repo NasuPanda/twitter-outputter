@@ -1,0 +1,10 @@
+<%# TODO 実装する %>
+<%# 処理の成功/失敗に応じて分岐 %>
+<%# モーダルを隠す %>
+<% if @status == 'success' %>
+$("#tags-sidebar").append("<%= j(render("shared/tag", tag: @tag)) %>");
+<% elsif @status == 'failure' %>
+alert('Tag creation error');
+<% end %>
+
+$("#tag-modal").modal("hide")

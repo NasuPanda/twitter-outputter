@@ -4,10 +4,19 @@ class TagsController < ApplicationController
   end
 
   def create
+    # TODO Ajaxに対応する
     @tag = current_user.tags.build(tag_params)
 
-    if @tag.save
-      redirect_to root_path, notice: "タグを作成しました"
+    respond_to do |format|
+      if @tag.save
+        format.html { redirect_to root_path, notice: "タグを作成しました" }
+        format.json { render json: @tag }
+        format.js { @status = "success" }
+      else
+        format.html { redirect_to root_path, notice: "タグの作成に失敗しました" }
+        format.json { render json: @tag.errors, status: :unprocessable_entity }
+        format.js { @status = "failure" }
+      end
     end
   end
 
