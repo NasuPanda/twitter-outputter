@@ -1,2 +1,3 @@
-$("#tag-modal").html("<%= escape_javascript(render 'form') %>")
-$("#tag-modal").modal("show")
+<%# renderで変数を渡すことで要素を動的に変更する %>
+$("#modal-tag").html("<%= escape_javascript(render partial: 'form', locals: { title: "新規タグ作成", action: "new" }) %>")
+$("#modal-tag").modal("show")

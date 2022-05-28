@@ -1,0 +1,27 @@
+<%# TODO
+  対応するtagを取得する
+  edit, destroyにlink_to
+  アイコンの追加
+  モーダルの表示位置をタグの真横に
+%>
+
+<div id="modal-tag-dialog" class="modal fade" tabindex="-1" aria-labelledby="modal-tag-dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">タグを編集</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-unstyled ms-2 mb-2">
+          <li>
+            <%= link_to "編集する", "#" %>
+            <%= link_to "削除する", "#" %>
+          </>
+          <li>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

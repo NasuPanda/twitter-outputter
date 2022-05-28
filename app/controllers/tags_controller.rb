@@ -4,7 +4,6 @@ class TagsController < ApplicationController
   end
 
   def create
-    # TODO Ajaxに対応する
     @tag = current_user.tags.build(tag_params)
 
     respond_to do |format|
@@ -25,6 +24,7 @@ class TagsController < ApplicationController
   end
 
   def update
+    # TODO Ajaxに対応する
     @tag = current_user.tags.find(params[:id])
     if @tag.update(tag_params)
       redirect_to root_path, notice: "タグを更新しました"
@@ -32,6 +32,7 @@ class TagsController < ApplicationController
   end
 
   def destroy
+    # TODO Ajaxに対応する
     @tag = current_user.tags.find(params[:id])
     @tag.destroy!
     redirect_to root_path, notice: "タグを削除しました"
