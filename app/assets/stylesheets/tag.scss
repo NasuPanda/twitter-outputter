@@ -1,3 +1,10 @@
-// Place all the styles related to the Tag controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+// タグがオーバーフローした場合3点リーダを表示する
+.tags {
+  overflow: hidden;
+  width: 100%;
+  li {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
