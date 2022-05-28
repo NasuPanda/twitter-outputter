@@ -1,6 +1,5 @@
 class WelcomeController < ApplicationController
   def index
-    cookies.permanent[:test] = "test value"
   end
 
   # FIXME 消す
