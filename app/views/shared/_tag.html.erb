@@ -1,4 +1,10 @@
-<li>
+<%#
+TODO 3点リーダをタグの右に実装、クリックすると編集/削除が出てくる
+TODO タグを丸っぽい背景で囲み、独立した要素のように見せる
+TODO 文字数が一定以上のときどうする？
+TODO タグ自体(3点リーダでない部分)をクリックすると画面中央のPostにタグが反映される
+%>
+<li class="mb-1" >
   <%# TODO pathをTag#editにする %>
-  <%= link_to "#{tag.name}", root_path %>
+  <%= link_to "##{tag.name}", root_path %>
 </>
