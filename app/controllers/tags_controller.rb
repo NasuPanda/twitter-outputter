@@ -1,7 +1,6 @@
 class TagsController < ApplicationController
-  # TODO before_actionによる認可の制御
   before_action :redirect_to_root_if_not_logged_in
-  before_action :redirect_to_root_if_incorrect_user, only: %i[edit update destory]
+  before_action :redirect_to_root_if_incorrect_user, only: %i[edit update destroy]
 
   def new
     @tag = current_user.tags.build
