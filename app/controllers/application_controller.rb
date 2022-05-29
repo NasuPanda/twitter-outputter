@@ -1,14 +1,13 @@
 class ApplicationController < ActionController::Base
-  helper_method :logged_in?
+  include SessionsHelper
+
+  helper_method %i[current_user logged_in?]
 
   private
 
-    # 現在ログインしているユーザを返す
-    def current_user
-      @user ||= User.find(cookies.signed[:user_id])
-    end
-
-    def logged_in?
-      !!cookies.signed[:user_id]
+    def redirect_to_root_if_not_logged_in
+      unless logged_in?
+        redirect_to root_url, notice: 'ログインしてください'
+      end
     end
 end

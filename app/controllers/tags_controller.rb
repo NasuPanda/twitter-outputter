@@ -1,4 +1,8 @@
 class TagsController < ApplicationController
+  # TODO before_actionによる認可の制御
+  before_action :redirect_to_root_if_not_logged_in
+  before_action :redirect_to_root_if_incorrect_user, only: %i[edit update destory]
+
   def new
     @tag = current_user.tags.build
   end
@@ -8,10 +12,10 @@ class TagsController < ApplicationController
 
     respond_to do |format|
       if @tag.save
-        format.html { redirect_to root_path, notice: 'タグを作成しました' }
+        format.html { redirect_to root_url, notice: 'タグを作成しました' }
         format.js { @status = 'success' }
       else
-        format.html { redirect_to root_path, notice: 'タグの作成に失敗しました' }
+        format.html { redirect_to root_url, notice: 'タグの作成に失敗しました' }
         format.js { @status = 'failure' }
       end
     end
@@ -26,7 +30,7 @@ class TagsController < ApplicationController
 
     respond_to do |format|
       if @tag.update(tag_params)
-        format.html { redirect_to root_path, notice: 'タグを更新しました' }
+        format.html { redirect_to root_url, notice: 'タグを更新しました' }
         format.js { @status = 'success' }
       else
         format.html { redirect_to edit_tag_path(tag), notice: 'タグの更新に失敗しました' }
@@ -40,7 +44,7 @@ class TagsController < ApplicationController
 
     respond_to do |format|
       if @tag.destroy!
-        format.html { redirect_to root_path, notice: 'タグを削除しました' }
+        format.html { redirect_to root_url, notice: 'タグを削除しました' }
         format.js { @status = 'success' }
       else
         format.html { redirect_to edit_tag_path(tag), notice: 'タグの削除に失敗しました' }
@@ -49,7 +53,14 @@ class TagsController < ApplicationController
     end
   end
 
-  def tag_params
-    params.require(:tag).permit(:name)
-  end
+  private
+
+    def tag_params
+      params.require(:tag).permit(:name)
+    end
+
+    def redirect_to_root_if_incorrect_user
+      tag = current_user.tags.find_by(id: params[:id])
+      redirect_to root_url if tag.nil?
+    end
 end
