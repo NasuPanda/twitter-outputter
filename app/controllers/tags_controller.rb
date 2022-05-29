@@ -8,16 +8,7 @@ class TagsController < ApplicationController
 
   def create
     @tag = current_user.tags.build(tag_params)
-
-    respond_to do |format|
-      if @tag.save
-        format.html { redirect_to root_url, notice: 'タグを作成しました' }
-        format.js { @status = 'success' }
-      else
-        format.html { redirect_to root_url, notice: 'タグの作成に失敗しました' }
-        format.js { @status = 'failure' }
-      end
-    end
+    @status = @tag.save ? 'success' : 'failure'
   end
 
   def edit
@@ -26,30 +17,12 @@ class TagsController < ApplicationController
 
   def update
     @tag = current_user.tags.find(params[:id])
-
-    respond_to do |format|
-      if @tag.update(tag_params)
-        format.html { redirect_to root_url, notice: 'タグを更新しました' }
-        format.js { @status = 'success' }
-      else
-        format.html { redirect_to edit_tag_path(tag), notice: 'タグの更新に失敗しました' }
-        format.js { @status = 'failure' }
-      end
-    end
+    @status =  @tag.update(tag_params) ? 'success' : 'failure'
   end
 
   def destroy
     @tag = current_user.tags.find(params[:id])
-
-    respond_to do |format|
-      if @tag.destroy!
-        format.html { redirect_to root_url, notice: 'タグを削除しました' }
-        format.js { @status = 'success' }
-      else
-        format.html { redirect_to edit_tag_path(tag), notice: 'タグの削除に失敗しました' }
-        format.js { @status = 'failure' }
-      end
-    end
+    @status = @tag.destroy ? 'success' : 'failure'
   end
 
   private

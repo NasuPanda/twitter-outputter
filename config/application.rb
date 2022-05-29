@@ -41,5 +41,7 @@ module TwitterOutputter
     config.assets.initialize_on_precompile = false
     # publicディレクトリに置かれたあらゆるアセットは静的ファイルとして扱われる
     config.public_file_server.enabled = true
+    # lib/constraintsを自動的に読み込むようにする(Ajaxリクエストのみを許可するため)
+    config.autoload_paths << "#{root}/lib/constraints"
   end
 end

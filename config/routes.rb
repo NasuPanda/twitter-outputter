@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   mount Sidekiq::Web, at: '/sidekiq'
 
   root 'pages#home'
-  resources :tags, except: %i[index show]
+  resources :tags, except: %i[index show], constraints: OnlyAjaxConstraints.new
   get '/auth/:provider/callback' => 'sessions#create'
   get '/auth/failure' => 'sessions#failure'
   delete '/logout' => 'sessions#destroy'
