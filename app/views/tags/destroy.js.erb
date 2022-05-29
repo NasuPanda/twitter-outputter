@@ -1,6 +1,5 @@
 <% if @status == 'success' %>
-  $("#<%="tag-#{@tag.id}"%>").remove();
-  console.log("#<%="tag-#{@tag.id}"%>");
+  $("#<%= tag_id(@tag) %>").remove();
 <% elsif @status == 'failure' %>
   alert("タグの削除に失敗しました。");
 <% end %>
