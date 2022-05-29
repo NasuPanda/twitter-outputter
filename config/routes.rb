@@ -3,12 +3,12 @@ Rails.application.routes.draw do
   # sidekiqのダッシュボード
   mount Sidekiq::Web, at: '/sidekiq'
 
-  root 'welcome#index'
+  root 'pages#home'
+  resources :tags
   get '/auth/:provider/callback' => 'sessions#create'
   get '/auth/failure' => 'sessions#failure'
   delete '/logout' => 'sessions#destroy'
 
-  resources :tags
 
   # FIXME twitter controller 自体移す
   get '/tweet' => 'twitter#update'

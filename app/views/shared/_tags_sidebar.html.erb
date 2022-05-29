@@ -1,6 +1,5 @@
 <aside id="tags-sidebar" class="d-flex flex-column align-items-baseline">
   <ul id="tags" class="list-unstyled ms-2 py-3 pt-md-1">
-    <%# TODO @userはログイン時のみ持ってくるようにする %>
     <%= render partial: 'shared/tag', collection: current_user.tags %>
   </ul>
   <%= link_to '+', new_tag_path, remote: true, class: "btn btn-sm btn-primary ms-2"%>

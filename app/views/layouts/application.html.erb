@@ -25,20 +25,6 @@
   <body>
     <%= render 'layouts/header' %>
     <%= render 'layouts/flash' %>
-    <%= render 'shared/tag_modal' %>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-2">
-          <%= render 'shared/tags_sidebar' %>
-        </div>
-        <div class="col">
-          <%= yield %>
-        </div>
-        <div class="col-3">
-          <%# <%= render 'shared/post-sidebar' %>
-          <a href="#">POST SIDEBAR</a>
-        </div>
-      </div>
-    </div>
+    <%= yield %>
   </body>
 </html>
