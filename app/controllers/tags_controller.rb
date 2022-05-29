@@ -8,13 +8,11 @@ class TagsController < ApplicationController
 
     respond_to do |format|
       if @tag.save
-        format.html { redirect_to root_path, notice: "タグを作成しました" }
-        format.json { render json: @tag }
-        format.js { @status = "success" }
+        format.html { redirect_to root_path, notice: 'タグを作成しました' }
+        format.js { @status = 'success' }
       else
-        format.html { redirect_to root_path, notice: "タグの作成に失敗しました" }
-        format.json { render json: @tag.errors, status: :unprocessable_entity }
-        format.js { @status = "failure" }
+        format.html { redirect_to root_path, notice: 'タグの作成に失敗しました' }
+        format.js { @status = 'failure' }
       end
     end
   end
@@ -24,18 +22,31 @@ class TagsController < ApplicationController
   end
 
   def update
-    # TODO Ajaxに対応する
     @tag = current_user.tags.find(params[:id])
-    if @tag.update(tag_params)
-      redirect_to root_path, notice: "タグを更新しました"
+
+    respond_to do |format|
+      if @tag.update(tag_params)
+        format.html { redirect_to root_path, notice: 'タグを更新しました' }
+        format.js { @status = 'success' }
+      else
+        format.html { redirect_to edit_tag_path(tag), notice: 'タグの更新に失敗しました' }
+        format.js { @status = 'failure' }
+      end
     end
   end
 
   def destroy
-    # TODO Ajaxに対応する
     @tag = current_user.tags.find(params[:id])
-    @tag.destroy!
-    redirect_to root_path, notice: "タグを削除しました"
+
+    respond_to do |format|
+      if @tag.destroy!
+        format.html { redirect_to root_path, notice: 'タグを削除しました' }
+        format.js { @status = 'success' }
+      else
+        format.html { redirect_to edit_tag_path(tag), notice: 'タグの削除に失敗しました' }
+        format.js { @status = 'failure' }
+      end
+    end
   end
 
   def tag_params

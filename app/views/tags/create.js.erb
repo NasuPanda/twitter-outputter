@@ -1,7 +1,7 @@
 <% if @status == 'success' %>
-$("#tags-sidebar").append("<%= j(render("shared/tag", tag: @tag)) %>");
+  $("#tags").append("<%= j(render("shared/tag", tag: @tag)) %>");
 <% elsif @status == 'failure' %>
-alert("タグの作成に失敗しました。");
+  alert("タグの作成に失敗しました。");
 <% end %>
 
 $("#modal-tag").modal("hide")

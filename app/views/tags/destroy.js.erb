@@ -1,0 +1,8 @@
+<% if @status == 'success' %>
+  $("#<%="tag-#{@tag.id}"%>").remove();
+  console.log("#<%="tag-#{@tag.id}"%>");
+<% elsif @status == 'failure' %>
+  alert("タグの削除に失敗しました。");
+<% end %>
+
+$("#modal-tag").modal("hide")

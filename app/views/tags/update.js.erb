@@ -1,0 +1,7 @@
+<% if @status == 'success' %>
+  $("#<%="tag-#{@tag.id}"%>").replaceWith("<%= j(render('shared/tag', tag: @tag)) %>");
+<% elsif @status == 'failure' %>
+  alert("タグの更新に失敗しました。");
+<% end %>
+
+$("#modal-tag").modal("hide")
