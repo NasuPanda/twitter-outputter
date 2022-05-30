@@ -1,12 +1,16 @@
 FactoryBot.define do
   factory :post do
     sequence(:content) { |i| "content #{i}" }
-    is_posted { true }
+    status { 'published' }
     post_at { rand(1..30).days.ago }
     association :user
 
     trait :draft do
-      is_posted { false }
+      status { 'draft' }
+    end
+
+    trait :reserved do
+      status { 'reserved' }
     end
   end
 end

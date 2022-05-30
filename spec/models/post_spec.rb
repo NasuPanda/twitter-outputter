@@ -1,27 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  let(:post) { FactoryBot.build(:post) }
   let(:draft) { FactoryBot.build(:post, :draft) }
+  let(:reserved) { FactoryBot.build(:post, :reserved) }
   let(:user_with_post) { FactoryBot.create(:user, :with_post) }
 
-  describe 'attribute: is_posted' do
-    context '真偽値のとき' do
-      it 'バリデーションに成功すること' do
-        expect(draft).to be_valid
-        expect(post).to be_valid
-      end
-    end
-
-    context '存在しないとき' do
-      it 'バリデーションに失敗すること' do
-        post.is_posted = nil
-        expect(post).to be_invalid
-      end
-    end
-  end
-
   describe 'attribute: content' do
+    let(:post) { FactoryBot.build(:post) }
+
     context '存在するとき' do
       it 'バリデーションに成功すること' do
         expect(post).to be_valid
@@ -67,6 +53,10 @@ RSpec.describe Post, type: :model do
   end
 
   describe 'attribute: post_at' do
+    let(:post) { FactoryBot.build(:post) }
+    let(:draft) { FactoryBot.build(:post, :draft) }
+    let(:reserved) { FactoryBot.build(:post, :reserved) }
+
     context '存在するとき' do
       it 'バリデーションに成功すること' do
         expect(post).to be_valid
@@ -80,11 +70,27 @@ RSpec.describe Post, type: :model do
       end
     end
 
+    context '予約投稿かつ存在しないとき' do
+      it 'バリデーションに失敗すること' do
+        reserved.post_at = nil
+        expect(reserved).to be_invalid
+      end
+    end
+
     context '投稿済みかつ存在しないとき' do
       it 'バリデーションに失敗すること' do
         post.post_at = nil
         expect(post).to be_invalid
       end
+    end
+  end
+
+  describe 'attribute: status' do
+    let(:user) { FactoryBot.create(:user) }
+
+    it 'デフォルト値がdraftであること' do
+      created_post = user.posts.create(content: 'test content')
+      expect(created_post.draft?).to be_truthy
     end
   end
 
