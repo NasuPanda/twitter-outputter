@@ -4,7 +4,6 @@ TODO 文字数が一定以上のときどうする？ → ...にする。ホバ�
 TODO タグ自体(3点リーダでない部分)をクリックすると画面中央のPostにタグが反映される
 %>
 <li class="mb-1" id=<%= tag_id(tag) %> >
-  <%# TODO pathをContent#updateにする %>
-  <%= link_to "##{tag.name}", root_path, remote: true %>
+  <%= link_to "##{tag.name}", editing_path(tag_name: tag.name), method: :put, remote: true %>
   <%= link_to "︙", edit_tag_path(tag), remote: true %>
 </li>

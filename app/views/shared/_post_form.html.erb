@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="form-group field">
+    <%= form_with(model: Post.new) do |f| %>
+      <%= f.label :content, "投稿", class: "form-label"%>
+      <div class="mb-3">
+        <%# NOTE: このフィールドのidを利用して投稿のテキストを更新する %>
+        <%= f.text_field :content, class: "form-control", id:"editing-post-content",  required: true %>
+      </div>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <%= f.submit "保存", class: "btn btn-info", formaction: drafts_path %>
+          <%= f.submit "投稿", class: "btn btn-primary", formaction: posts_path %>
+      </div>
+    <% end %>
+  </div>
+</div>

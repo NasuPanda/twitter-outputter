@@ -1,0 +1,7 @@
+AddTagToInputTail("<%= @tag_name %>");
+
+<%# TODO ユーザの設定に応じてタグ挿入の挙動を変える(改行有無等) %>
+function AddTagToInputTail(text) {
+  const tag = `#${text}`;
+  document.getElementById("editing-post-content").value += tag + " "
+}
