@@ -14,6 +14,19 @@ class User < ApplicationRecord
     return external_user_id
   end
 
+  # 特定のstatusのPostを取得する
+  def drafts
+    return posts.find_all{ |post| post.draft? }
+  end
+
+  def published_posts
+    return posts.find_all{ |post| post.published? }
+  end
+
+  def reserved_posts
+    return posts.find_all{ |post| post.reserved? }
+  end
+
   def post_tweet(text)
     client = twitter_client
     client.update(text)

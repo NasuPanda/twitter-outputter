@@ -11,6 +11,7 @@ FactoryBot.define do
 
     trait :reserved do
       status { 'reserved' }
+      post_at { rand(1..30).days.from_now }
     end
   end
 end
