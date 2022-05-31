@@ -1,6 +1,6 @@
 <div class="container">
   <div class="form-group field">
-    <%= form_with(model: Post.new) do |f| %>
+    <%= form_with(url: published_index_path) do |f| %>
       <%= f.label :content, "投稿", class: "form-label"%>
       <div class="mb-3">
         <%# NOTE: このフィールドのidを利用して投稿のテキストを更新する %>
@@ -8,7 +8,7 @@
       </div>
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
           <%= f.submit "保存", class: "btn btn-info", formaction: drafts_path %>
-          <%= f.submit "投稿", class: "btn btn-primary", formaction: posts_path %>
+          <%= f.submit "投稿", class: "btn btn-primary" %>
       </div>
     <% end %>
   </div>
