@@ -21,3 +21,51 @@
 .nav-item {
   margin-left: 5px;
 }
+
+.icon::before {
+  display: inline-block;
+	font-style: normal;
+	font-variant: normal;
+	-webkit-font-smoothing: antialiased;
+	font-weight: 900;
+	margin-right: 5px;
+}
+
+.twitter::before {
+  font-family: "Font Awesome 6 Brands";
+  content: '\f099';
+}
+
+.login::before {
+  font-family: "Font Awesome 6 Free";
+  content: '\f090';
+}
+
+.logout::before {
+  font-family: "Font Awesome 6 Free";
+  content: '\f08b';
+}
+
+.setting::before {
+  font-family: "Font Awesome 6 Free";
+  content: '\f013';
+}
+
+.draft::before {
+  font-family: "Font Awesome 6 Free";
+  content: '\f31c';
+}
+
+.scheduled::before {
+  font-family: "Font Awesome 6 Free";
+  content: '\f254';
+}
+
+.published::before {
+  font-family: "Font Awesome 6 Free";
+  content: '\e493';
+}
+
+.navbar-toggler {
+  background-color: pink;
+}
