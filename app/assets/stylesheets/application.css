@@ -14,6 +14,10 @@
  *= require_self
  */
 
+* {
+  box-sizing: border-box;
+}
+
 .navbar {
   background-color: #e3f2fd;
 }
@@ -36,14 +40,9 @@
   content: '\f099';
 }
 
-.login::before {
-  font-family: "Font Awesome 6 Free";
-  content: '\f090';
-}
-
 .logout::before {
   font-family: "Font Awesome 6 Free";
-  content: '\f08b';
+  content: '\f2f5';
 }
 
 .setting::before {
@@ -64,8 +63,4 @@
 .published::before {
   font-family: "Font Awesome 6 Free";
   content: '\e493';
-}
-
-.navbar-toggler {
-  background-color: pink;
 }

@@ -1,3 +1,48 @@
 // Place all the styles related to the pages/homes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.login-button {
+	border: none;
+	padding: 0 20px;
+	height: 40px;
+	line-height: 1;
+	background: #6699cc;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.login {
+  font-size: 1em;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  transition: .3s;
+}
+
+// アイコン
+.login::before {
+  font-family: "Font Awesome 6 Free";
+  content: '\f2f6';
+}
+
+// ホバー時のアニメーション
+a::after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  content: '';
+  width: 0;
+  height: 2px;
+  background-color: #fff;
+  transition: .3s;
+  transform: translateX(-50%);
+}
+
+.login:hover {
+  color: #fff;
+}
+
+.login:hover::after {
+  width: 100%;
+}
