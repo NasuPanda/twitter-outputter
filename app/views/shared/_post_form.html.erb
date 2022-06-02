@@ -7,8 +7,12 @@
         <%= f.text_field :content, class: "form-control", id:"editing-post-content",  required: true %>
       </div>
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-          <%= f.submit "保存", class: "btn btn-info", formaction: drafts_path %>
-          <%= f.submit "投稿", class: "btn btn-primary" %>
+        <button class="button button-submit icon save">
+          <%= f.submit "保存", class: "form-inner-button", formaction: drafts_path %>
+        </button>
+        <button class="button button-submit icon upload">
+          <%= f.submit "投稿", class: "form-inner-button" %>
+        </button>
       </div>
     <% end %>
   </div>

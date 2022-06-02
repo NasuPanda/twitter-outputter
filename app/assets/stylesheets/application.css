@@ -27,6 +27,58 @@
 }
 
 /* ------------------------------------------------------------------------ */
+/* button */
+/* ------------------------------------------------------------------------ */
+.button {
+  color: #fff;
+  border-radius: 4px;
+  border: 0;
+  box-shadow: rgba(1,60,136,.5) 0 -1px 3px 0 inset,rgba(0,44,97,.1) 0 3px 6px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 24px;
+  margin: 0;
+  min-height: 30px;
+  min-width: 100px;
+  padding: 15px 20px;
+  transition: all .2s cubic-bezier(.22, .61, .36, 1);
+}
+
+.button-submit {
+  background-color: #398AB9;
+}
+
+.button-submit:hover {
+  background-color: #1C658C;
+}
+
+.button-danger {
+  background-color: red;
+  text-decoration: none;
+}
+
+.button-danger:hover {
+  color: #fff;
+  background-color: #CA0B00;
+}
+
+/* ------------------------------------------------------------------------ */
+/* button内に配置したformのスタイルをリセット(formオブジェクトにアイコンを配置するため) */
+/* ------------------------------------------------------------------------ */
+.form-inner-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 0;
+  border: none;
+  outline: none;
+  color: #fff;
+  background: transparent;
+}
+
+/* ------------------------------------------------------------------------ */
 /* nav-link */
 /* ------------------------------------------------------------------------ */
 .nav-link {
@@ -94,4 +146,19 @@
 .published::before {
   font-family: "Font Awesome 6 Free";
   content: '\e493';
+}
+
+.upload::before, .update::before {
+  font-family: "Font Awesome 6 Free";
+  content: '\f093';
+}
+
+.save::before {
+  font-family: "Font Awesome 6 Free";
+  content: '\f0c7';
+}
+
+.trash::before {
+  font-family: "Font Awesome 6 Free";
+  content: '\f2ed';
 }
