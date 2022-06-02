@@ -1,9 +1,6 @@
-<%#
-TODO タグを丸っぽい背景で囲み、独立した要素のように見せる
-TODO 文字数が一定以上のときどうする？ → ...にする。ホバーしたときは全表示にしたい(Want)
-TODO タグ自体(3点リーダでない部分)をクリックすると画面中央のPostにタグが反映される
-%>
 <li class="mb-1" id=<%= tag_id(tag) %> >
-  <%= link_to "##{tag.name}", editing_path(tag_name: tag.name), method: :put, remote: true %>
-  <%= link_to "︙", edit_tag_path(tag), remote: true %>
+  <div class="tag-container">
+    <%= link_to "# #{tag.name}", editing_path(tag_name: tag.name), class: "tag-name", method: :put, remote: true %>
+    <%= link_to "︙", edit_tag_path(tag), class: "tag-edit", remote: true %>
+  </div>
 </li>

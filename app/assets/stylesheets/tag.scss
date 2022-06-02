@@ -1,10 +1,58 @@
-// タグがオーバーフローした場合3点リーダを表示する
 #tags {
-  overflow: hidden;
-  width: 100%;
-  li {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* ------------------------------------------------------------------------ */
+/* タグのスタイル ホバー時に下線表示/透明になる */
+/* ------------------------------------------------------------------------ */
+.tag-container {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-right: 10px;
+  border-radius: 20px;
+  background-color: #398AB9;
+  color: #fff;
+}
+
+.tag-container {
+  a {
+    color: #fff;
+    text-decoration: none;
+    position: relative;
   }
+  a:hover {
+    color: #fff;
+  }
+  .tag-name::after,.tag-new::after {
+    position: absolute;
+    bottom: .3em;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
+    opacity: 0;
+    transition: .3s;
+  }
+  .tag-name:hover::after,.tag-new:hover::after {
+    bottom: 0;
+    opacity: 1;
+  }
+  .tag-edit {
+    margin-left: 5px;
+  }
+  .tag-edit:hover{
+    opacity: 0.7;
+  }
+}
+
+#tag-new-container {
+  background-color: #1C658C;
+  opacity: 0.9;
+}
+// アイコン
+.plus::before {
+  font-family: "Font Awesome 6 Free";
+  content: '\f0fe';
 }

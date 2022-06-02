@@ -23,9 +23,11 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="bg-secondary bg-opacity-10">
     <%= render 'layouts/header' %>
     <%= render 'layouts/flash' %>
-    <%= yield %>
+    <div class="container-fluid">
+      <%= yield %>
+    </div>
   </body>
 </html>

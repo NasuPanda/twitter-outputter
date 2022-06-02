@@ -2,16 +2,12 @@
   <% if logged_in? %>
     <%= render 'shared/tag_modal' %>
     <div class="row">
-      <div class="col-2">
-        <%= render 'shared/tags_sidebar' %>
-      </div>
+      <div class="col-2"></div>
       <div class="col">
+        <%= render 'shared/tags' %>
         <%= render 'shared/post_form' %>
       </div>
-      <div class="col-3">
-        <%# <%= render 'shared/post-sidebar' %>
-        <a href="#">POST SIDEBAR</a>
-      </div>
+      <div class="col-2"></div>
     </div>
   <% else %>
     <h1>ようこそ</h1>
