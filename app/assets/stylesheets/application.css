@@ -74,8 +74,8 @@
   padding: 0;
   border: none;
   outline: none;
-  color: #fff;
-  background: transparent;
+  color: inherit;
+  background: inherit;
 }
 
 /* ------------------------------------------------------------------------ */
