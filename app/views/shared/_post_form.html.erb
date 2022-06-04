@@ -4,9 +4,10 @@
       <%= f.label :content, "投稿", class: "form-label"%>
       <div class="mb-3">
         <%# NOTE: このフィールドのidを利用して投稿のテキストを更新する %>
-        <%= f.text_field :content, class: "form-control", id:"editing-post-content",  required: true %>
+        <%= f.text_area :content, class: "form-control", id:"editing-post-content", required: true, placeholder: '投稿内容', rows: 10 %>
       </div>
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <p id="char-count-down">140</p>
         <button class="button button-submit icon save">
           <%= f.submit "保存", class: "form-inner-button", formaction: drafts_path %>
         </button>
@@ -17,3 +18,6 @@
     <% end %>
   </div>
 </div>
+
+<%# NOTE: パーシャルが描画された後でないと適切に動作しないため読み込み順に注意する %>
+<%= javascript_pack_tag 'shared/post_form' %>
