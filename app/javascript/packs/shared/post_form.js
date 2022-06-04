@@ -44,7 +44,7 @@ function addAndRemoveClass(el, clsToBeAdd, clsToBeRemove) {
 // NOTE: require()の返り値がModuleで、Module.defaultの中にtwitter-textの実態がいる形。
 const twitter = require('twitter-text').default;
 
-editingPost.addEventListener("keyup", () => {
+editingPost.addEventListener("input", () => {
   const result = twitter.parseTweet(editingPost.value);
   // 日本語版の場合140文字制限(280バイト制限なのは変わらないが)なので、表示用に2で割る
   const jaWeightedLength = result.weightedLength / 2
