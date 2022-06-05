@@ -78,8 +78,8 @@ RSpec.describe User, type: :model do
       end
 
       it '下書きのみを取得すること' do
-        user.drafts.each do |d|
-          expect(d.draft?).to be_truthy
+        user.drafts.each do |draft|
+          expect(draft.draft?).to be_truthy
         end
       end
     end
@@ -102,8 +102,8 @@ RSpec.describe User, type: :model do
       end
 
       it '投稿済の投稿のみを取得すること' do
-        user.published_posts.each do |d|
-          expect(d.published?).to be_truthy
+        user.published_posts.each do |published_post|
+          expect(published_post.published?).to be_truthy
         end
       end
     end
@@ -126,8 +126,8 @@ RSpec.describe User, type: :model do
       end
 
       it '予約投稿のみを取得すること' do
-        user.reserved_posts.each do |d|
-          expect(d.reserved?).to be_truthy
+        user.reserved_posts.each do |reserved_post|
+          expect(reserved_post.reserved?).to be_truthy
         end
       end
     end
@@ -137,6 +137,25 @@ RSpec.describe User, type: :model do
 
       it '空のリストを返すこと' do
         expect(user.reserved_posts).to be_blank
+      end
+    end
+  end
+
+  describe '#added_tags' do
+    context 'added_tagsが存在するとき' do
+      # added_tagを5つ持つ
+      let(:user) { FactoryBot.create(:user, :with_added_tags) }
+
+      it 'added_tagsを全て取得すること' do
+        expect(user.added_tags.count).to eq(5)
+      end
+    end
+
+    context 'added_tagsが存在しないとき' do
+      let(:user) { FactoryBot.build(:user) }
+
+      it '空のリストを返すこと' do
+        expect(user.added_tags).to be_blank
       end
     end
   end
