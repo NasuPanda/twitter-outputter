@@ -28,16 +28,31 @@ RSpec.describe Post, type: :model do
       end
     end
 
-    context '140字のとき' do
+    # NOTE: twitterの投稿は280バイトまで
+    context '1バイト文字が280字のとき' do
       it 'バリデーションに成功すること' do
-        post.content = 'a' * 140
+        post.content = 'a' * 280
         expect(post).to be_valid
       end
     end
 
-    context '141字のとき' do
+    context '2バイト文字が140字のとき' do
+      it 'バリデーションに成功すること' do
+        post.content = 'あ' * 140
+        expect(post).to be_valid
+      end
+    end
+
+    context '1バイト文字が281字のとき' do
       it 'バリデーションに失敗すること' do
-        post.content = 'a' * 141
+        post.content = 'a' * 281
+        expect(post).to be_invalid
+      end
+    end
+
+    context '2バイト文字が141字のとき' do
+      it 'バリデーションに失敗すること' do
+        post.content = 'あ' * 141
         expect(post).to be_invalid
       end
     end
