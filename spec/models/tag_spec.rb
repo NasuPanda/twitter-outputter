@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Tag, type: :model do
-  let(:tag) { FactoryBot.create(:tag) }
-  let(:user_with_tag) { FactoryBot.create(:user, :with_tag) }
-
   describe 'attribute: name' do
+    let(:tag) { FactoryBot.build(:tag) }
+    let(:user_with_tag) { FactoryBot.create(:user, :with_tag) }
+
     context '存在するとき' do
       it 'バリデーションに成功すること' do
         expect(tag).to be_valid
@@ -20,22 +20,36 @@ RSpec.describe Tag, type: :model do
 
     context '空白のとき' do
       it 'バリデーションに失敗すること' do
-        tag.name = '  '
+        tag.name = ' '
         expect(tag).to be_invalid
       end
     end
 
-    context '100字のとき' do
+    context 'ハッシュタグを除いて100字のとき' do
       it 'バリデーションに成功すること' do
-        tag.name = 'a' * 100
+        tag.name = "##{'a' * 100}"
         expect(tag).to be_valid
       end
     end
 
-    context '101字のとき' do
+    context 'ハッシュタグを除いて101字のとき' do
       it 'バリデーションに失敗すること' do
-        tag.name = 'a' * 101
+        tag.name = "##{'a' * 101}"
         expect(tag).to be_invalid
+      end
+    end
+
+    # テストケースの参考 : https://github.com/twitter/twitter-text/blob/master/conformance/validate.yml
+    context '全て数字のとき' do
+      it 'バリデーションに失敗すること' do
+        tag.name = '#123'
+        expect(tag).to be_invalid
+      end
+    end
+
+    context '空白を含むとき' do
+      it 'バリデーションに失敗すること' do
+        tag.name = '#無効な ハッシュタグ'
       end
     end
 
@@ -45,6 +59,23 @@ RSpec.describe Tag, type: :model do
         dup_name = existing_tag.name
         name_dup_tag = user_with_tag.tags.create(name: dup_name)
         expect(name_dup_tag).to be_invalid
+      end
+    end
+  end
+
+  describe 'attribute: is_added' do
+    let(:tag) { FactoryBot.build(:tag) }
+
+    context '存在するとき' do
+      it 'バリデーションに成功すること' do
+        expect(tag).to be_valid
+      end
+    end
+
+    context '存在しないとき' do
+      it 'バリデーションに失敗すること' do
+        tag.is_added = nil
+        expect(tag).to be_invalid
       end
     end
   end
