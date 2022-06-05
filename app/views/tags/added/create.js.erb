@@ -2,6 +2,8 @@
   $("#added-tags").append("<%= j(render("shared/added_tag", added_tag: @tag)) %>");
   // コードからイベントを発火させる
   document.getElementById("editing-post-content").dispatchEvent(new Event("input"));
-<% else%>
-  alert("<%= @status %>");
+<% elsif @status == 'failure' %>
+  alert("ハッシュタグのセットに失敗しました。");
+<% else %>
+  alert("<%= @status %>")
 <% end %>

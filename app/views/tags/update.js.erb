@@ -1,7 +1,10 @@
 <% if @status == 'success' %>
   $("#<%= tag_id(@tag) %>").replaceWith("<%= j(render('shared/tag', tag: @tag)) %>");
-<% elsif @status == 'failure' %>
-  alert("タグの更新に失敗しました。");
+  $("#modal-tag").modal("hide");
+<% elsif @status == 'failure'  %>
+  alert(`ハッシュタグの更新に失敗しました。
+        ・数字のみのハッシュタグは無効です。
+        ・同じハッシュタグは登録出来ません。
+        ・ハッシュタグ内に空白を含むことは出来ません。
+        ・ハッシュタグ内に特殊記号を含むことは出来ません。`);
 <% end %>
-
-$("#modal-tag").modal("hide")

@@ -22,7 +22,7 @@
             <button class="button button-submit icon update">
               <%= f.submit "更新", class: "form-inner-button", maxlength: 100 %>
             </button>
-            <%= link_to "削除", tag_path(@tag), method: :delete, remote: true, data: { confirm: "タグを削除してもよろしいですか?" }, class: "button button-danger icon trash"%>
+            <%= link_to "削除", tag_path(@tag), method: :delete, remote: true, data: { confirm: "ハッシュタグを削除してもよろしいですか?" }, class: "button button-danger icon trash"%>
           <% end %>
         </div>
       <% end %>

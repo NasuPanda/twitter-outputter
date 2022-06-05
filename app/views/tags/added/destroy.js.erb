@@ -2,6 +2,6 @@
   $("#<%= added_tag_id(@tag) %>").remove();
   // コードからイベントを発火させる
   document.getElementById("editing-post-content").dispatchEvent(new Event("input"));
-<% else%>
-  alert("<%= @status %>");
+<% elsif @status == 'failure' %>
+  alert("セットしたハッシュタグの削除に失敗しました。レコードが存在しない可能性があります。");
 <% end %>
