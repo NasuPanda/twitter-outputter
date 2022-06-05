@@ -14,11 +14,13 @@ Rails.application.routes.draw do
   end
 
   scope module: :posts do
-    resource  :editing,   only: %i[update]
     resources :drafts,    except: %i[show]
     resources :scheduled, only: %i[index create edit update destory]
     resources :published, only: %i[index create]
   end
 
   resources :tags, except: %i[index show], constraints: OnlyAjaxConstraints.new
+  scope module: :tags do
+    resources :added, only: %i[create destory]
+  end
 end

@@ -12,6 +12,13 @@ const charCountDown = document.getElementById("char-count-down");
 const submitButtons = document.querySelectorAll("div.post-form-submit-container > button");
 const submitForms = document.querySelectorAll(".button-submit > input");
 
+// element.valueを結合する
+function concatElementValues(elements) {
+  let result = "";
+  elements.forEach((e) => { result += e.value; });
+  return result;
+}
+
 // 残り入力可能な文字数を表示する
 function updateCharCountDown(jaWeightedLength) {
   const numberOfCharCanBeEntered = 140 - jaWeightedLength;
@@ -45,7 +52,9 @@ function addAndRemoveClass(el, clsToBeAdd, clsToBeRemove) {
 const twitter = require('twitter-text').default;
 
 editingPost.addEventListener("input", () => {
-  const result = twitter.parseTweet(editingPost.value);
+  const countableTextAreas = document.querySelectorAll(".textarea-char-countable");
+  const total = concatElementValues(countableTextAreas);
+  const result = twitter.parseTweet(total);
   // 日本語版の場合140文字制限(280バイト制限なのは変わらないが)なので、表示用に2で割る
   const jaWeightedLength = result.weightedLength / 2
   const isValid = result.valid;
