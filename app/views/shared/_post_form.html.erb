@@ -10,7 +10,9 @@
       <p id="char-count-down">140</p>
 
       <%# TODO スタイルを追加する %>
-      <div id="added-tag-container"></div>
+      <div id="added-tag-container">
+        <%= render partial: 'shared/added_tag', collection: current_user.added_tags %>
+      </div>
 
       <div class="post-form-submit-container d-grid gap-2 d-md-flex justify-content-md-end">
         <button class="button button-submit icon save">

@@ -1,4 +1,7 @@
-$("#added-tag-container").append("<%= j(render("shared/added_tag", tag_name: @tag_name)) %>");
-
-// コードからイベントを発火させる
-document.getElementById("editing-post-content").dispatchEvent(new Event("input"));
+<% if @status == 'success' %>
+  $("#added-tag-container").append("<%= j(render("shared/added_tag", added_tag: @tag)) %>");
+  // コードからイベントを発火させる
+  document.getElementById("editing-post-content").dispatchEvent(new Event("input"));
+<% else%>
+  alert("<%= @status %>");
+<% end %>
