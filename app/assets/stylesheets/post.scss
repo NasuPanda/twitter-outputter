@@ -1,6 +1,14 @@
 #added-tag-container {
-  background-color: rgba(57, 138, 185, 0.5);
   background-color: #D8D2CB;
+  a {
+    color: #398AB9;
+    text-decoration: none;
+    position: relative;
+    margin-left: 10px;
+  }
+  a:hover {
+    color: #1C658C;
+  }
 }
 
 #added-tags {

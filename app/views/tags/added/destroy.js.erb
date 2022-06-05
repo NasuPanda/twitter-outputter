@@ -1,0 +1,7 @@
+<% if @status == 'success' %>
+  $("#<%= added_tag_id(@tag) %>").remove();
+  // コードからイベントを発火させる
+  document.getElementById("editing-post-content").dispatchEvent(new Event("input"));
+<% else%>
+  alert("<%= @status %>");
+<% end %>
