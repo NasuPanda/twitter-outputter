@@ -1,6 +1,22 @@
-.textarea-char-countable {
-  font-size: 16px;
-  resize: none;
+#added-tag-container {
+  background-color: rgba(57, 138, 185, 0.5);
+  background-color: #D8D2CB;
+}
+
+#added-tags {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.added-tag {
+  display: inline-block;
+  overflow: hidden;
+  font-size: 1.2rem;
+  margin: 5px 5px 5px 0;
+  border-radius: 5px;
+  color: #398AB9;
 }
 
 /* ------------------------------------------------------------------------ */
@@ -8,7 +24,7 @@
 /* ------------------------------------------------------------------------ */
 .flex-textarea-container {
   position: relative;
-  font-size: 1rem;
+  font-size: 1.2rem;
   line-height: 1.8;
 }
 

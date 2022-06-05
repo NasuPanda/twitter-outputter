@@ -15,7 +15,14 @@ const submitForms = document.querySelectorAll(".button-submit > input");
 // element.valueを結合する
 function concatElementValues(elements) {
   let result = "";
-  elements.forEach((e) => { result += e.value; });
+  elements.forEach((e) => {
+    if (! e.value) {
+      text = e.textContent;
+    } else {
+      text = e.value;
+    }
+    result += text;
+  });
   return result;
 }
 
@@ -52,7 +59,7 @@ function addAndRemoveClass(el, clsToBeAdd, clsToBeRemove) {
 const twitter = require('twitter-text').default;
 
 editingPost.addEventListener("input", () => {
-  const countableTextAreas = document.querySelectorAll(".textarea-char-countable");
+  const countableTextAreas = document.querySelectorAll(".for-char-count");
   const total = concatElementValues(countableTextAreas);
   const result = twitter.parseTweet(total);
   // 日本語版の場合140文字制限(280バイト制限なのは変わらないが)なので、表示用に2で割る

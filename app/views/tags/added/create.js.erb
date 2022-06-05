@@ -1,5 +1,5 @@
 <% if @status == 'success' %>
-  $("#added-tag-container").append("<%= j(render("shared/added_tag", added_tag: @tag)) %>");
+  $("#added-tags").append("<%= j(render("shared/added_tag", added_tag: @tag)) %>");
   // コードからイベントを発火させる
   document.getElementById("editing-post-content").dispatchEvent(new Event("input"));
 <% else%>
