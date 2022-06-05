@@ -27,6 +27,11 @@ class User < ApplicationRecord
     return posts.find_all{ |post| post.reserved? }
   end
 
+  # is_addedがtrueのtagを取得する
+  def added_tags
+    return tags.find_all{ |tag| tag.is_added? }
+  end
+
   def post_tweet(text)
     client = twitter_client
     client.update(text)
