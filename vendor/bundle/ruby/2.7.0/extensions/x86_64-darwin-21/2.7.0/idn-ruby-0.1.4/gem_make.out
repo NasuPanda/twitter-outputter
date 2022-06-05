@@ -1,0 +1,29 @@
+current directory: /Users/westen/rdev/twitter-outputter/twitter_outputter/vendor/bundle/ruby/2.7.0/gems/idn-ruby-0.1.4/ext
+/Users/westen/.anyenv/envs/rbenv/versions/2.7.0/bin/ruby -I /Users/westen/.anyenv/envs/rbenv/versions/2.7.0/lib/ruby/2.7.0 -r ./siteconf20220605-75948-1273vsy.rb extconf.rb
+checking for -lidn... yes
+checking for idna.h... yes
+checking for punycode.h... yes
+checking for stringprep.h... yes
+creating Makefile
+
+current directory: /Users/westen/rdev/twitter-outputter/twitter_outputter/vendor/bundle/ruby/2.7.0/gems/idn-ruby-0.1.4/ext
+make "DESTDIR=" clean
+
+current directory: /Users/westen/rdev/twitter-outputter/twitter_outputter/vendor/bundle/ruby/2.7.0/gems/idn-ruby-0.1.4/ext
+make "DESTDIR="
+compiling idn.c
+compiling idna.c
+idna.c:89:49: warning: implicit conversion loses integer precision: 'VALUE' (aka 'unsigned long') to 'int' [-Wshorten-64-to-32]
+  rc = idna_to_ascii_8z(RSTRING_PTR(str), &buf, flags);
+       ~~~~~~~~~~~~~~~~                         ^~~~~
+idna.c:129:53: warning: implicit conversion loses integer precision: 'VALUE' (aka 'unsigned long') to 'int' [-Wshorten-64-to-32]
+  rc = idna_to_unicode_8z8z(RSTRING_PTR(str), &buf, flags);
+       ~~~~~~~~~~~~~~~~~~~~                         ^~~~~
+2 warnings generated.
+compiling punycode.c
+compiling stringprep.c
+linking shared-object idn.bundle
+
+current directory: /Users/westen/rdev/twitter-outputter/twitter_outputter/vendor/bundle/ruby/2.7.0/gems/idn-ruby-0.1.4/ext
+make "DESTDIR=" install
+/usr/local/bin/ginstall -c -m 0755 idn.bundle ./.gem.20220605-75948-qi6sxo

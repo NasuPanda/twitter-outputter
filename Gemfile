@@ -26,6 +26,8 @@ gem 'omniauth-twitter'
 gem 'omniauth-rails_csrf_protection'
 # Twitter操作
 gem 'twitter'
+# Tweetの長さ測定,有効性の検証
+gem 'twitter-text'
 # apiを叩く
 gem 'httparty'
 # バックグラウンドジョブ

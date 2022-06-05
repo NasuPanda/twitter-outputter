@@ -1,0 +1,36 @@
+Changes with IDN 0.1.4 (2021-11-02)
+
+* nfkc_normalize raises ArgumentError instead of returning nil for
+  invalid utf-8 strings.
+
+Changes with IDN 0.1.3 (2021-11-01)
+
+* Fixed segv in latest ruby-head with bad utf-8
+
+Changes with IDN 0.1.2 (2021-06-10)
+
+* add missing includes
+* fix default encoding to use utf8
+
+Changes with IDN 0.1.1 [yanked] (2021-06-09)
+
+* Use xfree() only with memory allocated with xmalloc()/xrealloc(). Free
+  IDN-allocated memory with idn_free()
+
+Changes with IDN 0.1.0 (2011-03-31)
+
+* Fix compilation errors in ruby 1.9.2p0 (2010-08-18 revision 29036).
+
+Changes with IDN 0.0.2 (2006-02-11)
+
+* Remove excessive xfree() if a call to stringprep_profile() returns an
+  error. Fixes crash reported in PR #3088.
+
+* Add tests for invalid Stringprep strings and adjust names of already
+  existing test methods.
+
+* Improve existing tests for IDN::Idna.
+
+Changes with IDN 0.0.1 (2005-09-26)
+
+* First release.
