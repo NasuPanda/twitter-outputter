@@ -12,6 +12,10 @@ const charCountDown = document.getElementById("char-count-down");
 const submitButtons = document.querySelectorAll("div.post-form-submit-container > button");
 const submitForms = document.querySelectorAll(".button-submit > input");
 
+// twitter-text
+// NOTE: require()の返り値がModuleで、Module.defaultの中にtwitter-textの実態がいる形。
+const twitter = require('twitter-text').default;
+
 // element.valueを結合する
 function concatElementValues(elements) {
   let result = "";
@@ -55,10 +59,8 @@ function addAndRemoveClass(el, clsToBeAdd, clsToBeRemove) {
   el.classList.add(clsToBeAdd)
 }
 
-// NOTE: require()の返り値がModuleで、Module.defaultの中にtwitter-textの実態がいる形。
-const twitter = require('twitter-text').default;
-
-editingPost.addEventListener("input", () => {
+// イベント本体
+function updateAndValidateCharCount() {
   const countableTextAreas = document.querySelectorAll(".for-char-count");
   const total = concatElementValues(countableTextAreas);
   const result = twitter.parseTweet(total);
@@ -68,7 +70,10 @@ editingPost.addEventListener("input", () => {
 
   updateCharCountDown(jaWeightedLength);
   validateInputCharCount(jaWeightedLength, isValid);
-});
+}
+
+editingPost.addEventListener("input", updateAndValidateCharCount);
+window.addEventListener("load", updateAndValidateCharCount);
 
 // - - - - - - - - - - - - - - - - - -
 // Textareaの長さを入力に応じて変化させる
