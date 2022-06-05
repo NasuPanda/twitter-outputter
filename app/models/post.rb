@@ -4,15 +4,17 @@ class Post < ApplicationRecord
 
   belongs_to :user
 
-  validates :content, presence: true, length: { maximum: 140 }, uniqueness: { scope: :user_id }
-  validate :content_shold_be_valid_twitter_text
+  validates :content, presence: true, uniqueness: { scope: :user_id }
+  validate :content_shold_be_valid_twitter_text, if: Proc.new { |post| post.content.present? }
   validate :post_at_cannot_be_blank_if_reserved_or_published
 
   private
     # バリデーション : contentが有効なtwitter-textであること
     def content_shold_be_valid_twitter_text
-      if tweet_invalid?(post.content)
-        post.errors[:content] << '投稿内容が無効です'
+      # NOTE: valid_tweetは非推奨なのでparse_tweetを使う
+      parse_result = parse_tweet(self.content)
+      unless parse_result[:valid]
+        self.errors[:content] << '投稿内容が無効です'
       end
     end
 
