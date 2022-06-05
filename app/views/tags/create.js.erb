@@ -1,5 +1,5 @@
 <% if @status == 'success' %>
-  $("#tags").append("<%= j(render("shared/tag", tag: @tag)) %>");
+  $("#tag-new").before("<%= j(render("shared/tag", tag: @tag)) %>");
 <% elsif @status == 'failure' %>
   alert("タグの作成に失敗しました。");
 <% end %>
