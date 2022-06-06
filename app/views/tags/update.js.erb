@@ -1,6 +1,6 @@
 <% if @status == 'success' %>
   $("#<%= tag_id(@tag) %>").replaceWith("<%= j(render('shared/tag', tag: @tag)) %>");
-  $("#modal-tag").modal("hide");
+  $("#modal-container").modal("hide");
 <% elsif @status == 'failure'  %>
   alert(`ハッシュタグの更新に失敗しました。
         ・数字のみのハッシュタグは無効です。
