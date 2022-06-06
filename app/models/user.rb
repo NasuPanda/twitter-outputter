@@ -16,9 +16,10 @@ class User < ApplicationRecord
 
   # 特定のstatusのPostを取得する
   def drafts
-    return posts.find_all{ |post| post.draft? }
+    return posts.by_recently_updated.find_all{ |post| post.draft? }
   end
 
+  # TODO post_atでorderする
   def published_posts
     return posts.find_all{ |post| post.published? }
   end

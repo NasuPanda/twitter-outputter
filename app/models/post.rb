@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
-  include Twitter::TwitterText::Validation
+  include OrderableByTimestamp              # タイムタンプで並び替えるため
+  include Twitter::TwitterText::Validation  # Twitterのバリデーションのため
   enum status: { draft: 0, reserved: 1, published: 2 }
 
   belongs_to :user
