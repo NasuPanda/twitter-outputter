@@ -118,4 +118,12 @@ RSpec.describe Post, type: :model do
       }.to change(Post, :count).by(-1)
     end
   end
+
+  # TODO ユニットテスト実装
+  describe '#to_published' do
+  end
+
+  # TODO ユニットテスト実装
+  describe '#to_reserved' do
+  end
 end

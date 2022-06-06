@@ -35,11 +35,40 @@ class Posts::DraftsController < ApplicationController
 
   # NOTE : 下書きから削除 → 予約投稿 or 投稿済 へ
   def destroy
+    @draft = current_user.drafts.find(params[:id])
+    # TODO 予約投稿へ移動する分岐を追加する privateメソッドで分割すると良さげ
+    # if @draft.post_at
+      # @draft.status = :reserved
+
+    # 投稿済へ移動する
+    self.to_published
   end
 
   private
 
     def draft_params
       params.require(:post).permit(:content)
+    end
+
+    # 投稿済に変更する
+    def to_published
+      @draft.to_published
+      if @draft.save
+        respond_to do |format|
+          format.html { redirect_to root_url, notice: '投稿に成功しました' }
+          format.js do
+            @status = 'success'
+            @action = '投稿'
+          end
+        end
+      else
+        respond_to do |format|
+          format.html { redirect_to root_url, alert: '投稿に失敗しました' }
+          format.js do
+            @status = 'failure'
+            @action = '投稿'
+          end
+        end
+      end
     end
 end

@@ -10,7 +10,7 @@ $("#alert-message").empty()
   document.getElementById("editing-post-content").dispatchEvent(new Event("input"));
 <% elsif @status == 'failure' %>
   $("#alert-message")
-  .append("<%= j(render('shared/flash_danger',message: "下書きの保存に失敗しました。\n全く同じ内容の投稿は出来ません。" )) %>");
+  .append("<%= j(render('shared/flash_danger',message: "下書きの保存に失敗しました。\n・過去の投稿と全く同じ投稿は出来ません。\n・規定の文字数を超えた投稿は出来ません。" )) %>");
 <% end %>
 
 // 約5秒後に消去する

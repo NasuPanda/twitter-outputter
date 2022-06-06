@@ -9,6 +9,12 @@ class Post < ApplicationRecord
   validate :content_shold_be_valid_twitter_text, if: Proc.new { |post| post.content.present? }
   validate :post_at_cannot_be_blank_if_reserved_or_published
 
+  # 投稿済に変更する
+  def to_published
+    self.status = :published
+    self.post_at = Time.current
+  end
+
   private
     # バリデーション : contentが有効なtwitter-textであること
     def content_shold_be_valid_twitter_text
@@ -27,4 +33,6 @@ class Post < ApplicationRecord
         end
       end
     end
+
+    # TODO バリデーション : 新しく付与される場合現在時刻よりも遅い時間であること
 end
