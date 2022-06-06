@@ -20,7 +20,7 @@
             <% end %>
           <% elsif action == 'edit' %>
             <%= f.button type: :submit, class: "button button-submit" do %>
-              <i class="fa-solid fa-upload"></i>更新
+              <i class="fa-solid fa-floppy-disk"></i>更新
             <% end %>
             <%= link_to "削除", tag_path(@tag), method: :delete, remote: true, data: { confirm: "ハッシュタグを削除してもよろしいですか?" }, class: "button button-danger icon trash"%>
           <% end %>

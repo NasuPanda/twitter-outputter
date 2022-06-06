@@ -44,6 +44,7 @@
   min-width: 100px;
   padding: 15px 20px;
   transition: all .2s cubic-bezier(.22, .61, .36, 1);
+  text-decoration: none;
 }
 
 /* ボタン内に配置したアイコン */
@@ -56,12 +57,12 @@
 }
 
 .button-submit:hover {
+  color: #fff;
   background-color: #1C658C;
 }
 
 .button-danger {
   background-color: red;
-  text-decoration: none;
 }
 
 .button-danger:hover {
@@ -122,6 +123,11 @@
 .logout::before {
   font-family: "Font Awesome 6 Free";
   content: '\f2f5';
+}
+
+.upload::before, .update::before {
+  font-family: "Font Awesome 6 Free";
+  content: '\f093';
 }
 
 .setting::before {
