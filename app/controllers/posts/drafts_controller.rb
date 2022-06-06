@@ -29,7 +29,7 @@ class Posts::DraftsController < ApplicationController
   end
 
   def update
-    @draft = current_user.drafts.find(parmas[:id])
+    @draft = current_user.drafts.find(params[:id])
     @status = @draft.update(draft_params) ? 'success' : 'failure'
   end
 
