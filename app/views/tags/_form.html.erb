@@ -15,13 +15,13 @@
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
           <%# renderから渡される変数を利用して分岐 %>
           <% if action == 'new' %>
-            <button class="button button-submit icon upload">
-              <%= f.submit "登録", class: "form-inner-button", maxlength: 100 %>
-            </button>
+            <%= f.button type: :submit, class: "button button-submit" do %>
+              <i class="fa-solid fa-upload"></i>登録
+            <% end %>
           <% elsif action == 'edit' %>
-            <button class="button button-submit icon update">
-              <%= f.submit "更新", class: "form-inner-button", maxlength: 100 %>
-            </button>
+            <%= f.button type: :submit, class: "button button-submit" do %>
+              <i class="fa-solid fa-upload"></i>更新
+            <% end %>
             <%= link_to "削除", tag_path(@tag), method: :delete, remote: true, data: { confirm: "ハッシュタグを削除してもよろしいですか?" }, class: "button button-danger icon trash"%>
           <% end %>
         </div>

@@ -1,6 +1,6 @@
 <div class="container">
   <div class="form-group field">
-    <%= form_with(url: published_index_path) do |f| %>
+    <%= form_with(scope: :post) do |f| %>
       <%= f.label :content, "投稿", class: "form-label"%>
       <div class="flex-textarea-container mb-3">
         <div class="flex-textarea-dummy" aria-hidden="true"></div>
@@ -18,12 +18,12 @@
       </div>
 
       <div class="post-form-submit-container d-grid gap-2 d-md-flex justify-content-md-end">
-        <button class="button button-submit icon save">
-          <%= f.submit "保存", class: "form-inner-button", formaction: drafts_path %>
-        </button>
-        <button class="button button-submit icon upload">
-          <%= f.submit "投稿", class: "form-inner-button" %>
-        </button>
+        <%= f.button type: :submit, formaction: drafts_path, class: "button button-submit" do %>
+          <i class="fa-solid fa-floppy-disk"></i>保存
+        <% end %>
+        <%= f.button type: :submit, foarmaction: published_index_path, class: "button button-submit" do %>
+          <i class="fa-solid fa-upload"></i>投稿
+        <% end %>
       </div>
     <% end %>
   </div>

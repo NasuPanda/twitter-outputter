@@ -46,6 +46,11 @@
   transition: all .2s cubic-bezier(.22, .61, .36, 1);
 }
 
+/* ボタン内に配置したアイコン */
+.button i{
+  margin-right: 10px;
+}
+
 .button-submit {
   background-color: #398AB9;
 }
@@ -62,21 +67,6 @@
 .button-danger:hover {
   color: #fff;
   background-color: #CA0B00;
-}
-
-/* ------------------------------------------------------------------------ */
-/* button内に配置したformのスタイルをリセット(formオブジェクトにアイコンを配置するため) */
-/* ------------------------------------------------------------------------ */
-/* TODO 削除する */
-.form-inner-button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  padding: 0;
-  border: none;
-  outline: none;
-  color: inherit;
-  background: inherit;
 }
 
 /* ------------------------------------------------------------------------ */
@@ -152,16 +142,6 @@
 .published::before {
   font-family: "Font Awesome 6 Free";
   content: '\e493';
-}
-
-.upload::before, .update::before {
-  font-family: "Font Awesome 6 Free";
-  content: '\f093';
-}
-
-.save::before {
-  font-family: "Font Awesome 6 Free";
-  content: '\f0c7';
 }
 
 .trash::before {
