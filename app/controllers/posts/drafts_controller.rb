@@ -1,6 +1,7 @@
 class Posts::DraftsController < ApplicationController
   def index
-    @drafts = current_user.drafts
+    # indexの場合はdraftsを更新日時の降順で取得する
+    @drafts = current_user.drafts_by_recently_updated
   end
 
   def new

@@ -14,18 +14,23 @@ class User < ApplicationRecord
     return external_user_id
   end
 
-  # 特定のstatusのPostを取得する
+  # status: draft のPostを取得
   def drafts
-    return posts.by_recently_updated.find_all{ |post| post.draft? }
+    return find_posts_by_status(:draft)
+  end
+
+  # status: draft のPostを更新日時降順で取得
+  def drafts_by_recently_updated
+    return drafts.by_recently_updated
   end
 
   # TODO post_atでorderする
   def published_posts
-    return posts.find_all{ |post| post.published? }
+    return find_posts_by_status(:published)
   end
 
   def reserved_posts
-    return posts.find_all{ |post| post.reserved? }
+    return find_posts_by_status(:reserved)
   end
 
   # is_addedがtrueのtagを取得する
@@ -53,11 +58,19 @@ class User < ApplicationRecord
   end
 
   private
+
+    # statusを元にPostを探す
+    def find_posts_by_status(status)
+      posts.where(status: status)
+    end
+
+    # Twitter-OmniAuthから受け取ったハッシュを元にユーザを探す
     def self.find_by_auth_hash(auth_hash)
       uid = auth_hash[:uid]
       user = self.find_authentication_uid(uid).first
     end
 
+    # Twitter-OmniAuthから受け取ったハッシュを元にユーザを作る
     def self.create_by_auth_hash(auth_hash)
       uid = auth_hash[:uid]
       user = self.new()
