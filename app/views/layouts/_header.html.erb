@@ -27,6 +27,12 @@
         </li>
       </ul>
     </div>
+    <% else %>
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%= link_to "Twitterでログイン" , "auth/twitter", class: "nav-link text-light icon login", method: :post %>
+        </li>
+      </ul>
     <% end %>
   </div>
 </nav>
