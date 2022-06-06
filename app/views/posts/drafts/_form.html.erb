@@ -1,8 +1,26 @@
-<%# TODO views/tags/_formを元にAjaxモーダルを実装 %>
-
-<button class="button button-submit" type="submit" formaction=<%= drafts_path %>>
-  <i class="fa-solid fa-floppy-disk"></i>更新
-</button>
-
-<%# TODO 削除はpost_pathにする(Postのインスタンス自体を消すことになるのでPostコントローラに投げる) %>
-<%= link_to "削除", draft_path(draft), method: :delete, remote: true, data: { confirm: "この下書きを削除してもよろしいですか?" }, class: "button button-danger icon trash"%>
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header">
+      <%# renderから渡される変数を利用 %>
+      <h5 class="modal-title"><%= title %></h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group field">
+        <%= form_with(model: @draft, url: draft_path(@draft), remote: true) do |f| %>
+            <%= f.label :name, "投稿内容", class: "form-label"%>
+          <div class="mb-3">
+            <%= f.text_field :content, class: "form-control", required: true %>
+          </div>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <%= f.button type: :submit, class: "button button-submit" do %>
+              <i class="fa-solid fa-floppy-disk"></i>更新
+            <% end %>
+            <%# TODO 削除はpost_pathにする(Postのインスタンス自体を消すことになるのでPostコントローラに投げる) %>
+            <%= link_to "削除", draft_path(@draft), method: :delete, remote: true, data: { confirm: "この下書きを削除してもよろしいですか?" }, class: "button button-danger icon trash"%>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

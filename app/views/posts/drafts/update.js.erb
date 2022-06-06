@@ -1,0 +1,8 @@
+<% if @status == 'success' %>
+  $("#<%= draft_id(@draft) %>").replaceWith("<%= j(render('draft', draft: @draft)) %>");
+  $("#modal-container").modal("hide");
+<% elsif @status == 'failure'  %>
+  alert(`投稿の更新に失敗しました。
+  ・過去の投稿と全く同じ投稿は出来ません。
+  ・規定の文字数を超えた投稿は出来ません。`);
+<% end %>

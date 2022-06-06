@@ -1,0 +1,4 @@
+<%# renderで変数を渡すことで要素を動的に変更する %>
+<%# TODO post_formにする(文字数カウントの表示など) %>
+$("#modal-container").html("<%= escape_javascript(render 'form', title: "下書きの編集") %>")
+$("#modal-container").modal("show")
