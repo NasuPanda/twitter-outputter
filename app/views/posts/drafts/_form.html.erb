@@ -1,0 +1,8 @@
+<%# TODO views/tags/_formを元にAjaxモーダルを実装 %>
+
+<button class="button button-submit" type="submit" formaction=<%= drafts_path %>>
+  <i class="fa-solid fa-floppy-disk"></i>更新
+</button>
+
+<%# TODO 削除はpost_pathにする(Postのインスタンス自体を消すことになるのでPostコントローラに投げる) %>
+<%= link_to "削除", draft_path(draft), method: :delete, remote: true, data: { confirm: "この下書きを削除してもよろしいですか?" }, class: "button button-danger icon trash"%>

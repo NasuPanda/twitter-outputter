@@ -1,0 +1,26 @@
+<div class="col">
+  <div class="card">
+    <div class="card-body">
+      <p class="card-text">
+        <%= draft.content %>
+      </p>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <%= link_to "編集", edit_draft_path(draft), class: "button button-submit icon edit", remote: true %>
+        <%# draftから削除 → publishedへ移動する %>
+        <%= link_to "投稿", draft_path(draft), method: :delete, remote: true, data: { confirm: "投稿してもよろしいですか?" }, class: "button button-submit icon upload"%>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+      最終更新: <%= l(draft.updated_at, format: :long) %>
+    </div>
+  </div>
+</div>
+
+<!--
+TODO
+編集ボタン : Drafts#editによりモーダルダイアログ(app/views/posts/drafts/_form.html.erb)を開く
+投稿ボタン : Draft → Published へ移動, statusを変更, post_atを付与
+更新ボタン : モーダル内で定義, updateを実行
+ページネーションの実装
+ボタンもう少し小さく or テキスト大きく
+-->

@@ -130,6 +130,11 @@
   content: '\f093';
 }
 
+.edit::before {
+  font-family: "Font Awesome 6 Free";
+  content: '\f304';
+}
+
 .setting::before {
   font-family: "Font Awesome 6 Free";
   content: '\f013';
