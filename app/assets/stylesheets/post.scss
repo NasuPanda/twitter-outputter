@@ -94,3 +94,6 @@
   background-color: #1C658C;
   pointer-events: none;
 }
+
+// aタグ無効化はクラスで表現
+// 疑似要素とは異なりapplication.cssに優先度で負けてしまうのでapplication.cssに書く

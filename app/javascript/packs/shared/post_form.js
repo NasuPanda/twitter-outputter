@@ -9,8 +9,8 @@ const INVALID_TEXT_CLASS = "text-invalid";
 // 操作する要素
 const editingPost = document.getElementById("editing-post-content");
 const charCountDown = document.getElementById("char-count-down");
-const submitButtons = document.querySelectorAll("div.post-form-submit-container > button");
-const submitForms = document.querySelectorAll(".button-submit > input");
+const submitButtons = document.querySelectorAll("div#post-form-submit-container > button");
+const submitLinks = document.querySelectorAll("div#post-form-submit-container > a");
 
 // twitter-text
 // NOTE: require()の返り値がModuleで、Module.defaultの中にtwitter-textの実態がいる形。
@@ -43,13 +43,13 @@ function validateInputCharCount(jaWeightedLength, isValid) {
     addAndRemoveClass(editingPost, VALID_TEXTAREA_CLASS, INVALID_TEXTAREA_CLASS);
     charCountDown.classList.remove(INVALID_TEXT_CLASS);
     submitButtons.forEach((e) => { e.disabled = false; });
-    submitForms.forEach((e) => { e.disabled = false; });
+    submitLinks.forEach((e) => { e.classList.remove("disable-link"); });
   // 無効な時
   } else {
     addAndRemoveClass(editingPost, INVALID_TEXTAREA_CLASS, VALID_TEXTAREA_CLASS);
     charCountDown.classList.add(INVALID_TEXT_CLASS);
     submitButtons.forEach((e) => { e.disabled = true });
-    submitForms.forEach((e) => { e.disabled = true; });
+    submitLinks.forEach((e) => { e.classList.add("disable-link"); });
   }
 }
 
@@ -73,7 +73,6 @@ function updateAndValidateCharCount() {
 }
 
 editingPost.addEventListener("input", updateAndValidateCharCount);
-window.addEventListener("load", updateAndValidateCharCount);
 
 // - - - - - - - - - - - - - - - - - -
 // Textareaの長さを入力に応じて変化させる
