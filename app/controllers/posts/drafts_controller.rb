@@ -1,7 +1,8 @@
 class Posts::DraftsController < ApplicationController
   def index
     # indexの場合はdraftsを更新日時の降順で取得する
-    @drafts = current_user.drafts_by_recently_updated
+    @drafts = current_user.drafts_by_recently_updated.
+      page(params[:page]).per(10)
   end
 
   def new

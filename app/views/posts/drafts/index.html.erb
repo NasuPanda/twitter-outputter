@@ -1,13 +1,14 @@
 <% provide(:title, '下書き') %>
 
 
-<div class="container-fluid">
-  <h1>下書き</h1>
-  <div class="row row-cols-1 row-cols-md-2 g-4">
+<h1>下書き</h1>
 
+<%=  paginate @drafts %>
+
+<div class="row row-cols-1 row-cols-md-2 g-4">
   <% @drafts.each do |draft| %>
     <%= render 'draft', draft: draft %>
   <% end %>
-
-  </div>
 </div>
+
+<%=  paginate @drafts %>

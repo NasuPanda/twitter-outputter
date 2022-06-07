@@ -172,3 +172,47 @@
   opacity: 0.8;
   font-size: 1.3em;
 }
+
+/* ------------------------------------------------------------------------ */
+/* ページネーション */
+/* ------------------------------------------------------------------------ */
+.pagination {
+  justify-content: center;
+}
+
+.pagination span {
+  font-size: 1.2rem;
+}
+
+.pagination span a {
+  color: rgba(57, 138, 185, 0.8);
+  text-decoration: none;
+}
+
+.pagination span a:hover {
+  color: #1C658C;
+}
+
+.current, .gap {
+  color: #1C658C;
+}
+
+.first {
+  margin-right: 20px;
+}
+
+.prev {
+  margin-right: 10px;
+}
+
+.last {
+  margin-left: 20px;
+}
+
+.next {
+  margin-left: 10px;
+}
+
+.pagination .page {
+  margin: 0px 5px 0px 5px;
+}
