@@ -4,14 +4,13 @@ $("#alert-message").empty()
 <% if @status == 'success' %>
   $("#<%= tag_id(@tag) %>").replaceWith("<%= j(render('shared/tag', tag: @tag)) %>");
   $("#modal-container").modal("hide");
-  $("#alert-message")
-  .append("<%= j(render('shared/flash_success',message: "タグの更新に成功しました。" )) %>");
+  $("#alert-message").append("<%= j(render('shared/flash_success',message: "タグの更新に成功しました。" )) %>");
 <% elsif @status == 'failure'  %>
   alert(`ハッシュタグの更新に失敗しました。
-        ・数字のみのハッシュタグは無効です。
-        ・同じハッシュタグは登録出来ません。
-        ・ハッシュタグ内に空白を含むことは出来ません。
-        ・ハッシュタグ内に特殊記号を含むことは出来ません。`);
+  ・数字のみのハッシュタグは無効です。
+  ・同じハッシュタグは登録出来ません。
+  ・ハッシュタグ内に空白を含むことは出来ません。
+  ・ハッシュタグ内に特殊記号を含むことは出来ません。`);
 <% end %>
 
 // 約5秒後に消去する

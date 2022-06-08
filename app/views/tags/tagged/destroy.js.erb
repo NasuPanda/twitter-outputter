@@ -3,5 +3,5 @@
   // コードからイベントを発火させる
   document.getElementById("editing-post-content").dispatchEvent(new Event("input"));
 <% elsif @status == 'failure' %>
-  alert("セットしたハッシュタグの削除に失敗しました。レコードが存在しない可能性があります。");
+  alert("セットしたハッシュタグの削除に失敗しました。既に削除されている可能性があります。");
 <% end %>

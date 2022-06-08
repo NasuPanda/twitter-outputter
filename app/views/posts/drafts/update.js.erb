@@ -4,8 +4,7 @@ $("#alert-message").empty()
 <% if @status == 'success' %>
   $("#<%= post_id(@draft) %>").replaceWith("<%= j(render('draft', draft: @draft)) %>");
   $("#modal-container").modal("hide");
-  $("#alert-message")
-  .append("<%= j(render('shared/flash_success',message: "下書きの保存に成功しました。" )) %>");
+  $("#alert-message").append("<%= j(render('shared/flash_success',message: "下書きの保存に成功しました。" )) %>");
 <% elsif @status == 'failure'  %>
   alert(`投稿の更新に失敗しました。
   ・過去の投稿と全く同じ投稿は出来ません。
