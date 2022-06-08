@@ -4,7 +4,7 @@ $("#alert-message").empty()
 <% if @status == 'success' %>
   $("#alert-message")
   .append("<%= j(render('shared/flash_success',message: "#{@action}に成功しました。" )) %>");
-  $("#<%= draft_id(@draft) %>").remove();
+  $("#<%= post_id(@draft) %>").remove();
 <% elsif @status == 'failure' %>
   $("#alert-message")
   .append("<%= j(render('shared/flash_danger',message: "#{@action}に失敗しました。\n・過去の投稿と全く同じ投稿は出来ません。\n・規定の文字数を超えた投稿は出来ません。" )) %>");

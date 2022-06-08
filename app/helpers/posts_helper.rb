@@ -2,6 +2,10 @@ module PostsHelper
   include Twitter::TwitterText::Validation
   MAX_TWEET_LENGTH = 140
 
+  def post_id(post)
+    "post-#{post.id}"
+  end
+
   def count_down_twitter_text(text)
     # NOTE: valid_tweetは非推奨なのでparse_tweetを使う
     parse_result = parse_tweet(text)

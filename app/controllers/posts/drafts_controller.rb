@@ -33,7 +33,17 @@ class Posts::DraftsController < ApplicationController
 
   def update
     @draft = current_user.drafts.find(params[:id])
-    @status = @draft.update(draft_params) ? 'success' : 'failure'
+    if @draft.update(draft_params)
+      respond_to do |format|
+        format.html { redirect_to drafts_url, notice: '下書きの更新に成功しました' }
+        format.js { @status = 'success' }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to drafts_url, notice: '下書きの更新に失敗しました' }
+        format.js { @status = 'failure' }
+      end
+    end
   end
 
   # NOTE : 下書きから削除 → 予約投稿 or 投稿済 へ

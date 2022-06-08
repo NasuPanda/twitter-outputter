@@ -21,8 +21,7 @@
             <%= f.button type: :submit, class: "button button-submit" do %>
               <i class="fa-solid fa-floppy-disk"></i>更新
             <% end %>
-            <%# TODO 削除はpost_pathにする(Postのインスタンス自体を消すことになるのでPostコントローラに投げる) %>
-            <%= link_to "削除", draft_path(@draft), method: :delete, remote: true, data: { confirm: "この下書きを削除してもよろしいですか?" }, class: "button button-danger icon trash"%>
+            <%= link_to "削除", post_path(@draft), method: :delete, remote: true, data: { confirm: "この下書きを削除してもよろしいですか?" }, class: "button button-danger icon trash"%>
           </div>
         <% end %>
       </div>
