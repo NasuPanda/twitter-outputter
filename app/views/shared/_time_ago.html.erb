@@ -1,0 +1,6 @@
+<%# ローカル変数: datetime %>
+<% if within_a_day_from_now?(datetime) %>
+  <%= "#{time_ago_in_words(datetime)}前" %>
+<% else%>
+  <%= l(datetime, format: :short) %>
+<% end %>

@@ -8,4 +8,9 @@ module ApplicationHelper
       return "#{page_title} - #{base_title}"
     end
   end
+
+  # 1日以内か判定する
+  def within_a_day_from_now?(datetime)
+    datetime > 1.day.ago
+  end
 end

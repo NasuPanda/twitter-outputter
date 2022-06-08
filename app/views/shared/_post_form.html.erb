@@ -24,6 +24,7 @@
         <%= f.button type: :submit, formaction: drafts_path, class: "button button-submit" do %>
           <i class="fa-solid fa-floppy-disk"></i>保存
         <% end %>
+        <%# TODO formactionをposts_pathに, Post#createから分岐させる %>
         <%= f.button type: :submit, formaction: published_index_path, class: "button button-submit" do %>
           <i class="fa-solid fa-upload"></i>投稿
         <% end %>

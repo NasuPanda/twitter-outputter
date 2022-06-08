@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="card-footer text-muted">
-      最終更新: <%= l(draft.updated_at, format: :long) %>
+      最終更新: <%= render('shared/time_ago', datetime: draft.updated_at) %>
     </div>
   </div>
 </div>
