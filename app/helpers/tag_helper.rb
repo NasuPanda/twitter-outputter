@@ -3,7 +3,7 @@ module TagHelper
     return "tag-#{tag.id}"
   end
 
-  def added_tag_id(tag)
-    return "added-tag-#{tag.id}"
+  def tagged_tag_id(tag)
+    return "tagged_tag-#{tag.id}"
   end
 end

@@ -33,9 +33,9 @@ class User < ApplicationRecord
     return find_posts_by_status(:reserved)
   end
 
-  # is_addedがtrueのtagを取得する
-  def added_tags
-    return tags.find_all{ |tag| tag.is_added? }
+  # is_taggedがtrueのtagを取得する
+  def tagged_tags
+    return tags.find_all{ |tag| tag.is_tagged? }
   end
 
   def post_tweet(text)

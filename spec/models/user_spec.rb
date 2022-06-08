@@ -141,21 +141,21 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#added_tags' do
-    context 'added_tagsが存在するとき' do
-      # added_tagを5つ持つ
-      let(:user) { FactoryBot.create(:user, :with_added_tags) }
+  describe '#tagged_tags' do
+    context 'tagged_tagsが存在するとき' do
+      # tagged_tagを5つ持つ
+      let(:user) { FactoryBot.create(:user, :with_tagged_tags) }
 
-      it 'added_tagsを全て取得すること' do
-        expect(user.added_tags.count).to eq(5)
+      it 'tagged_tagsを全て取得すること' do
+        expect(user.tagged_tags.count).to eq(5)
       end
     end
 
-    context 'added_tagsが存在しないとき' do
+    context 'tagged_tagsが存在しないとき' do
       let(:user) { FactoryBot.build(:user) }
 
       it '空のリストを返すこと' do
-        expect(user.added_tags).to be_blank
+        expect(user.tagged_tags).to be_blank
       end
     end
   end

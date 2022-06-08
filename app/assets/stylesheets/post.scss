@@ -6,7 +6,7 @@
 /* タグ */
 /* ------------------------------------------------------------------------ */
 
-#added-tag-container {
+#tagged-tag-container {
   background-color: #D8D2CB;
   a {
     color: #398AB9;
@@ -19,14 +19,14 @@
   }
 }
 
-#added-tags {
+#tagged_tags {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.added-tag {
+.tagged_tag {
   display: inline-block;
   overflow: hidden;
   font-size: 1.2rem;

@@ -63,7 +63,7 @@ RSpec.describe Tag, type: :model do
     end
   end
 
-  describe 'attribute: is_added' do
+  describe 'attribute: is_tagged' do
     let(:tag) { FactoryBot.build(:tag) }
 
     context '存在するとき' do
@@ -74,7 +74,7 @@ RSpec.describe Tag, type: :model do
 
     context '存在しないとき' do
       it 'バリデーションに失敗すること' do
-        tag.is_added = nil
+        tag.is_tagged = nil
         expect(tag).to be_invalid
       end
     end

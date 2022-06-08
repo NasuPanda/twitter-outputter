@@ -1,2 +1,0 @@
-module Tags::AddedHelper
-end

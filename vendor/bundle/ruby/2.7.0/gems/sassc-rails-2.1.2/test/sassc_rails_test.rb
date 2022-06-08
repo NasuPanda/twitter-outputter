@@ -308,7 +308,7 @@ class SassRailsTest < MiniTest::Test
     end
   end
 
-  def test_globbed_imports_work_when_globbed_file_is_added
+  def test_globbed_imports_work_when_globbed_file_is_tagged
     begin
       initialize!
 

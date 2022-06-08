@@ -1,0 +1,2 @@
+module Tags::TaggedHelper
+end

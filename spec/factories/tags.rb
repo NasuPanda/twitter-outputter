@@ -1,11 +1,11 @@
 FactoryBot.define do
   factory :tag do
     sequence(:name) { |i| "#tag#{i}" }
-    is_added { false }
+    is_tagged { false }
     association :user
 
-    trait :added do
-      is_added { true }
+    trait :tagged do
+      is_tagged { true }
     end
   end
 end

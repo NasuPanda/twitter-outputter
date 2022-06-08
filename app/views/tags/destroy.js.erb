@@ -1,6 +1,6 @@
 <% if @status == 'success' %>
   $("#<%= tag_id(@tag) %>").remove();
-  $("#<%= added_tag_id(@tag) %>").remove();
+  $("#<%= tagged_tag_id(@tag) %>").remove();
   $("#modal-container").modal("hide");
 <% elsif @status == 'failure' %>
   alert("タグの削除に失敗しました");

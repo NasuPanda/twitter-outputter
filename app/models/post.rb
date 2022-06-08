@@ -9,10 +9,28 @@ class Post < ApplicationRecord
   validate :content_shold_be_valid_twitter_text, if: Proc.new { |post| post.content.present? }
   validate :post_at_cannot_be_blank_if_reserved_or_published
 
+  # タグのリストを受け取りcontentに追加する
+  def add_tags_to_content(tags)
+    return if tags.blank?
+
+    tags.each do |tag|
+      # タグの前には半角スペースを入れる
+      self.content += ' '
+      self.content += tag
+    end
+  end
+
   # 投稿済に変更する
   def to_published
     self.status = :published
     self.post_at = Time.current
+  end
+
+  # 予約済に変更する
+  def to_reserved(post_at)
+    self.status = :reserved
+    self.post_at = post_at
+    post_at_should_be_on_or_after_now
   end
 
   private
@@ -27,12 +45,15 @@ class Post < ApplicationRecord
 
     # バリデーション : 投稿予約状態または投稿済のとき、post_atは存在しなければならない
     def post_at_cannot_be_blank_if_reserved_or_published
-      if reserved? || published?
-        if post_at.blank?
-          errors.add(:post_at, '投稿予約状態または投稿済のPostはpost_atカラムを持つ必要があります')
-        end
+      if (reserved? || published?) && post_at.blank?
+        errors.add(:post_at, '投稿予約状態または投稿済のPostはpost_atカラムを持つ必要があります')
       end
     end
 
-    # TODO バリデーション : 新しく付与される場合現在時刻よりも遅い時間であること
+    # バリデーション : post_atが現在、またはそれ以降であること
+    def post_at_should_be_on_or_after_now
+      if post_at <= Time.current
+        errors.add(:post_at, 'は現在よりも後に設定してください')
+      end
+    end
 end

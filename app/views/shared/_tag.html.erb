@@ -1,6 +1,6 @@
 <li class="mb-1" id=<%= tag_id(tag) %> >
   <div class="tag-container">
-    <%= link_to "#{tag.name}", added_index_path(tag_id: tag.id), class: "tag-name", method: :post, remote: true %>
+    <%= link_to "#{tag.name}", tagged_index_path(tag_id: tag.id), class: "tag-name", method: :post, remote: true %>
     <%= link_to "︙", edit_tag_path(tag), class: "tag-edit", remote: true %>
   </div>
 </li>

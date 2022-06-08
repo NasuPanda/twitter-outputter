@@ -6,7 +6,7 @@ class Tag < ApplicationRecord
   belongs_to :user
   # Twitterにおけるハッシュタグの最大文字数は100が上限のため
   validates :name, presence: true, length: { maximum: 101 }, uniqueness: { scope: :user_id }
-  validates :is_added, inclusion: [true, false]
+  validates :is_tagged, inclusion: [true, false]
   # タグのバリデーション(TwitterTextを利用)
   validate :name_should_be_valid_hashtag
 

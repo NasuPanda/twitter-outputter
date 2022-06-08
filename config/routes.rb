@@ -22,6 +22,6 @@ Rails.application.routes.draw do
 
   resources :tags, only: %i[new create edit update destroy], constraints: OnlyAjaxConstraints.new
   scope module: :tags do
-    resources :added, only: %i[create destroy], constraints: OnlyAjaxConstraints.new
+    resources :tagged, only: %i[create destroy], constraints: OnlyAjaxConstraints.new
   end
 end

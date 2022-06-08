@@ -1,0 +1,7 @@
+<%# NOTE: カウントダウン用に半角空白を余分に追加しておく %>
+<% tagged_tag = tagged_tag || @tagged_tag %>
+<li id=<%= tagged_tag_id(tagged_tag) %> class="for-char-count tagged_tag" rows="1" disabled>
+  <%= "#{tagged_tag.name} " %>
+  <%# アイコンのみ表示する %>
+  <%= link_to '', tagged_path(tagged_tag), method: :delete, remote: true, class: "icon trash"%>
+</li>

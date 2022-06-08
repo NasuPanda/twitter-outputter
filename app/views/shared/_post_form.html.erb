@@ -13,10 +13,10 @@
       </p>
 
       <%# TODO スタイルを追加する %>
-      <div id="added-tag-container">
+      <div id="tagged-tag-container">
         <h3>セットしたタグ</h3>
-        <ul id="added-tags">
-          <%= render partial: 'shared/added_tag', collection: current_user.added_tags %>
+        <ul id="tagged_tags">
+          <%= render partial: 'shared/tagged_tag', collection: current_user.tagged_tags %>
         </ul>
       </div>
 

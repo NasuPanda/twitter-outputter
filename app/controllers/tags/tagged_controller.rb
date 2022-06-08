@@ -1,22 +1,22 @@
-class Tags::AddedController < ApplicationController
+class Tags::TaggedController < ApplicationController
   def create
     tag = current_user.tags.find(create_params[:tag_id])
-    # 既にaddedの場合は失敗する
-    if tag.is_added?
+    # 既にtaggedの場合は失敗する
+    if tag.is_tagged?
       @status = '既に使用されているタグです。同じタグを使用することは出来ません。'
       return
     end
-    @status =  tag.update(is_added: true) ? 'success' : 'failure'
+    @status =  tag.update(is_tagged: true) ? 'success' : 'failure'
     @tag = tag
   end
 
   def destroy
     tag = current_user.tags.find(destroy_params[:id])
-    unless tag.is_added?
+    unless tag.is_tagged?
       @status = 'failure'
       return
     end
-    @status = tag.update(is_added: false) ? 'success' : 'failure'
+    @status = tag.update(is_tagged: false) ? 'success' : 'failure'
     @tag = tag
   end
 
