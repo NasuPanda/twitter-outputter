@@ -24,9 +24,14 @@ class User < ApplicationRecord
     return drafts.by_recently_updated
   end
 
-  # TODO post_atでorderする
+  # status: published のPostを取得
   def published_posts
     return find_posts_by_status(:published)
+  end
+
+  # status: published のPostを投稿日時降順で取得
+  def published_posts_by_recently_posted
+    return published_posts.by_recently_posted
   end
 
   def reserved_posts
@@ -41,6 +46,7 @@ class User < ApplicationRecord
   def post_tweet(text)
     client = twitter_client
     client.update(text)
+    # TODO 失敗した場合はキャッチする
   end
 
   def self.find_or_create_by_auth_hash(auth_hash)

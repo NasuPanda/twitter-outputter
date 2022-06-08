@@ -50,6 +50,7 @@ class Posts::DraftsController < ApplicationController
   def destroy
     @draft = current_user.drafts.find(params[:id])
     # TODO 予約投稿へ移動する分岐を追加する privateメソッドで分割すると良さげ
+    # ここ予約 or 投稿済 の振り分けロジックを書くとPostControllerと重複が発生するので, Post.createを呼び出す形でも良さそう
     # if @draft.post_at
       # @draft.status = :reserved
 

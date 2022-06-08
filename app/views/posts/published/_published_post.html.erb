@@ -1,0 +1,12 @@
+<div class="col" id=<%= post_id(post) %>>
+  <div class="card">
+    <div class="card-body">
+      <p class="card-text">
+        <%= post.content %>
+      </p>
+    </div>
+    <div class="card-footer text-muted">
+      投稿日時: <%= l(post.post_at, format: :long) %>
+    </div>
+  </div>
+</div>
