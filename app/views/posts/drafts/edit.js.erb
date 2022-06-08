@@ -1,3 +1,5 @@
-<%# renderで変数を渡すことで要素を動的に変更する %>
+// renderで変数を渡すことで要素を動的に変更する
 $("#modal-container").html("<%= escape_javascript(render 'form', title: "下書きの編集") %>")
+// コードからイベントを発火させることでtextboxのサイズを調整
+document.getElementById("editing-post-content").dispatchEvent(new Event("input"));
 $("#modal-container").modal("show")
