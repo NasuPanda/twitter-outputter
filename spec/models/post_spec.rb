@@ -119,11 +119,15 @@ RSpec.describe Post, type: :model do
     end
   end
 
-  # TODO ユニットテスト実装
+  # TODO Post ユニットテスト実装
   describe '#to_published' do
   end
 
-  # TODO ユニットテスト実装
+  # TODO Post ユニットテスト実装
   describe '#to_reserved' do
+  end
+
+  # TODO Post ユニットテスト実装
+  describe '#add_tags_to_content' do
   end
 end

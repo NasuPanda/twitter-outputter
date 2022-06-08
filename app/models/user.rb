@@ -35,7 +35,7 @@ class User < ApplicationRecord
 
   # is_taggedがtrueのtagを取得する
   def tagged_tags
-    return tags.find_all{ |tag| tag.is_tagged? }
+    tags.where(is_tagged: true)
   end
 
   def post_tweet(text)

@@ -12,6 +12,8 @@ class Posts::DraftsController < ApplicationController
   # NOTE: status はデフォルトで draftのため指定不要
   def create
     @draft = current_user.posts.build(draft_params)
+    # NOTE: 新規作成の場合, タグ付けされたタグをcontentに追加しておく
+    @draft.add_tags_to_content(current_user.tagged_tags)
     if @draft.save
       respond_to do |format|
         format.html { redirect_to root_url, notice: '下書きの保存に成功しました' }

@@ -14,9 +14,9 @@ class Post < ApplicationRecord
     return if tags.blank?
 
     tags.each do |tag|
-      # タグの前には半角スペースを入れる
+      # タグの前には半角スペースを入れること
       self.content += ' '
-      self.content += tag
+      self.content += tag.name
     end
   end
 

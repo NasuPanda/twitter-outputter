@@ -16,14 +16,19 @@ const submitLinks = document.querySelectorAll("div#post-form-submit-container > 
 // NOTE: require()の返り値がModuleで、Module.defaultの中にtwitter-textの実態がいる形。
 const twitter = require('twitter-text').default;
 
-// element.valueを結合する
-function concatElementValues(elements) {
+// カウント対象のHTML要素が持つテキストを結合する
+function concatElementTexts(elements) {
   let result = "";
   elements.forEach((e) => {
-    if (! e.value) {
-      text = e.textContent;
-    } else {
+    // <textarea>の場合
+    if (e.tagName === "TEXTAREA") {
       text = e.value;
+    // <li>の場合(タグの場合)
+    } else if (e.tagName === "LI") {
+      // textContentに含まれる空白・改行・タブを削除する
+      text = e.textContent.replace(/\s+/g, '');
+      // NOTE: タグの前には半角空白を入れるため, カウントにも反映させる
+      text += ' '
     }
     result += text;
   });
@@ -62,7 +67,7 @@ function addAndRemoveClass(el, clsToBeAdd, clsToBeRemove) {
 // イベント本体
 function updateAndValidateCharCount() {
   const countableTextAreas = document.querySelectorAll(".for-char-count");
-  const total = concatElementValues(countableTextAreas);
+  const total = concatElementTexts(countableTextAreas);
   const result = twitter.parseTweet(total);
   // 日本語版の場合140文字制限(280バイト制限なのは変わらないが)なので、表示用に2で割る
   const jaWeightedLength = result.weightedLength / 2
@@ -73,6 +78,7 @@ function updateAndValidateCharCount() {
 }
 
 editingPost.addEventListener("input", updateAndValidateCharCount);
+window.addEventListener("load", updateAndValidateCharCount);
 
 // - - - - - - - - - - - - - - - - - -
 // Textareaの長さを入力に応じて変化させる
