@@ -68,7 +68,6 @@ class PostsController < ApplicationController
       p @post.errors.full_messages
       if @post.save
         # TODO jsレンダリングするメッセージを修正
-        # TODO errorsあってもバリデーション通る。なぜ？
         respond_to do |format|
           format.html { redirect_to root_url, notice: "予約投稿に成功しました: 予約日時#{post.post_at}" }
           format.js { @status = 'success' }

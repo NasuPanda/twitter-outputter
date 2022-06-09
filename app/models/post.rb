@@ -8,6 +8,8 @@ class Post < ApplicationRecord
   validates :content, presence: true, uniqueness: { scope: :user_id }
   validate :content_shold_be_valid_twitter_text, if: Proc.new { |post| post.content.present? }
   validate :post_at_cannot_be_blank_if_scheduled_or_published
+  validate :post_at_should_be_on_or_after_now, if: Proc.new { |post| post.scheduled? }
+  validate :post_at_should_be_within_a_year, if: Proc.new { |post| post.scheduled? }
 
   # タグのリストを受け取りcontentに追加する
   def add_tags_to_content(tags)
@@ -22,14 +24,13 @@ class Post < ApplicationRecord
 
   # 投稿済に変更する
   def to_published
-    self.published!
+    self.status = :published    # published!を使うとレコードが保存されてしまうため使わない
     self.post_at = Time.current
   end
 
   # 予約済に変更する
   def to_scheduled
-    self.scheduled!
-    post_at_should_be_on_or_after_now
+    self.status = :scheduled    # scheduled!を使うとレコードが保存されてしまうため使わない
   end
 
   private
@@ -42,20 +43,28 @@ class Post < ApplicationRecord
       end
     end
 
-    # バリデーション : 投稿予約状態または投稿済のとき、post_atは存在しなければならない
+    # バリデーション(予約投稿 or 投稿済のとき) : post_atは存在しなければならない
     def post_at_cannot_be_blank_if_scheduled_or_published
       if (scheduled? || published?) && post_at.blank?
-        errors.add[:post_at] << '投稿予約状態または投稿済のPostはpost_atカラムを持つ必要があります'
+        errors[:post_at] << '投稿予約状態または投稿済のPostはpost_atカラムを持つ必要があります'
       end
     end
 
-    # バリデーション : post_atが現在、またはそれ以降であること
+    # バリデーション(予約投稿のとき) : post_atが現在、またはそれ以降であること
     def post_at_should_be_on_or_after_now
-      p '*' * 50
-      p '呼ばれたよ'
+      return if post_at.nil?
+
       if post_at <= Time.current
-        p 'Trueだよ'
-        self.errors[:post_at] << 'post_atは現在よりも後に設定してください'
+        errors[:post_at] << 'は現在よりも後に設定してください'
+      end
+    end
+
+    # バリデーション(予約投稿のとき) : post_atが1年以内であること
+    def post_at_should_be_within_a_year
+      return if post_at.nil?
+
+      if post_at >= 1.years.from_now
+        errors[:post_at] << 'は1年以内に設定してください'
       end
     end
 end

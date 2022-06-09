@@ -78,24 +78,58 @@ RSpec.describe Post, type: :model do
       end
     end
 
-    context '下書きかつ存在しないとき' do
-      it 'バリデーションに成功すること' do
-        draft.post_at = nil
-        expect(draft).to be_valid
+    context '下書き' do
+      context '存在しないとき' do
+        it 'バリデーションに成功すること' do
+          draft.post_at = nil
+          expect(draft).to be_valid
+        end
       end
     end
 
-    context '予約投稿かつ存在しないとき' do
-      it 'バリデーションに失敗すること' do
-        scheduled.post_at = nil
-        expect(scheduled).to be_invalid
+    context '予約投稿' do
+      context '存在しないとき' do
+        it 'バリデーションに失敗すること' do
+          scheduled.post_at = nil
+          expect(scheduled).to be_invalid
+        end
+      end
+
+      context '現在時刻より遅いとき' do
+        it 'バリデーションに失敗すること' do
+          scheduled.post_at = 1.days.ago
+          expect(scheduled).to be_invalid
+        end
+      end
+
+      context '現在時刻の1分前のとき' do
+        it 'バリデーションに失敗すること' do
+          scheduled.post_at = 1.minutes.ago
+          expect(scheduled).to be_invalid
+        end
+      end
+
+      context '現在時刻の1年後のとき' do
+        it 'バリデーションに成功すること' do
+          scheduled.post_at = 1.years.from_now
+          expect(scheduled).to be_valid
+        end
+      end
+
+      context '現在時刻の1年+1分後のとき' do
+        it 'バリデーションに失敗すること' do
+          scheduled.post_at = 1.years.from_now + 1.minutes
+          expect(scheduled).to be_invalid
+        end
       end
     end
 
-    context '投稿済みかつ存在しないとき' do
-      it 'バリデーションに失敗すること' do
-        post.post_at = nil
-        expect(post).to be_invalid
+    context '投稿済' do
+      context '存在しないとき' do
+        it 'バリデーションに失敗すること' do
+          post.post_at = nil
+          expect(post).to be_invalid
+        end
       end
     end
   end
