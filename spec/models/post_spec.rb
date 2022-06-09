@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Post, type: :model do
   let(:draft) { FactoryBot.build(:post, :draft) }
-  let(:reserved) { FactoryBot.build(:post, :reserved) }
+  let(:scheduled) { FactoryBot.build(:post, :scheduled) }
   let(:user_with_post) { FactoryBot.create(:user, :with_post) }
 
   describe 'attribute: content' do
@@ -70,7 +70,7 @@ RSpec.describe Post, type: :model do
   describe 'attribute: post_at' do
     let(:post) { FactoryBot.build(:post) }
     let(:draft) { FactoryBot.build(:post, :draft) }
-    let(:reserved) { FactoryBot.build(:post, :reserved) }
+    let(:scheduled) { FactoryBot.build(:post, :scheduled) }
 
     context '存在するとき' do
       it 'バリデーションに成功すること' do
@@ -87,8 +87,8 @@ RSpec.describe Post, type: :model do
 
     context '予約投稿かつ存在しないとき' do
       it 'バリデーションに失敗すること' do
-        reserved.post_at = nil
-        expect(reserved).to be_invalid
+        scheduled.post_at = nil
+        expect(scheduled).to be_invalid
       end
     end
 
@@ -124,7 +124,7 @@ RSpec.describe Post, type: :model do
   end
 
   # TODO Post ユニットテスト実装
-  describe '#to_reserved' do
+  describe '#to_scheduled' do
   end
 
   # TODO Post ユニットテスト実装

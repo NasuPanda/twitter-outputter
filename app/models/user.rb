@@ -34,8 +34,8 @@ class User < ApplicationRecord
     return published_posts.by_recently_posted
   end
 
-  def reserved_posts
-    return find_posts_by_status(:reserved)
+  def scheduled_posts
+    return find_posts_by_status(:scheduled)
   end
 
   # is_taggedがtrueのtagを取得する

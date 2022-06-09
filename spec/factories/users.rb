@@ -23,8 +23,8 @@ FactoryBot.define do
       after(:create) { |user| create_list(:post, 5, :draft, user: user) }
     end
 
-    trait :with_reserved_posts do
-      after(:create) { |user| create_list(:post, 5, :reserved, user: user) }
+    trait :with_scheduled_posts do
+      after(:create) { |user| create_list(:post, 5, :scheduled, user: user) }
     end
 
     trait :with_tagged_tags do

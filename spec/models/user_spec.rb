@@ -7,7 +7,7 @@ RSpec.describe User, type: :model do
         :user,
         :with_published_posts,
         :with_drafts,
-        :with_reserved_posts
+        :with_scheduled_posts
       )
     }
   end
@@ -85,7 +85,7 @@ RSpec.describe User, type: :model do
     end
 
     context '下書きが存在しないとき' do
-      let(:user) { FactoryBot.create(:user, :with_published_posts, :with_reserved_posts) }
+      let(:user) { FactoryBot.create(:user, :with_published_posts, :with_scheduled_posts) }
 
       it '空のリストを返すこと' do
         expect(user.drafts).to be_blank
@@ -109,7 +109,7 @@ RSpec.describe User, type: :model do
     end
 
     context '投稿済みの投稿が存在しないとき' do
-      let(:user) { FactoryBot.create(:user, :with_drafts, :with_reserved_posts) }
+      let(:user) { FactoryBot.create(:user, :with_drafts, :with_scheduled_posts) }
 
       it '空のリストを返すこと' do
         expect(user.published_posts).to be_blank
@@ -117,17 +117,17 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#reserved_posts' do
+  describe '#scheduled_posts' do
     context '予約投稿が存在するとき' do
       include_context '下書き,投稿,予約投稿を5つずつ持つユーザ'
 
       it '予約投稿を全て取得すること' do
-        expect(user.reserved_posts.count).to eq(5)
+        expect(user.scheduled_posts.count).to eq(5)
       end
 
       it '予約投稿のみを取得すること' do
-        user.reserved_posts.each do |reserved_post|
-          expect(reserved_post.reserved?).to be_truthy
+        user.scheduled_posts.each do |scheduled_post|
+          expect(scheduled_post.scheduled?).to be_truthy
         end
       end
     end
@@ -136,7 +136,7 @@ RSpec.describe User, type: :model do
       let(:user) { FactoryBot.create(:user, :with_drafts, :with_published_posts) }
 
       it '空のリストを返すこと' do
-        expect(user.reserved_posts).to be_blank
+        expect(user.scheduled_posts).to be_blank
       end
     end
   end

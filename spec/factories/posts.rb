@@ -9,8 +9,8 @@ FactoryBot.define do
       status { 'draft' }
     end
 
-    trait :reserved do
-      status { 'reserved' }
+    trait :scheduled do
+      status { 'scheduled' }
       post_at { rand(1..30).days.from_now }
     end
   end
