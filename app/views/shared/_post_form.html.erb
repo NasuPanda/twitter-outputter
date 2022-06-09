@@ -1,7 +1,7 @@
 <div class="container">
   <div class="form-group field">
     <%= form_with(scope: :post) do |f| %>
-      <%= f.label :content, "投稿", class: "form-label"%>
+      <%= f.label :content, '投稿', class: "form-label"%>
       <%# TODO 以下をパーシャルとして抜き出して若干DRYにする %>
       <div class="flex-textarea-container mb-3">
         <div class="flex-textarea-dummy" aria-hidden="true"></div>
@@ -20,12 +20,15 @@
         </ul>
       </div>
 
-      <div id="post-form-submit-container" class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <%= f.label :post_at, '投稿日時', class: 'form-label' %>
+      <%= f.datetime_field :post_at, class: 'form-control' %>
+
+      <div id="post-form-submit-container" class="d-grid gap-2 d-md-flex mt-3 justify-content-md-end">
         <%= f.button type: :submit, formaction: drafts_path, class: "button button-submit" do %>
           <i class="fa-solid fa-floppy-disk"></i>保存
         <% end %>
         <%# TODO formactionをposts_pathに, Post#createから分岐させる %>
-        <%= f.button type: :submit, formaction: published_index_path, class: "button button-submit" do %>
+        <%= f.button type: :submit, formaction: posts_path, class: "button button-submit" do %>
           <i class="fa-solid fa-upload"></i>投稿
         <% end %>
       </div>

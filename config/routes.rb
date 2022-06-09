@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     resource :setting,  only: %i[show edit update]
   end
 
-  resources :posts, only: %i[destroy]
+  resources :posts, only: %i[create destroy]
   scope module: :posts do
     resources :drafts,    only: %i[index new create edit update destroy]
     resources :scheduled, only: %i[index create edit update destroy]
