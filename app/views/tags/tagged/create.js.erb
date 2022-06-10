@@ -1,9 +1,7 @@
-<% if @status == 'success' %>
+<% if @error_messages.blank? %>
   $("#tagged_tags").append("<%= j(render("shared/tagged_tag", tagged_tag: @tag)) %>");
   // コードからイベントを発火させる
   document.getElementById("editing-post-content").dispatchEvent(new Event("input"));
-<% elsif @status == 'failure' %>
-  alert("ハッシュタグのセットに失敗しました。");
 <% else %>
-  alert("<%= @status %>")
+  alert("<%= join_words_with_newline(@error_messages) %>");
 <% end %>

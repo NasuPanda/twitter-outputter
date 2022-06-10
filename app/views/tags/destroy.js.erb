@@ -1,7 +1,7 @@
-<% if @status == 'success' %>
+<% if @error_messages.blank? %>
   $("#<%= tag_id(@tag) %>").remove();
   $("#<%= tagged_tag_id(@tag) %>").remove();
   $("#modal-container").modal("hide");
-<% elsif @status == 'failure' %>
-  alert("タグの削除に失敗しました");
+<% else %>
+  alert("<%= join_words_with_newline(@error_messages) %>");
 <% end %>

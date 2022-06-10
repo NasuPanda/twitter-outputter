@@ -1,14 +1,20 @@
 // 消去されていない場合を考慮して実行前に空にしておく
 $("#alert-message").empty()
 
-<% if @status == 'success' %>
+<% if @error_messages.blank? %>
   // 成功した場合はクリアする
   $("#editing-post-content").val("");
   // NOTE: valによる変更ではinputイベントが発火しないので明示的に発火させる
   document.getElementById("editing-post-content").dispatchEvent(new Event("input"));
-  $("#alert-message").append("<%= j(render('shared/flash_success',message: "投稿に成功しました。" )) %>");
-<% elsif @status == 'failure' %>
-  $("#alert-message").append("<%= j(render('shared/flash_danger',message: "投稿に失敗しました。\n・過去の投稿と全く同じ投稿は出来ません。\n・規定の文字数を超えた投稿は出来ません。" )) %>");
+
+  <% if @action == 'published' %>
+    $("#alert-message").append("<%= j(render('shared/flash_success', message: "投稿に成功しました。" )) %>");
+  <% elsif @action == 'scheduled' %>
+    $("#alert-message").append("<%= j(render('shared/flash_success', message: "予約投稿に成功しました。 予約日時: #{l(@post.post_at, format: :short)}" )) %>");
+  <% end %>
+
+<% else %>
+  $("#alert-message").append("<%= j(render('shared/flash_danger', messages: @error_messages )) %>");
 <% end %>
 
 // 約5秒後に消去する

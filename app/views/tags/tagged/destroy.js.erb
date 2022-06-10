@@ -1,7 +1,7 @@
-<% if @status == 'success' %>
+<% if @error_messages.blank? %>
   $("#<%= tagged_tag_id(@tag) %>").remove();
   // コードからイベントを発火させる
   document.getElementById("editing-post-content").dispatchEvent(new Event("input"));
-<% elsif @status == 'failure' %>
-  alert("セットしたハッシュタグの削除に失敗しました。既に削除されている可能性があります。");
+<% else %>
+  alert("<%= join_words_with_newline(@error_messages) %>");
 <% end %>

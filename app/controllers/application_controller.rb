@@ -10,4 +10,10 @@ class ApplicationController < ActionController::Base
         redirect_to root_url, notice: 'ログインしてください'
       end
     end
+
+    # モデルの持つエラーメッセージにprefixを付けて返す(非破壊)
+    def error_messages_with_prefix(model, prefix)
+      error_messages = model.errors.full_messages.dup
+      error_messages.prepend(prefix)
+    end
 end

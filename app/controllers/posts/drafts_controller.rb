@@ -16,13 +16,13 @@ class Posts::DraftsController < ApplicationController
     @draft.add_tags_to_content(current_user.tagged_tags)
     if @draft.save
       respond_to do |format|
-        format.html { redirect_to root_url, notice: '下書きの保存に成功しました' }
-        format.js { @status = 'success' }
+        format.html { redirect_to root_url, notice: '下書きの保存に成功しました。' }
+        format.js { @error_messages = [] }
       end
     else
       respond_to do |format|
-        format.html { redirect_to root_url, alert: '下書きの保存に失敗しました' }
-        format.js { @status = 'failure' }
+        format.html { redirect_to root_url, alert: '下書きの保存に失敗しました。' }
+        format.js { @error_messages = error_messages_with_prefix(@draft, '下書きの保存に失敗しました。') }
       end
     end
   end
@@ -36,12 +36,12 @@ class Posts::DraftsController < ApplicationController
     if @draft.update(draft_params)
       respond_to do |format|
         format.html { redirect_to drafts_url, notice: '下書きの更新に成功しました' }
-        format.js { @status = 'success' }
+        format.js { @error_messages = [] }
       end
     else
       respond_to do |format|
         format.html { redirect_to drafts_url, notice: '下書きの更新に失敗しました' }
-        format.js { @status = 'failure' }
+        format.js { @error_messages = error_messages_with_prefix(@draft, '下書きの更新に失敗しました。') }
       end
     end
   end
@@ -71,16 +71,16 @@ class Posts::DraftsController < ApplicationController
         respond_to do |format|
           format.html { redirect_to root_url, notice: '投稿に成功しました' }
           format.js do
-            @status = 'success'
-            @action = '投稿'
+            @error_messages = []
+            @action = 'published'
           end
         end
       else
         respond_to do |format|
           format.html { redirect_to root_url, alert: '投稿に失敗しました' }
           format.js do
-            @status = 'failure'
-            @action = '投稿'
+            @error_messages = error_messages_with_prefix(@draft, '投稿に失敗しました。')
+            @action = 'published'
           end
         end
       end

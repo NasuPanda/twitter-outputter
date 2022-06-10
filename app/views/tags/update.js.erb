@@ -1,16 +1,12 @@
 // 消去されていない場合を考慮して実行前に空にしておく
 $("#alert-message").empty()
 
-<% if @status == 'success' %>
+<% if @error_messages.blank? %>
   $("#<%= tag_id(@tag) %>").replaceWith("<%= j(render('shared/tag', tag: @tag)) %>");
   $("#modal-container").modal("hide");
   $("#alert-message").append("<%= j(render('shared/flash_success',message: "タグの更新に成功しました。" )) %>");
-<% elsif @status == 'failure'  %>
-  alert(`ハッシュタグの更新に失敗しました。
-  ・数字のみのハッシュタグは無効です。
-  ・同じハッシュタグは登録出来ません。
-  ・ハッシュタグ内に空白を含むことは出来ません。
-  ・ハッシュタグ内に特殊記号を含むことは出来ません。`);
+<% else  %>
+  alert("<%= join_words_with_newline(@error_messages) %>");
 <% end %>
 
 // 約5秒後に消去する

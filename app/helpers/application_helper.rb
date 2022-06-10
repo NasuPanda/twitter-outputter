@@ -13,4 +13,10 @@ module ApplicationHelper
   def within_a_day_from_now?(datetime)
     datetime > 1.day.ago
   end
+
+  # リストを改行で結合する
+  def join_words_with_newline(words)
+    # "\n"だとJS側で unexpected token と出るため注意
+    words.join('\n')
+  end
 end

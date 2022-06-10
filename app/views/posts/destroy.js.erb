@@ -1,12 +1,12 @@
 // 消去されていない場合を考慮して実行前に空にしておく
 $("#alert-message").empty()
 
-<% if @status == 'success' %>
+<% if @error_messages.blank? %>
   $("#<%= post_id(@post) %>").remove();
   $("#modal-container").modal("hide");
   $("#alert-message")
   .append("<%= j(render('shared/flash_success',message: "下書きの削除に成功しました。" )) %>");
-<% elsif @status == 'failure'  %>
+<% else  %>
   alert("下書きの削除に失敗しました。");
 <% end %>
 

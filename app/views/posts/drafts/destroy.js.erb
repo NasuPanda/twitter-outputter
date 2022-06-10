@@ -1,11 +1,13 @@
 // 消去されていない場合を考慮して実行前に空にしておく
 $("#alert-message").empty()
 
-<% if @status == 'success' %>
+<% if @error_messages.blank? %>
   $("#<%= post_id(@draft) %>").remove();
-  $("#alert-message").append("<%= j(render('shared/flash_success',message: "#{@action}に成功しました。" )) %>");
-<% elsif @status == 'failure' %>
-  $("#alert-message").append("<%= j(render('shared/flash_danger',message: "#{@action}に失敗しました。\n・過去の投稿と全く同じ投稿は出来ません。\n・規定の文字数を超えた投稿は出来ません。" )) %>");
+  <% if @action == 'published' %>
+    $("#alert-message").append("<%= j(render('shared/flash_success', message: "投稿に成功しました。" )) %>");
+  <% end %>
+<% else %>
+  $("#alert-message").append("<%= j(render('shared/flash_danger', messages: @error_messages )) %>");
 <% end %>
 
 // 約5秒後に消去する

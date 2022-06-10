@@ -1,11 +1,6 @@
-<% if @status == 'success' %>
+<% if @error_messages.blank? %>
   $("#tag-new").before("<%= j(render("shared/tag", tag: @tag)) %>");
   $("#modal-container").modal("hide")
-<% elsif @status == 'failure' %>
-  // テンプレート文字列は改行や空白を含む
-  alert(`ハッシュタグの作成に失敗しました。
-  ・数字のみのハッシュタグは無効です。
-  ・同じハッシュタグは登録出来ません。
-  ・ハッシュタグ内に空白を含むことは出来ません。
-  ・ハッシュタグ内に特殊記号を含むことは出来ません。`);
+<% else %>
+  alert("<%= join_words_with_newline(@error_messages) %>");
 <% end %>
