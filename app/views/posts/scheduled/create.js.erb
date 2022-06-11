@@ -7,12 +7,7 @@ $("#alert-message").empty()
   // NOTE: valによる変更ではinputイベントが発火しないので明示的に発火させる
   document.getElementById("editing-post-content").dispatchEvent(new Event("input"));
 
-  <% if @action == 'published' %>
-    $("#alert-message").append("<%= j(render('shared/flash_success', message: "投稿に成功しました。" )) %>");
-  <% elsif @action == 'scheduled' %>
-    $("#alert-message").append("<%= j(render('shared/flash_success', message: "予約投稿に成功しました。 予約日時: #{l(@post.post_at, format: :short)}" )) %>");
-  <% end %>
-
+  $("#alert-message").append("<%= j(render('shared/flash_success', message: "予約投稿に成功しました。 予約日時: #{l(@scheduled_post.post_at, format: :short)}" )) %>");
 <% else %>
   $("#alert-message").append("<%= j(render('shared/flash_danger', messages: @error_messages )) %>");
 <% end %>

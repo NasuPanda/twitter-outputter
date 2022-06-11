@@ -27,8 +27,10 @@
         <%= f.button type: :submit, formaction: drafts_path, class: "button button-submit" do %>
           <i class="fa-solid fa-floppy-disk"></i>保存
         <% end %>
-        <%# TODO formactionをposts_pathに, Post#createから分岐させる %>
-        <%= f.button type: :submit, formaction: posts_path, class: "button button-submit" do %>
+        <%= f.button type: :submit, formaction: scheduled_index_path, class: "button button-submit" do %>
+          <i class="fas fa-hourglass-half"></i>予約投稿
+        <% end %>
+        <%= f.button type: :submit, formaction: published_index_path, class: "button button-submit" do %>
           <i class="fa-solid fa-upload"></i>投稿
         <% end %>
       </div>
