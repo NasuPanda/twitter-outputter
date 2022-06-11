@@ -4,7 +4,7 @@ $("#alert-message").empty()
 <% if @error_messages.blank? %>
   $("#<%= post_id(@draft) %>").replaceWith("<%= j(render('draft', draft: @draft)) %>");
   $("#modal-container").modal("hide");
-  $("#alert-message").append("<%= j(render('shared/flash_success', message: "下書きの保存に成功しました。" )) %>");
+  $("#alert-message").append("<%= j(render('shared/flash_success', message: "下書きの更新に成功しました。" )) %>");
 <% else %>
   alert("<%= join_words_with_newline(@error_messages) %>");
 <% end %>

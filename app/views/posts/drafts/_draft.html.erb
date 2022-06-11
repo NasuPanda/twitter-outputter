@@ -6,8 +6,11 @@
       </p>
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <%= link_to "編集", edit_draft_path(draft), class: "button button-submit icon edit", remote: true %>
-        <%# draftから削除 → publishedへ移動する %>
-        <%= link_to "投稿", draft_path(draft), method: :delete, remote: true, data: { confirm: "投稿してもよろしいですか?" }, class: "button button-submit icon upload"%>
+        <%# NOTE: draft → scheduled or published はパラメータにより分岐させる %>
+        <%= link_to "予約投稿", draft_path(draft, to: 'scheduled'), method: :delete, remote: true,
+          data: { confirm: "投稿を予約しますか?" }, class: "button button-submit icon scheduled" %>
+        <%= link_to "投稿", draft_path(draft, to: 'published'), method: :delete, remote: true,
+          data: { confirm: "投稿してもよろしいですか?" }, class: "button button-submit icon upload" %>
       </div>
     </div>
     <div class="card-footer text-muted">

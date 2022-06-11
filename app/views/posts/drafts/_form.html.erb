@@ -17,7 +17,11 @@
           <p id="char-count-down">
             <%= count_down_twitter_text(@draft.content) %>
           </p>
-          <div id="post-form-submit-container" class="d-grid gap-2 d-md-flex justify-content-md-end">
+
+          <%= f.label :post_at, '投稿予定日時 (予約投稿用)', class: 'form-label' %>
+          <%= f.datetime_field :post_at, class: 'form-control' %>
+
+          <div id="post-form-submit-container" class="d-grid gap-2 d-md-flex mt-3 justify-content-md-end">
             <%= f.button type: :submit, class: "button button-submit" do %>
               <i class="fa-solid fa-floppy-disk"></i>更新
             <% end %>

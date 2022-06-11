@@ -1,3 +1,8 @@
+// NOTE: destroyアクションでpost_atが登録されていなかった場合の分岐
+<% if @error_messages %>
+  alert("<%= join_words_with_newline(@error_messages) %>");
+<% end %>
+
 // renderで変数を渡すことで要素を動的に変更する
 $("#modal-container").html("<%= escape_javascript(render 'form', title: "下書きの編集") %>")
 // コードからイベントを発火させることでtextboxのサイズを調整

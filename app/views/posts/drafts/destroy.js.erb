@@ -3,9 +3,14 @@ $("#alert-message").empty()
 
 <% if @error_messages.blank? %>
   $("#<%= post_id(@draft) %>").remove();
-  <% if @action == 'published' %>
+  // 投稿の場合
+  <% if @to == 'published' %>
     $("#alert-message").append("<%= j(render('shared/flash_success', message: "投稿に成功しました。" )) %>");
+  // 予約投稿の場合
+  <% elsif @to == 'scheduled' %>
+    $("#alert-message").append("<%= j(render('shared/flash_success', message: "予約投稿に成功しました。" )) %>");
   <% end %>
+
 <% else %>
   $("#alert-message").append("<%= j(render('shared/flash_danger', messages: @error_messages )) %>");
 <% end %>
