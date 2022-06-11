@@ -1,0 +1,21 @@
+// 消去されていない場合を考慮して実行前に空にしておく
+$("#alert-message").empty()
+
+<% if @error_messages.blank? %>
+  $("#<%= post_id(@scheduled_post) %>").remove();
+  // 投稿の場合
+  <% if @to == 'published' %>
+    $("#alert-message").append("<%= j(render('shared/flash_success', message: "投稿に成功しました。" )) %>");
+  // 予約投稿取り消しの場合
+  <% elsif @to == 'draft' %>
+    $("#alert-message").append("<%= j(render('shared/flash_success', message: "予約投稿の取り消しに成功しました。" )) %>");
+  <% end %>
+
+<% else %>
+  $("#alert-message").append("<%= j(render('shared/flash_danger', messages: @error_messages )) %>");
+<% end %>
+
+// 約5秒後に消去する
+setTimeout(() => {
+  $("#alert-message").empty()
+}, 5000);

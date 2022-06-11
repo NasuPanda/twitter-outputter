@@ -41,12 +41,14 @@ class Posts::ScheduledController < ApplicationController
   # NOTE: 予約投稿から削除 → 下書き or 投稿へ
   def destroy
     @scheduled_post = current_user.scheduled_posts.find(params[:id])
-    @scheduled_post.to_published
-    # TODO current_user.post_tweet
-    if @scheduled_post.save
-      format.html { redirect_to published_index_path, notice: '投稿に成功しました' }
-      format.js { @error_messages = [] }
+
+    # params[:to]に渡した値で分岐する
+    if params[:to] == 'published'
+      self.to_published!
+    elsif params[:to] == 'draft'
+      self.to_draft!
     else
+      # TODO エラー投げる
     end
   end
 
@@ -63,5 +65,52 @@ class Posts::ScheduledController < ApplicationController
       scheduled_post.add_tags_to_content(current_user.tagged_tags)
       scheduled_post.to_scheduled
       return scheduled_post
+    end
+
+    # TODO sendメソッドでDRYにできそう
+    # 投稿する(インスタンスを直接操作する)
+    def to_published!
+      @scheduled_post.to_published
+      if @scheduled_post.save
+        respond_to do |format|
+          format.html { redirect_to scheduled_index_url, notice: '投稿に成功しました' }
+          format.js do
+            @error_messages = []
+            @to = 'published'
+          end
+        end
+
+      else
+        respond_to do |format|
+          format.html { redirect_to scheduled_index_url, alert: '投稿に失敗しました' }
+          format.js do
+            @error_messages = error_messages_with_prefix(@scheduled_post, '投稿に失敗しました。')
+            @to = 'published'
+          end
+        end
+      end
+    end
+
+    # 予約投稿を取り消して下書きへ移動する
+    def to_draft!
+      @scheduled_post.to_draft
+
+      if @scheduled_post.save
+        respond_to do |format|
+          format.html { redirect_to scheduled_index_url, notice: '予約投稿の取り消しに成功しました' }
+          format.js do
+            @error_messages = []
+            @to = 'draft'
+          end
+        end
+      else
+        respond_to do |format|
+          format.html { redirect_to scheduled_index_url, alert: '予約投稿の取り消しに失敗しました' }
+          format.js do
+            @error_messages = error_messages_with_prefix(@draft, '予約投稿の取り消しに失敗しました。')
+            @to = 'draft'
+          end
+        end
+      end
     end
 end

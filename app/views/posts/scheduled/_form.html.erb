@@ -1,0 +1,36 @@
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header">
+      <%# renderから渡される変数を利用 %>
+      <h5 class="modal-title"><%= title %></h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group field">
+        <%= form_with(model: @scheduled_post, url: scheduled_path(@scheduled_post), remote: true) do |f| %>
+          <%= f.label :name, "投稿内容", class: "form-label"%>
+          <div class="flex-textarea-container mb-3">
+            <div class="flex-textarea-dummy" aria-hidden="true"></div>
+            <%= f.text_area :content, class: "flex-textarea textarea-valid for-char-count", id: "editing-post-content", required: true, placeholder: '投稿内容' %>
+          </div>
+          <p id="char-count-down">
+            <%= count_down_twitter_text(@scheduled_post.content) %>
+          </p>
+
+          <%= f.label :post_at, '投稿予定日時', class: 'form-label' %>
+          <%= f.datetime_field :post_at, class: 'form-control' %>
+
+          <div id="post-form-submit-container" class="d-grid gap-2 d-md-flex mt-3 justify-content-md-end">
+            <%= f.button type: :submit, class: "button button-submit" do %>
+              <i class="fa-solid fa-floppy-disk"></i>更新
+            <% end %>
+            <%= link_to "削除", post_path(@scheduled_post), method: :delete, remote: true, data: { confirm: "この下書きを削除してもよろしいですか?" }, class: "button button-danger icon trash"%>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%# NOTE: パーシャルが描画された後でないと適切に動作しないため読み込み順に注意する %>
+<%= javascript_pack_tag 'shared/post_form' %>

@@ -22,15 +22,21 @@ class Post < ApplicationRecord
     end
   end
 
-  # 投稿済に変更する
+  # to_**! を使うと保存されてしまうため使わない
+  # 下書きに変更する
+  def to_draft
+    self.status = :draft
+  end
+
+  # 投稿済に変更する(post_atを付与)
   def to_published
-    self.status = :published    # published!を使うとレコードが保存されてしまうため使わない
+    self.status = :published
     self.post_at = Time.current
   end
 
   # 予約済に変更する
   def to_scheduled
-    self.status = :scheduled    # scheduled!を使うとレコードが保存されてしまうため使わない
+    self.status = :scheduled
   end
 
   private

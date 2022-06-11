@@ -34,8 +34,14 @@ class User < ApplicationRecord
     return published_posts.by_recently_posted
   end
 
+  # status: scheduled のPostを取得
   def scheduled_posts
     return find_posts_by_status(:scheduled)
+  end
+
+  # status: scheduled のPostを投稿予定日順で取得
+  def scheduled_posts_by_recently_posting
+    return scheduled_posts.by_recently_posted
   end
 
   # is_taggedがtrueのtagを取得する
