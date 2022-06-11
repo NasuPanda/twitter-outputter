@@ -1,7 +1,7 @@
 <div id="alert-message">
   <% if flash[:notice] %>
-    <%= render 'shared/flash_alert', message: flash[:notice] %>
+    <%= render 'shared/flash_success', message: flash[:notice] %>
   <% elsif flash[:alert] %>
-    <%= render 'shared/flash_alert', message: flash[:alert] %>
+    <%= render 'shared/flash_danger', message: flash[:alert] %>
   <% end %>
 </div>
