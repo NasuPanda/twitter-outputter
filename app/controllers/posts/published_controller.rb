@@ -28,7 +28,7 @@ class Posts::PublishedController < ApplicationController
   private
 
     def post_params
-      params.require(:post).permit(:content, :post_at)
+      params.require(:post).permit(:content)
     end
 
     def build_published_post
