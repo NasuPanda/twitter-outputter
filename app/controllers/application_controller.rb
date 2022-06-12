@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
     def redirect_to_root_if_not_logged_in
       unless logged_in?
-        redirect_to root_url, notice: 'ログインしてください'
+        redirect_to root_url, alert: 'ログインしてください'
       end
     end
 

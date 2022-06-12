@@ -8,7 +8,7 @@ $("#alert-message").empty()
   document.getElementById("editing-post-content").dispatchEvent(new Event("input"));
   $("#alert-message").append("<%= j(render('shared/flash_success', message: "下書きの保存に成功しました。" )) %>");
 <% else %>
-  $("#alert-message").append("<%= j(render('shared/flash_danger', messages: @error_messages )) %>");
+  $("#alert-message").append("<%= j(render('shared/flash_dangers', messages: @error_messages )) %>");
 <% end %>
 
 // 約5秒後に消去する

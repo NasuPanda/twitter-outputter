@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  before_action :redirect_to_root_if_not_logged_in
+
   # postそのものを削除する
   def destroy
     @post = current_user.posts.find(params[:id])

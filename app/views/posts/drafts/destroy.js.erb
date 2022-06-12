@@ -12,7 +12,7 @@ $("#alert-message").empty()
   <% end %>
 
 <% else %>
-  $("#alert-message").append("<%= j(render('shared/flash_danger', messages: @error_messages )) %>");
+  $("#alert-message").append("<%= j(render('shared/flash_dangers', messages: @error_messages )) %>");
 <% end %>
 
 // 約5秒後に消去する

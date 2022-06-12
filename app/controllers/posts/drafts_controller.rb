@@ -1,4 +1,6 @@
 class Posts::DraftsController < ApplicationController
+  before_action :redirect_to_root_if_not_logged_in
+
   def index
     # indexの場合はdraftsを更新日時の降順で取得する
     @drafts = current_user.drafts_by_recently_updated.

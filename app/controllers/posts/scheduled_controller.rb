@@ -1,4 +1,6 @@
 class Posts::ScheduledController < ApplicationController
+  before_action :redirect_to_root_if_not_logged_in
+
   def index
     @scheduled_posts  = current_user.scheduled_posts_by_recently_posting
       .page(params[:page]).per(10)

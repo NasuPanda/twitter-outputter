@@ -1,4 +1,6 @@
 class Posts::PublishedController < ApplicationController
+  before_action :redirect_to_root_if_not_logged_in
+
   def index
     @published_posts = current_user.published_posts_by_recently_posted.
       page(params[:page]).per(10)

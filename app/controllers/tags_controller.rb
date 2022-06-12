@@ -1,6 +1,5 @@
 class TagsController < ApplicationController
   before_action :redirect_to_root_if_not_logged_in
-  before_action :redirect_to_root_if_incorrect_user, only: %i[edit update destroy]
 
   def new
     @tag = current_user.tags.build
@@ -17,6 +16,7 @@ class TagsController < ApplicationController
 
   def update
     @tag = current_user.tags.find(params[:id])
+    # JS表示用
     @error_messages =  @tag.update(tag_params) ? [] : error_messages_with_prefix(@tag, 'タグの更新に失敗しました。')
   end
 
@@ -29,10 +29,5 @@ class TagsController < ApplicationController
 
     def tag_params
       params.require(:tag).permit(:name)
-    end
-
-    def redirect_to_root_if_incorrect_user
-      tag = current_user.tags.find_by(id: params[:id])
-      redirect_to root_url if tag.nil?
     end
 end
