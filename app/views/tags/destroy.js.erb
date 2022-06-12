@@ -1,7 +1,15 @@
+$("#alert-message").empty()
+
 <% if @error_messages.blank? %>
   $("#<%= tag_id(@tag) %>").remove();
   $("#<%= tagged_tag_id(@tag) %>").remove();
   $("#modal-container").modal("hide");
+  $("#alert-message").append("<%= j(render('shared/flash_success', message: "タグの削除に成功しました。" )) %>");
 <% else %>
   alert("<%= join_words_with_newline(@error_messages) %>");
 <% end %>
+
+// 約5秒後に消去する
+setTimeout(() => {
+  $("#alert-message").empty()
+}, 5000);

@@ -1,4 +1,4 @@
-// 消去されていない場合を考慮して実行前に空にしておく
+// 実行前に空にしておく
 $("#alert-message").empty()
 
 <% if @error_messages.blank? %>
@@ -14,8 +14,3 @@ $("#alert-message").empty()
 <% else %>
   $("#alert-message").append("<%= j(render('shared/flash_dangers', messages: @error_messages )) %>");
 <% end %>
-
-// 約5秒後に消去する
-setTimeout(() => {
-  $("#alert-message").empty()
-}, 5000);
