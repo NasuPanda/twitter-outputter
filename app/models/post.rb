@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+  class PublishedToDraftError < StandardError; end
+  class PublishedToScheduledError < StandardError; end
   include OrderableByTimestamp              # タイムタンプで並び替えるため
   include Twitter::TwitterText::Validation  # Twitterのバリデーションのため
   enum status: { draft: 0, scheduled: 1, published: 2 }
@@ -25,18 +27,20 @@ class Post < ApplicationRecord
   # to_**! を使うと保存されてしまうため使わない
   # 下書きに変更する
   def to_draft
+    raise PublishedToDraftError, '公開済みの投稿を下書きに変更しようとしています' if self.published?
     self.status = :draft
+  end
+
+  # 予約済に変更する
+  def to_scheduled
+    raise PublishedToScheduledError, '公開済みの投稿を予約投稿に変更しようとしています' if self.published?
+    self.status = :scheduled
   end
 
   # 投稿済に変更する(post_atを付与)
   def to_published
     self.status = :published
     self.post_at = Time.current
-  end
-
-  # 予約済に変更する
-  def to_scheduled
-    self.status = :scheduled
   end
 
   private
