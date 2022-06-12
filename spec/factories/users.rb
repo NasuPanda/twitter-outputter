@@ -10,13 +10,17 @@ FactoryBot.define do
       after(:create) { |user| user.tags << FactoryBot.create(:tag) }
     end
 
+    trait :with_tagged_tag do
+      after(:create) { |user| user.tags << FactoryBot.create(:tag, :tagged) }
+    end
+
     trait :with_post do
       after(:create) { |user| user.posts << FactoryBot.create(:post) }
     end
 
     # NOTE: create_listh(name, amount, {trait, override...})
     trait :with_published_posts do
-      after(:create) { |user| create_list(:post, 5, user: user) }
+      after(:create) { |user| create_list(:post, 5, :published, user: user) }
     end
 
     trait :with_drafts do
