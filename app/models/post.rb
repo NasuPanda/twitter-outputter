@@ -8,7 +8,7 @@ class Post < ApplicationRecord
   validates :content, presence: true, uniqueness: { scope: :user_id }
   validate :content_shold_be_valid_twitter_text, if: Proc.new { |post| post.content.present? }
   validate :post_at_cannot_be_blank_if_scheduled_or_published
-  validate :post_at_should_be_on_or_after_now, if: Proc.new { |post| post.scheduled? || post.draft? }
+  validate :post_at_should_be_on_or_after_now, if: Proc.new { |post| post.scheduled? }
   validate :post_at_should_be_within_a_year, if: Proc.new { |post| post.scheduled? }
 
   # タグのリストを受け取りcontentに追加する

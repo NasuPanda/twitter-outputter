@@ -90,13 +90,13 @@ class Posts::DraftsController < ApplicationController
 
     # 下書きを予約投稿へ(インスタンス変数を直接操作する)
     def to_scheduled!
-      # NOTE: post_atが登録されていなければeditに飛ばす
-      unless @draft.post_at
-        @error_messages = ['予約投稿に失敗しました。', '予約投稿するには投稿日時を設定してください。']
+      @draft.to_scheduled
+
+      # NOTE: post_atが無効ならeditに飛ばす
+      unless @draft.valid?
+        @error_messages = error_messages_with_prefix(@draft, '予約投稿に失敗しました。')
         render :edit, content_type: 'text/javascript' and return
       end
-
-      @draft.to_scheduled
 
       if @draft.save
         respond_to do |format|
