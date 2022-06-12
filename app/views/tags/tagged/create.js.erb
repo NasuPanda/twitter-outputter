@@ -1,5 +1,5 @@
 <% if @error_messages.blank? %>
-  $("#tagged_tags").append("<%= j(render("shared/tagged_tag", tagged_tag: @tag)) %>");
+  $("#tagged_tags").append("<%= j(render("pages/homes/tagged_tag", tagged_tag: @tag)) %>");
   // コードからイベントを発火させる
   document.getElementById("editing-post-content").dispatchEvent(new Event("input"));
 <% else %>

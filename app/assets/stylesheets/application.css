@@ -167,6 +167,11 @@
   content: '\f2ed';
 }
 
+.trash-arrow-up:before {
+  font-family: "Font Awesome 6 Free";
+  content: '\f829';
+}
+
 .bars{
   color: #ffffff;
   opacity: 0.8;

@@ -1,5 +1,5 @@
 <% if @error_messages.blank? %>
-  $("#tag-new").before("<%= j(render("shared/tag", tag: @tag)) %>");
+  $("#tag-new").before("<%= j(render("pages/homes/tag", tag: @tag)) %>");
   $("#modal-container").modal("hide")
 <% else %>
   alert("<%= join_words_with_newline(@error_messages) %>");

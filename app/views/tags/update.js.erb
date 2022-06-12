@@ -2,7 +2,7 @@
 $("#alert-message").empty()
 
 <% if @error_messages.blank? %>
-  $("#<%= tag_id(@tag) %>").replaceWith("<%= j(render('shared/tag', tag: @tag)) %>");
+  $("#<%= tag_id(@tag) %>").replaceWith("<%= j(render('pages/homes/tag', tag: @tag)) %>");
   $("#modal-container").modal("hide");
   $("#alert-message").append("<%= j(render('shared/flash_success',message: "タグの更新に成功しました。" )) %>");
 <% else  %>
