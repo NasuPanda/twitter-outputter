@@ -54,7 +54,7 @@ class Posts::DraftsController < ApplicationController
     elsif params[:to] == 'scheduled'
       self.to_scheduled!
     else
-      # TODO エラー投げる
+      raise ControllerError::UndefinedCondirionalBranchError, '定義されていないtoパラメータが設定されました'
     end
   end
 

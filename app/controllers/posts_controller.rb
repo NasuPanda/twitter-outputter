@@ -11,7 +11,7 @@ class PostsController < ApplicationController
     elsif params[:from] == 'scheduled'
       destroy_scheduled_post
     else
-      # TODO エラー投げる
+      raise ControllerError::UndefinedCondirionalBranchError, '定義されていないfromパラメータが設定されました'
     end
   end
 
