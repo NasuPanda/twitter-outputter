@@ -32,7 +32,7 @@ RSpec.describe 'Tags', type: :request do
   describe 'POST /tags' do
     let(:user) { FactoryBot.create(:user, :with_authentication) }
     let(:tag_params) {
-      { tag: { name: 'test tag' } }
+      { tag: { name: 'test' } }
     }
 
     context 'ログインユーザのとき' do
@@ -88,9 +88,9 @@ RSpec.describe 'Tags', type: :request do
         sign_in_as(other_user)
       end
 
-      it 'rootにリダイレクトされること' do
+      it '404エラーが返ること' do
         get edit_tag_path(tag), xhr: true
-        expect(response).to redirect_to root_url
+        expect(response).to have_http_status(404)
       end
     end
   end
@@ -99,7 +99,7 @@ RSpec.describe 'Tags', type: :request do
     include_context 'タグを持つ認証済みのユーザ'
     let(:other_user) { FactoryBot.create(:user, :with_authentication) }
     let(:tag_params) {
-      { tag: { name: 'updated tag' } }
+      { tag: { name: 'updated' } }
     }
 
     context 'ログインユーザのとき' do
@@ -109,7 +109,7 @@ RSpec.describe 'Tags', type: :request do
 
       it '更新できること' do
         patch tag_path(tag), xhr: true, params: tag_params
-        expect(tag.reload.name).to eq tag_params[:tag][:name]
+        expect(tag.reload.name).to eq '#updated'
       end
     end
 
@@ -121,18 +121,18 @@ RSpec.describe 'Tags', type: :request do
 
       it '更新できないこと' do
         patch tag_path(tag), xhr: true, params: tag_params
-        expect(tag.reload.name).to_not eq tag_params[:tag][:name]
+        expect(tag.reload.name).to_not eq '#updated'
       end
     end
 
-    context '他のユーザのとき' do
+    context '正しくないユーザのとき' do
       before do
         sign_in_as(other_user)
       end
 
-      it 'rootにリダイレクトされること' do
+      it '404エラーが返ること' do
         patch tag_path(tag), xhr: true, params: tag_params
-        expect(response).to redirect_to root_url
+        expect(response).to have_http_status(404)
       end
 
       it '更新できないこと' do
@@ -171,14 +171,14 @@ RSpec.describe 'Tags', type: :request do
       end
     end
 
-    context '他のユーザのとき' do
+    context '正しくないユーザのとき' do
       before do
         sign_in_as(other_user)
       end
 
-      it 'rootにリダイレクトされること' do
+      it '404エラーが返ること' do
         delete tag_path(tag), xhr: true
-        expect(response).to redirect_to root_url
+        expect(response).to have_http_status(404)
       end
 
       it '削除できないこと' do
