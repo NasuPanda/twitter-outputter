@@ -2,7 +2,7 @@
 
 <h1>過去の投稿</h1>
 
-<% if @drafts.empty? %>
+<% if @published_posts.empty? %>
   <%= render 'shared/resource_non_existent', resource: '過去の投稿' %>
 
 <% else %>

@@ -14,7 +14,8 @@
       </div>
     </div>
     <div class="card-footer text-muted">
-      最終更新: <%= render('shared/time_ago', datetime: draft.updated_at) %>
+      <p class="mb-0">最終更新: <%= render('shared/time_ago', datetime: draft.updated_at) %></p>
+      <p class="mb-0">投稿予定: <%= draft.post_at ? "#{l(draft.post_at, format: :short)}" : '未設定' %></p>
     </div>
   </div>
 </div>
