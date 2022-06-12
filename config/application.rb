@@ -43,5 +43,7 @@ module TwitterOutputter
     config.public_file_server.enabled = true
     # lib/constraintsを自動的に読み込むようにする(Ajaxリクエストのみを許可するため)
     config.autoload_paths << "#{root}/lib/constraints"
+    # エラーメッセージフォーマットの変更をアクティブに
+    config.active_model.i18n_customize_full_message = true
   end
 end

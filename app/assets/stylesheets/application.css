@@ -221,3 +221,15 @@
 .pagination .page {
   margin: 0px 5px 0px 5px;
 }
+
+/* ------------------------------------------------------------------------ */
+/* alert */
+/* ------------------------------------------------------------------------ */
+/* 1番上のメッセージだけ ・ を表示しない */
+.alert-danger li:first-child {
+  list-style-type: none;
+}
+
+.alert-danger :not(li:first-child) {
+  padding-left: 10px;
+}

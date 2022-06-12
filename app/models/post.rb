@@ -45,14 +45,14 @@ class Post < ApplicationRecord
       # NOTE: valid_tweetは非推奨なのでparse_tweetを使う
       parse_result = parse_tweet(self.content)
       unless parse_result[:valid]
-        self.errors[:content] << '投稿内容が無効です'
+        self.errors[:content] << 'が無効です。'
       end
     end
 
     # バリデーション(予約投稿 or 投稿済のとき) : post_atは存在しなければならない
     def post_at_cannot_be_blank_if_scheduled_or_published
       if (scheduled? || published?) && post_at.blank?
-        errors[:post_at] << '投稿予約状態または投稿済のPostはpost_atカラムを持つ必要があります'
+        errors[:post_at] << 'が必要です。'
       end
     end
 
@@ -61,7 +61,7 @@ class Post < ApplicationRecord
       return if post_at.nil?
 
       if post_at <= Time.current
-        errors[:post_at] << 'は現在よりも後に設定してください'
+        errors[:post_at] << 'は現在よりも後に設定してください。'
       end
     end
 
@@ -70,7 +70,7 @@ class Post < ApplicationRecord
       return if post_at.nil?
 
       if post_at >= 1.years.from_now
-        errors[:post_at] << 'は1年以内に設定してください'
+        errors[:post_at] << 'は1年以内に設定してください。'
       end
     end
 end

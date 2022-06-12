@@ -15,7 +15,7 @@ class Tag < ApplicationRecord
     # バリデーション : nameが有効なhashtagであること
     def name_should_be_valid_hashtag
       unless valid_hashtag?(self.name)
-        self.errors[:name] << '無効なハッシュタグです'
+        self.errors[:name] << 'が無効です。'
       end
     end
 
