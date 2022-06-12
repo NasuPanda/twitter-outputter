@@ -11,7 +11,9 @@
         <%= count_down_twitter_text("")%>
       </p>
 
-      <%= render 'tagged_tags' %>
+      <div id="tagged-tag-container">
+        <%= render 'tagged_tags' %>
+      </div>
 
       <%= f.label :post_at, '投稿日時', class: 'form-label' %>
       <%= f.datetime_field :post_at, class: 'form-control' %>

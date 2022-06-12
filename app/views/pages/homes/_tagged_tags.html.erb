@@ -1,13 +1,11 @@
 <% tagged_tags = current_user.tagged_tags %>
 
 <%# TODO スタイル %>
-<div id="tagged-tag-container">
-  <h3>セットしたタグ</h3>
-  <% if tagged_tags.empty? %>
-    <%= render 'shared/resource_non_existent', resource: 'セットしたタグ' %>
-  <% else %>
-    <ul id="tagged_tags">
-      <%= render partial: 'tagged_tag', collection: tagged_tags %>
-    </ul>
-  <% end %>
-</div>
+<h3>セットしたタグ</h3>
+<% if tagged_tags.empty? %>
+  <%= render 'shared/resource_non_existent', resource: 'セットしたタグ' %>
+<% else %>
+  <ul id="tagged_tags">
+    <%= render partial: 'pages/homes/tagged_tag', collection: tagged_tags %>
+  </ul>
+<% end %>

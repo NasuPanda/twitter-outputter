@@ -1,5 +1,5 @@
 <% if @error_messages.blank? %>
-  $("#<%= tagged_tag_id(@tag) %>").remove();
+  $("#tagged-tag-container").html("<%= j(render("pages/homes/tagged_tags")) %>");
   // コードからイベントを発火させる
   document.getElementById("editing-post-content").dispatchEvent(new Event("input"));
 <% else %>
