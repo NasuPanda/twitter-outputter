@@ -2,12 +2,17 @@
 
 <h1>過去の投稿</h1>
 
-<%=  paginate @published_posts %>
+<% if @drafts.empty? %>
+  <%= render 'shared/resource_non_existent', resource: '過去の投稿' %>
 
-<div class="row row-cols-1 row-cols-md-2 g-4">
-  <% @published_posts.each do |post| %>
-    <%= render 'published_post', post: post %>
-  <% end %>
-</div>
+<% else %>
+  <%=  paginate @published_posts %>
 
-<%=  paginate @published_posts %>
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    <% @published_posts.each do |post| %>
+      <%= render 'published_post', post: post %>
+    <% end %>
+  </div>
+
+  <%=  paginate @published_posts %>
+<% end %>

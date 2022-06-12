@@ -3,12 +3,17 @@
 
 <h1>下書き</h1>
 
-<%=  paginate @drafts %>
+<% if @drafts.empty? %>
+  <%= render 'shared/resource_non_existent', resource: '下書き' %>
 
-<div class="row row-cols-1 row-cols-md-2 g-4">
-  <% @drafts.each do |draft| %>
-    <%= render 'draft', draft: draft %>
-  <% end %>
-</div>
+<% else %>
+  <%=  paginate @drafts %>
 
-<%=  paginate @drafts %>
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    <% @drafts.each do |draft| %>
+      <%= render 'draft', draft: draft %>
+    <% end %>
+  </div>
+
+  <%=  paginate @drafts %>
+<% end %>
