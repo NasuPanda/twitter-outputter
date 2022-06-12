@@ -4,8 +4,12 @@ $("#alert-message").empty()
 <% if @error_messages.blank? %>
   $("#<%= post_id(@post) %>").remove();
   $("#modal-container").modal("hide");
-  $("#alert-message")
-  .append("<%= j(render('shared/flash_success',message: "下書きの削除に成功しました。" )) %>");
+  <% if @from == 'draft' %>
+    $("#alert-message").append("<%= j(render('shared/flash_success', message: '下書きの削除に成功しました。' )) %>");
+  <% elsif @from == 'scheduled' %>
+    $("#alert-message").append("<%= j(render('shared/flash_success', message: '予約投稿の削除に成功しました。' )) %>");
+  <% end %>
+
 <% else  %>
   alert("下書きの削除に失敗しました。");
 <% end %>

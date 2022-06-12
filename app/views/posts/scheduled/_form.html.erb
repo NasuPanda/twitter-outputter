@@ -1,13 +1,16 @@
 <div class="modal-dialog modal-dialog-centered">
+
   <div class="modal-content">
     <div class="modal-header">
       <%# renderから渡される変数を利用 %>
       <h5 class="modal-title"><%= title %></h5>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
+
     <div class="modal-body">
       <div class="form-group field">
         <%= form_with(model: @scheduled_post, url: scheduled_path(@scheduled_post), remote: true) do |f| %>
+  
           <%= f.label :name, "投稿内容", class: "form-label"%>
           <div class="flex-textarea-container mb-3">
             <div class="flex-textarea-dummy" aria-hidden="true"></div>
@@ -24,8 +27,9 @@
             <%= f.button type: :submit, class: "button button-submit" do %>
               <i class="fa-solid fa-floppy-disk"></i>更新
             <% end %>
-            <%= link_to "削除", post_path(@scheduled_post), method: :delete, remote: true, data: { confirm: "この下書きを削除してもよろしいですか?" }, class: "button button-danger icon trash"%>
+            <%= link_to "削除", post_path(@scheduled_post, from: :scheduled), method: :delete, remote: true, data: { confirm: "この下書きを削除してもよろしいですか?" }, class: "button button-danger icon trash"%>
           </div>
+
         <% end %>
       </div>
     </div>
