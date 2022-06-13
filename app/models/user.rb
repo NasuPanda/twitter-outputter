@@ -16,32 +16,32 @@ class User < ApplicationRecord
 
   # status: draft のPostを取得
   def drafts
-    return find_posts_by_status(:draft)
+    find_posts_by_status(:draft)
   end
 
   # status: draft のPostを更新日時降順で取得
   def drafts_by_recently_updated
-    return drafts.by_recently_updated
+    drafts.by_recently_updated
   end
 
   # status: published のPostを取得
   def published_posts
-    return find_posts_by_status(:published)
+    find_posts_by_status(:published)
   end
 
   # status: published のPostを投稿日時降順で取得
   def published_posts_by_recently_posted
-    return published_posts.by_recently_posted
+    published_posts.by_recently_posted
   end
 
   # status: scheduled のPostを取得
   def scheduled_posts
-    return find_posts_by_status(:scheduled)
+    find_posts_by_status(:scheduled)
   end
 
   # status: scheduled のPostを投稿予定日順で取得
   def scheduled_posts_by_recently_posting
-    return scheduled_posts.by_recently_posted
+    scheduled_posts.by_recently_posted
   end
 
   # is_taggedがtrueのtagを取得する
@@ -51,8 +51,12 @@ class User < ApplicationRecord
 
   def post_tweet(text)
     client = twitter_client
-    client.update(text)
+    client.update!(text)
     # TODO 失敗した場合はキャッチする
+    # returns
+    # Twitter::Tweet (成功した場合)
+    # raises
+    # Twitter::Error::Unauthorized, Twitter::Error::DuplicateStatus
   end
 
   def self.find_or_create_by_auth_hash(auth_hash)
@@ -95,10 +99,10 @@ class User < ApplicationRecord
       return user
     end
 
-    # TODO Twitter関連の処理をモジュールとして切り出す。サービスオブジェクト/concernのどちらが最適かはまた考える。
-    # モックでテストしやすいようにメソッドに分離する
+    # TwitterAPIを叩くためのクライアント
+    # Userに依存しているのでUserに定義している
     def twitter_client
-      client = Twitter::REST::Client.new do |config|
+      @client ||= Twitter::REST::Client.new do |config|
         config.consumer_key        = Rails.application.credentials.twitter[:client_id]
         config.consumer_secret     = Rails.application.credentials.twitter[:client_secret]
         config.access_token        = self.authentication.decrypted_access_token
