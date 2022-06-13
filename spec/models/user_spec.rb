@@ -163,7 +163,7 @@ RSpec.describe User, type: :model do
   describe '#post_tweet' do
     let(:authenticated_user) { FactoryBot.create(:user, :with_authentication) }
     before do
-      build_twitter_mock(authenticated_user)
+      twitter_mock_from_instance(authenticated_user)
     end
 
     it 'Tweet出来ること' do

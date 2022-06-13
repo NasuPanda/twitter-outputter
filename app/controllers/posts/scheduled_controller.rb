@@ -73,7 +73,12 @@ class Posts::ScheduledController < ApplicationController
     # 投稿する(インスタンスを直接操作する)
     def to_published!
       @scheduled_post.to_published
-      if @scheduled_post.save
+
+      # 有効ならツイート, ツイートに成功すれば保存
+      if @scheduled_post.valid? &&
+        current_user.post_tweet(@scheduled_post.content) &&
+        @scheduled_post.save
+
         respond_to do |format|
           format.html { redirect_to scheduled_index_url, notice: '投稿に成功しました' }
           format.js do

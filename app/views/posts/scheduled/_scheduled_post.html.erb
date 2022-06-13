@@ -10,7 +10,7 @@
         <%= link_to "予約取り消し", scheduled_path(scheduled_post, to: 'draft'), method: :delete, remote: true,
           data: { confirm: "投稿予約を取り消して下書きへ移動させますか?" }, class: "button button-submit icon scheduled"%>
         <%= link_to "投稿", scheduled_path(scheduled_post, to: 'published'), method: :delete, remote: true,
-          data: { confirm: "投稿してもよろしいですか?" }, class: "button button-submit icon upload"%>
+          data: { confirm: "投稿予約を取り消して今すぐ投稿しますか?" }, class: "button button-submit icon upload"%>
       </div>
     </div>
     <div class="card-footer text-muted">

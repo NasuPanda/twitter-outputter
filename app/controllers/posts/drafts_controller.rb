@@ -69,7 +69,11 @@ class Posts::DraftsController < ApplicationController
     def to_published!
       @draft.to_published
 
-      if @draft.save
+      # 有効ならツイート, ツイートに成功すれば保存
+      if @draft.valid? &&
+        current_user.post_tweet(@draft.content) &&
+        @draft.save
+
         respond_to do |format|
           format.html { redirect_to root_url, notice: '投稿に成功しました' }
           format.js do
@@ -77,6 +81,7 @@ class Posts::DraftsController < ApplicationController
             @to = 'published'
           end
         end
+
       else
         respond_to do |format|
           format.html { redirect_to root_url, alert: '投稿に失敗しました' }

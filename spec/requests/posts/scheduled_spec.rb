@@ -275,10 +275,12 @@ RSpec.describe 'Posts::Scheduleds', type: :request do
     include_context '予約投稿を持つ認証済のユーザ'
     let(:other_user) { FactoryBot.create(:user, :with_authentication) }
 
-    describe 'to published' do
+    context 'to published' do
       context 'ログインユーザのとき' do
         before do
           sign_in_as(user)
+          # TwitterAPIのモック化
+          twitter_mock
         end
 
         it '投稿済になること' do
@@ -324,7 +326,7 @@ RSpec.describe 'Posts::Scheduleds', type: :request do
       end
     end
 
-    describe 'to draft' do
+    context 'to draft' do
       context 'ログインユーザのとき' do
         before do
           sign_in_as(user)

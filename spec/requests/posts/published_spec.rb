@@ -29,11 +29,12 @@ RSpec.describe 'Posts::Publisheds', type: :request do
   end
 
   describe 'POST /published' do
-    include_context '公開済の投稿を持つ認証済のユーザ'
-
+    let!(:user) { FactoryBot.create(:user, :with_authentication) }
     context 'ログインユーザのとき' do
       before do
         sign_in_as(user)
+        # twitterAPIをモック化
+        twitter_mock
       end
 
       context '有効なパラメータの場合' do

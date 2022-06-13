@@ -8,15 +8,20 @@ class Posts::PublishedController < ApplicationController
 
   def create
     @published_post = build_published_post
-    if @published_post.save
-      respond_to do |format|
-        format.html { redirect_to root_url, notice: '投稿に成功しました' }
-        format.js do
-          @error_messages = []
-          @action = 'published'
+    # 有効ならツイート, ツイートに成功すれば保存
+    # TODO この後mediaがあればupdate_with_mediaを呼ぶ・・・というように分岐していくことを考えてConcensにでも切り出す
+    if @published_post.valid? &&
+      current_user.post_tweet(@published_post.content) &&
+      @published_post.save
+
+        respond_to do |format|
+          format.html { redirect_to root_url, notice: '投稿に成功しました' }
+          format.js do
+            @error_messages = []
+            @action = 'published'
+          end
         end
-        # current_user.post_tweet(@published_post.content)
-      end
+
     else
       respond_to do |format|
         format.html { redirect_to root_url, alert: '投稿に失敗しました。' }
