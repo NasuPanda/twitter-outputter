@@ -1,4 +1,5 @@
 class Posts::DraftsController < ApplicationController
+  include Tweetable
   before_action :redirect_to_root_if_not_logged_in
 
   def index
@@ -70,10 +71,7 @@ class Posts::DraftsController < ApplicationController
       @draft.to_published
 
       # 有効ならツイート, ツイートに成功すれば保存
-      if @draft.valid? &&
-        current_user.post_tweet(@draft.content) &&
-        @draft.save
-
+      if post_tweet(@draft) && @draft.save
         respond_to do |format|
           format.html { redirect_to root_url, notice: '投稿に成功しました' }
           format.js do

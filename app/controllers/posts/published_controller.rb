@@ -1,4 +1,5 @@
 class Posts::PublishedController < ApplicationController
+  include Tweetable
   before_action :redirect_to_root_if_not_logged_in
 
   def index
@@ -8,12 +9,8 @@ class Posts::PublishedController < ApplicationController
 
   def create
     @published_post = build_published_post
-    # 有効ならツイート, ツイートに成功すれば保存
-    # TODO この後mediaがあればupdate_with_mediaを呼ぶ・・・というように分岐していくことを考えてConcensにでも切り出す
-    if @published_post.valid? &&
-      current_user.post_tweet(@published_post.content) &&
-      @published_post.save
 
+    if post_tweet(@published_post) && @published_post.save
         respond_to do |format|
           format.html { redirect_to root_url, notice: '投稿に成功しました' }
           format.js do

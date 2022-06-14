@@ -1,4 +1,5 @@
 class Posts::ScheduledController < ApplicationController
+  include Tweetable
   before_action :redirect_to_root_if_not_logged_in
 
   def index
@@ -75,10 +76,7 @@ class Posts::ScheduledController < ApplicationController
       @scheduled_post.to_published
 
       # 有効ならツイート, ツイートに成功すれば保存
-      if @scheduled_post.valid? &&
-        current_user.post_tweet(@scheduled_post.content) &&
-        @scheduled_post.save
-
+      if post_tweet(@scheduled_post) && @scheduled_post.save
         respond_to do |format|
           format.html { redirect_to scheduled_index_url, notice: '投稿に成功しました' }
           format.js do
