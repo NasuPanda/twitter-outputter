@@ -10,6 +10,8 @@ class Posts::ScheduledController < ApplicationController
   def create
     @scheduled_post = build_scheduled_post
     if @scheduled_post.save
+      reserve_tweet(@scheduled_post)
+
       respond_to do |format|
         format.html { redirect_to root_url, notice: "予約投稿に成功しました: 予約日時#{l(post.post_at, format: :short)}" }
         format.js { @error_messages = [] }
@@ -29,6 +31,8 @@ class Posts::ScheduledController < ApplicationController
   def update
     @scheduled_post = current_user.scheduled_posts.find(params[:id])
     if @scheduled_post.update(scheduled_params)
+      update_scheduled_tweet(@scheduled_post)
+
       respond_to do |format|
         format.html { redirect_to published_index_path, notice: '予約投稿の更新に成功しました' }
         format.js { @error_messages = [] }
@@ -77,6 +81,8 @@ class Posts::ScheduledController < ApplicationController
 
       # 有効ならツイート, ツイートに成功すれば保存
       if post_tweet(@scheduled_post) && @scheduled_post.save
+        cancel_scheduled_tweet(@scheduled_post)
+
         respond_to do |format|
           format.html { redirect_to scheduled_index_url, notice: '投稿に成功しました' }
           format.js do
@@ -101,6 +107,8 @@ class Posts::ScheduledController < ApplicationController
       @scheduled_post.to_draft
 
       if @scheduled_post.save
+        cancel_scheduled_tweet(@scheduled_post)
+
         respond_to do |format|
           format.html { redirect_to scheduled_index_url, notice: '予約投稿の取り消しに成功しました' }
           format.js do

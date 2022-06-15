@@ -102,6 +102,8 @@ class Posts::DraftsController < ApplicationController
       end
 
       if @draft.save
+        reserve_tweet(@draft)
+
         respond_to do |format|
           format.html { redirect_to drafts_url, notice: '予約投稿に成功しました' }
           format.js do

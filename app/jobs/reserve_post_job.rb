@@ -1,7 +1,8 @@
-class SetScheduledJob < ApplicationJob
+class ReservePostJob < ApplicationJob
   queue_as :default
+  sidekiq_options retry: 5
 
-  def perform(post_id, post_updated_at)
+  def perform(user, post_id, post_updated_at)
     post = Post.find(post_id)
 
     # 更新日時が異なる場合は実行しない
@@ -14,12 +15,12 @@ class SetScheduledJob < ApplicationJob
 
     p "*" * 50
     p "Perform!"
+    p "*" * 50
     begin
       user.post_tweet(post.content)
     rescue Twitter::Error::DuplicateStatus
       p "重複した投稿"
-      # TODO 予約投稿の失敗を表すstatsuを追加する
+      post.scheduled_post_job.failure!
     end
-    p "*" * 50
   end
 end
