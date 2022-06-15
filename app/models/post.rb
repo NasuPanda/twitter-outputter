@@ -5,6 +5,7 @@ class Post < ApplicationRecord
   include Twitter::TwitterText::Validation  # Twitterのバリデーションのため
   enum status: { draft: 0, scheduled: 1, published: 2 }
 
+  has_one :scheduled_post_job, dependent: :destroy, class_name: 'ScheduledPostJob'
   belongs_to :user
 
   validates :content, presence: true, uniqueness: { scope: :user_id }

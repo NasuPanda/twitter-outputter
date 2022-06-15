@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_08_124345) do
+ActiveRecord::Schema.define(version: 2022_06_15_111806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,15 @@ ActiveRecord::Schema.define(version: 2022_06_08_124345) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
+  create_table "scheduled_post_jobs", force: :cascade do |t|
+    t.string "job_id"
+    t.integer "status", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "post_id", null: false
+    t.index ["post_id"], name: "index_scheduled_post_jobs_on_post_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.text "name"
     t.datetime "created_at", precision: 6, null: false
@@ -54,5 +63,6 @@ ActiveRecord::Schema.define(version: 2022_06_08_124345) do
   end
 
   add_foreign_key "posts", "users"
+  add_foreign_key "scheduled_post_jobs", "posts"
   add_foreign_key "tags", "users"
 end
