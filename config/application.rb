@@ -48,5 +48,7 @@ module TwitterOutputter
     config.autoload_paths << "#{root}/lib/constraints"
     # エラーメッセージフォーマットの変更をアクティブに
     config.active_model.i18n_customize_full_message = true
+    # jobのアダプタにsidekiqを使う
+    config.active_job.queue_adapter = :sidekiq
   end
 end
