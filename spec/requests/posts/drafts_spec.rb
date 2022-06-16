@@ -281,6 +281,12 @@ RSpec.describe 'Posts::Drafts', type: :request do
             delete draft_path(draft, to: 'scheduled'), xhr: true
             expect(response.body).to include('予約投稿に成功しました')
           end
+
+          it '予約投稿ジョブがキューに入ること' do
+            expect {
+              delete draft_path(draft, to: 'scheduled'), xhr: true
+            }.to enqueue_job(ReservePostJob)
+          end
         end
 
         context '投稿日時が無効なとき' do
@@ -292,6 +298,12 @@ RSpec.describe 'Posts::Drafts', type: :request do
             expect {
               delete draft_path(draft, to: 'scheduled'), xhr: true
             }.to_not change{ draft.reload.status }
+          end
+
+          it '予約投稿ジョブがキューに入らないこと' do
+            expect {
+              delete draft_path(draft, to: 'scheduled'), xhr: true
+            }.to_not enqueue_job(ReservePostJob)
           end
         end
       end
@@ -306,6 +318,12 @@ RSpec.describe 'Posts::Drafts', type: :request do
           expect {
             delete draft_path(draft, to: 'scheduled'), xhr: true
           }.to_not change{ draft.reload.status }
+        end
+
+        it '予約投稿ジョブがキューに入らないこと' do
+          expect {
+            delete draft_path(draft, to: 'scheduled'), xhr: true
+          }.to_not enqueue_job(ReservePostJob)
         end
       end
 
@@ -324,6 +342,12 @@ RSpec.describe 'Posts::Drafts', type: :request do
           expect {
             delete draft_path(draft, to: 'scheduled'), xhr: true
           }.to_not change{ draft.reload.status }
+        end
+
+        it 'ジョブがキューに入らないこと' do
+          expect {
+            delete draft_path(draft, to: 'scheduled'), xhr: true
+          }.to_not enqueue_job(ReservePostJob)
         end
       end
     end

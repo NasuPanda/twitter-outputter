@@ -48,6 +48,12 @@ RSpec.describe 'Posts::Scheduleds', type: :request do
           post scheduled_index_path, xhr: true, params: { post: valid_params }
           expect(response.body).to include('予約投稿に成功しました')
         end
+
+        it '予約投稿ジョブがキューに入ること' do
+          expect {
+            post scheduled_index_path, xhr: true, params: { post: valid_params }
+          }.to enqueue_job(ReservePostJob)
+        end
       end
 
       context 'contentを入力していない場合' do
@@ -72,6 +78,18 @@ RSpec.describe 'Posts::Scheduleds', type: :request do
             }
           }
           expect(response.body).to include('予約投稿に失敗しました')
+        end
+
+        it '予約投稿ジョブがキューに入らないこと' do
+          expect {
+            post scheduled_index_path, xhr: true,
+            params: {
+              post: {
+                content: '',
+                post_at: valid_params[:post_at]
+              }
+            }
+          }.to_not enqueue_job(ReservePostJob)
         end
       end
 
@@ -98,6 +116,18 @@ RSpec.describe 'Posts::Scheduleds', type: :request do
           }
           expect(response.body).to include('予約投稿に失敗しました')
         end
+
+        it '予約投稿ジョブがキューに入らないこと' do
+          expect {
+            post scheduled_index_path, xhr: true,
+            params: {
+              post: {
+                content: valid_params[:content],
+                post_at: nil
+              }
+            }
+          }.to_not enqueue_job(ReservePostJob)
+        end
       end
     end
 
@@ -111,6 +141,12 @@ RSpec.describe 'Posts::Scheduleds', type: :request do
         expect {
           post scheduled_index_path, xhr: true, params: { post: valid_params }
         }.to_not change{ user.scheduled_posts.count }
+      end
+
+      it '予約投稿ジョブがキューに入らないこと' do
+        expect {
+          post scheduled_index_path, xhr: true, params: { post: valid_params }
+        }.to_not enqueue_job(ReservePostJob)
       end
     end
   end
