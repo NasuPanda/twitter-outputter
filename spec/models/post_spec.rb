@@ -1,12 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  let(:draft) { FactoryBot.build(:post, :draft) }
-  let(:scheduled) { FactoryBot.build(:post, :scheduled) }
-  let(:user_with_post) { FactoryBot.create(:user, :with_post) }
-
   describe 'attribute: content' do
     let(:post) { FactoryBot.build(:post) }
+    let(:user_with_post) { FactoryBot.create(:user, :with_post) }
 
     context '存在するとき' do
       it 'バリデーションに成功すること' do
@@ -211,7 +208,8 @@ RSpec.describe Post, type: :model do
   end
 
   describe '#to_scheduled' do
-    let(:draft) { FactoryBot.build(:post, :draft) }
+    let(:user) { FactoryBot.create(:user) }
+    let(:draft) { FactoryBot.create(:post, :draft, user: user) }
     let(:published_post) { FactoryBot.build(:post, :published) }
 
     context '下書きのとき' do
@@ -219,11 +217,69 @@ RSpec.describe Post, type: :model do
         expect { draft.to_scheduled }.to change{ draft.status }
           .from('draft').to('scheduled')
       end
+
+      it 'ジョブがキューに追加されること' do
+        expect { draft.to_scheduled }.to enqueue_job(ReservePostJob)
+      end
+
+      it 'ScheduledPostJobが作成されること' do
+        job_mock = double('PostJob')
+        allow(job_mock).to receive(:provider_job_id).and_return('random_job_id')
+        allow_any_instance_of(Post).to receive(:set_scheduled_post_job).and_return(job_mock)
+        allow_any_instance_of(ScheduledPostJob).to receive(:delete_job).and_return(true)
+        draft.to_scheduled
+        expect(draft.reload.scheduled_post_job).to be_valid
+      end
     end
 
     context '投稿済のとき' do
       it 'PublishedToScheduledError が発生すること' do
         expect{ published_post.to_scheduled }.to raise_error(Post::PublishedToScheduledError)
+      end
+    end
+  end
+
+  describe '#update_scheduled_tweet' do
+    before do
+      job_mock = double('PostJob')
+      allow(job_mock).to receive(:provider_job_id).and_return('random_job_id')
+      allow_any_instance_of(Post).to receive(:set_scheduled_post_job).and_return(job_mock)
+      allow_any_instance_of(ScheduledPostJob).to receive(:delete_job).and_return(true)
+    end
+
+    context 'ScheduledPostJobを持つ時' do
+      let(:post) { FactoryBot.create(:post, :with_job) }
+
+      it 'ScheduledPostJobが更新されること' do
+        expect {
+          post.update_scheduled_tweet
+        }.to change{ post.reload.scheduled_post_job.job_id }
+      end
+    end
+
+    context 'ScheduledPostJobを持たない時' do
+      let(:post) { FactoryBot.create(:post) }
+
+      it '実行後ScheduledPostJobを持たないこと' do
+        post.update_scheduled_tweet
+        expect(post.reload.scheduled_post_job).to be_blank
+      end
+    end
+  end
+
+  describe '#cancel_scheduled_tweet' do
+    let(:post) { FactoryBot.create(:post, :with_job) }
+    before do
+      job_mock = double('PostJob')
+      allow(job_mock).to receive(:provider_job_id).and_return('random_job_id')
+      allow_any_instance_of(Post).to receive(:set_scheduled_post_job).and_return(job_mock)
+      allow_any_instance_of(ScheduledPostJob).to receive(:delete_job).and_return(true)
+    end
+
+    context 'ScheduledPostJobを持つ時' do
+      it 'ScheduledPostJobが削除されること' do
+        post.cancel_scheduled_tweet
+        expect(post.reload.scheduled_post_job).to be_blank
       end
     end
   end

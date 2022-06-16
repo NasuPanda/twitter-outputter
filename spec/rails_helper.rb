@@ -66,4 +66,6 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   # TimeHelperのアクティブ化
   config.include ActiveSupport::Testing::TimeHelpers
+  # ActiveJobのテスト用
+  config.include ActiveJob::TestHelper
 end

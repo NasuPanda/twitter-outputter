@@ -36,6 +36,7 @@ class Post < ApplicationRecord
   def to_scheduled
     raise PublishedToScheduledError, '公開済みの投稿を予約投稿に変更しようとしています' if self.published?
     self.status = :scheduled
+    # ジョブをセットする
     job = set_scheduled_post_job
     self.create_scheduled_post_job(job_id: job.provider_job_id)
   end
@@ -44,6 +45,20 @@ class Post < ApplicationRecord
   def to_published
     self.status = :published
     self.post_at = Time.current
+  end
+
+  # 予約ツイートの更新(ジョブの更新)
+  def update_scheduled_tweet
+    return unless self.scheduled_post_job
+
+    job = set_scheduled_post_job
+    self.scheduled_post_job.update!(job_id: job.provider_job_id)
+  end
+
+  # 予約ツイートのキャンセル(ジョブの削除)
+  def cancel_scheduled_tweet
+    return unless self.scheduled_post_job
+    self.scheduled_post_job.destroy!
   end
 
   private
@@ -86,19 +101,5 @@ class Post < ApplicationRecord
       ReservePostJob.set(wait_until: self.post_at).perform_later(
         self.user, self.id, self.updated_at
       )
-    end
-
-    # 予約ツイートの更新(ジョブの更新)
-    def update_scheduled_tweet
-      return unless self.scheduled_post_job
-
-      job = set_scheduled_post_job
-      post.scheduled_post_job.update!(job_id: job.provider_job_id)
-    end
-
-    # 予約ツイートのキャンセル(ジョブの削除)
-    def cancel_scheduled_tweet
-      return unless self.scheduled_post_job
-      self.scheduled_post_job.destroy!
     end
 end

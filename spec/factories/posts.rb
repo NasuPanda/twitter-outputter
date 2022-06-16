@@ -17,5 +17,9 @@ FactoryBot.define do
       status { 'published' }
       post_at { rand(1..30).days.ago }
     end
+
+    trait :with_job do
+      after(:create) { |post| FactoryBot.create(:scheduled_post_job, post: post) }
+    end
   end
 end
