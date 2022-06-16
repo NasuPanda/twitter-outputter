@@ -102,6 +102,9 @@ class Posts::DraftsController < ApplicationController
       end
 
       if @draft.save
+        # NOTE: 親(Post)が保存されていない段階で子(Job)を作成・所有することは出来ないため保存後に実行
+        @draft.set_scheduled_post_job
+
         respond_to do |format|
           format.html { redirect_to drafts_url, notice: '予約投稿に成功しました' }
           format.js do

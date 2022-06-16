@@ -10,6 +10,9 @@ class Posts::ScheduledController < ApplicationController
   def create
     @scheduled_post = build_scheduled_post
     if @scheduled_post.save
+      # NOTE: 親(Post)が保存されていない段階で子(Job)を作成・所有することは出来ないため保存後に実行
+      @scheduled_post.set_scheduled_post_job
+
       respond_to do |format|
         format.html { redirect_to root_url, notice: "予約投稿に成功しました: 予約日時#{l(post.post_at, format: :short)}" }
         format.js { @error_messages = [] }
@@ -65,11 +68,11 @@ class Posts::ScheduledController < ApplicationController
 
     # paramsを元にPostを生成する
     def build_scheduled_post
-      scheduled_post = current_user.posts.build(scheduled_params)
+      post = current_user.posts.build(scheduled_params)
       # NOTE: 新規作成の場合, タグ付けされたタグをcontentに追加しておく
-      scheduled_post.add_tags_to_content(current_user.tagged_tags)
-      scheduled_post.to_scheduled
-      return scheduled_post
+      post.add_tags_to_content(current_user.tagged_tags)
+      post.to_scheduled
+      return post
     end
 
     # TODO sendメソッドでDRYにできそう
