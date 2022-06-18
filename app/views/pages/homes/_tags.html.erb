@@ -2,7 +2,7 @@
   <%= render partial: 'tag', collection: current_user.tags %>
   <li id="tag-new" class="mb-1">
     <div id="tag-new-container" class="tag-container">
-      <%= link_to '追加', new_tag_path, remote: true, class: "tag-new icon plus" %>
+      <%= link_to 'タグを追加', new_tag_path, remote: true, class: "tag-new icon plus" %>
     </div>
   </li>
 </ul>
