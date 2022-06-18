@@ -2,20 +2,18 @@ class ReservePostJob < ApplicationJob
   queue_as :default
 
   def perform(user, post_id, post_updated_at)
-    post = Post.find(post_id)
-
     # 更新日時が異なる場合は実行しない
+    post = Post.find(post_id)
+    # NOTE: DB側とジョブ側で小数点精度が異なるため丸める
     if post_updated_at.to_f.floor != post.updated_at.to_f.floor
-      p "*" * 50
-      p "doesn't work!!"
-      p "*" * 50
       return
     end
 
-    p "*" * 50
-    p "Perform!"
-    p "*" * 50
     post_tweet(user, post)
+
+    # Postのstatus, post_atを更新
+    post.to_published
+    post.save
   end
 
   def post_tweet(user, post)
