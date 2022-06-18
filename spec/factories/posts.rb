@@ -21,5 +21,9 @@ FactoryBot.define do
     trait :with_job do
       after(:create) { |post| FactoryBot.create(:scheduled_post_job, post: post) }
     end
+
+    trait :with_failure_job do
+      after(:create) { |post| FactoryBot.create(:scheduled_post_job, :failure, post: post) }
+    end
   end
 end
