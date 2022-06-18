@@ -14,6 +14,7 @@ class ScheduledPostJob < ApplicationRecord
     def delete_job
       ss = sidekiq_scheduled_set
       job = ss.scan("ReservePostJob").find { |job| job.jid == self.job_id }
+      return unless job
       job.delete
     end
 

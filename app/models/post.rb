@@ -46,7 +46,7 @@ class Post < ApplicationRecord
 
   # ジョブをセットする
   def set_scheduled_post_job
-    job = scheduled_post_job
+    job = perform_later_scheduled_post_job
     self.create_scheduled_post_job(job_id: job.provider_job_id)
   end
 
@@ -54,14 +54,23 @@ class Post < ApplicationRecord
   def update_scheduled_tweet
     return unless self.scheduled_post_job
 
-    job = scheduled_post_job
-    self.scheduled_post_job.update!(job_id: job.provider_job_id)
+    job = perform_later_scheduled_post_job
+    # statusも更新しておく
+    # 投稿失敗 → status: failure → 修正して再度予約投稿した場合のため
+    self.scheduled_post_job.update!(job_id: job.provider_job_id, status: 'scheduled')
   end
 
   # 予約ツイートのキャンセル(ジョブの削除)
   def cancel_scheduled_tweet
     return unless self.scheduled_post_job
     self.scheduled_post_job.destroy!
+  end
+
+  # 予約ツイートが成功したかどうか判定
+  def scheduled_tweet_failure?
+    return unless self.scheduled_post_job
+
+    self.scheduled_post_job.failure?
   end
 
   private
@@ -100,7 +109,7 @@ class Post < ApplicationRecord
     end
 
     # 投稿予約ジョブをセット
-    def scheduled_post_job
+    def perform_later_scheduled_post_job
       ReservePostJob.set(wait_until: self.post_at).perform_later(
         self.user, self.id, self.updated_at
       )

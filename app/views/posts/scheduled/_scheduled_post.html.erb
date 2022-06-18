@@ -13,8 +13,12 @@
           data: { confirm: "投稿予約を取り消して今すぐ投稿しますか?" }, class: "button button-submit icon upload"%>
       </div>
     </div>
-    <div class="card-footer text-muted">
-      <p class="mb-0">投稿予定: <%= l(scheduled_post.post_at, format: :short) %></p>
+    <div class="card-footer">
+      <% if scheduled_post.scheduled_tweet_failure? %>
+        <p class="mb-0 text-danger">投稿に失敗しました。過去の投稿と同じ内容を投稿しようとした可能性があります。</p>
+      <% else %>
+        <p class="mb-0 text-muted">投稿予定: <%= l(scheduled_post.post_at, format: :short) %></p>
+      <% end %>
     </div>
   </div>
 </div>
