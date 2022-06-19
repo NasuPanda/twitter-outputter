@@ -25,6 +25,10 @@ ja:
         post_at: 投稿日時
       tag:
         name: タグ名
+      notification_setting:
+        can_notify: 通知機能のON/OFF
+        notify_at: 通知時間
+        interval_to_check: ツイート有無確認間隔
   errors:
     format: "%{attribute}%{message}"
     messages:
