@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2022_06_19_061924) do
 
   create_table "notification_settings", force: :cascade do |t|
     t.boolean "can_notify", default: false, null: false
-    t.string "notify_at"
+    t.time "notify_at"
     t.integer "interval_to_check"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
