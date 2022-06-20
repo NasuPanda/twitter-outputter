@@ -7,12 +7,12 @@ class NotificationSetting < ApplicationRecord
 
   # ツイート有無を確認する期間
   def check_tweet_existence_range
-    min_day = Time.current
-    max_day = interval_to_check.days.from_now
+    min_day = interval_to_check.days.ago
+    max_day = Time.current
     return min_day.change(min: notify_min, hour: notify_hour), max_day.change(min: notify_min, hour: notify_hour)
   end
 
-  # ツイート有無を確認する時
+  # ツイート有無を確認するタイミング
   def check_tweet_existence_time
     interval_to_check.days.from_now.change(min: notify_min, hour: notify_hour)
   end
