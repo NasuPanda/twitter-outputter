@@ -5,20 +5,27 @@ class NotificationSetting < ApplicationRecord
   validates :notify_at, presence: true, if: Proc.new { |setting| setting.can_notify? }
   validate :interval_to_check_should_be_within_a_month, if: Proc.new { |setting| setting.can_notify? }
 
-=begin
-  # to_aで現在時刻に関する情報を取得
-    # sec, min, hour, mday, mon, year, wday, yday, isdst, zone = Time.current.to_a
+  # ツイート有無を確認する期間
+  def check_tweet_existence_range
+    min_day = Time.current
+    max_day = interval_to_check.days.from_now
+    return min_day.change(min: notify_min, hour: notify_hour), max_day.change(min: notify_min, hour: notify_hour)
+  end
 
-  # Time.gmで現在の日付+特定の時間のdatatimeを取得
-    # Time.gm(0, 0, 20, mday, mon, year, wday, yday, isdst, zone)
-    # => 2022-06-19 20:00:00 UTC
-
-  # つまりコレでいい
-    # time = Time.current.to_a
-    # notify_at = Time.gm(0, min, hour, *time[3..9])
-=end
+  # ツイート有無を確認する時
+  def check_tweet_existence_time
+    interval_to_check.days.from_now.change(min: notify_min, hour: notify_hour)
+  end
 
   private
+
+    def notify_min
+      notify_at.min
+    end
+
+    def notify_hour
+      notify_at.hour
+    end
 
     # バリデーション(can_notifyのとき) : interval_to_checkが0~30の間であること
     def interval_to_check_should_be_within_a_month
