@@ -9,11 +9,10 @@ class ReservePostJob < ApplicationJob
       return
     end
 
-    post_tweet(user, post)
+    return unless post_tweet(user, post)
 
     # Postのstatus, post_atを更新
-    post.to_published
-    post.save
+    to_published(post)
   end
 
   def post_tweet(user, post)
@@ -22,6 +21,15 @@ class ReservePostJob < ApplicationJob
     # 重複した投稿の場合
     rescue Twitter::Error::DuplicateStatus
       post.scheduled_post_job.failure!
+      return
     end
+
+    return true
+  end
+
+  def to_published(post)
+    post.to_published
+    post.scheduled_post_job.destroy!
+    post.save!
   end
 end
