@@ -1,0 +1,10 @@
+// 実行前に空にしておく
+$("#alert-message").empty()
+
+<% if @error_messages.blank? %>
+  $("#content").html("<%= j(render('content', setting: @setting)) %>");
+  $("#modal-container").modal("hide");
+  $("#alert-message").append("<%= j(render('shared/flash_success', message: "設定の更新に成功しました。" )) %>");
+<% else %>
+  alert("<%= join_words_with_newline(@error_messages) %>");
+<% end %>

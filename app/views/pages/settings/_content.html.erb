@@ -1,0 +1,29 @@
+<div class="setting-item">
+  <h5 class="mt-2">通知機能のON/OFF</h5>
+  <p>
+    <%= can_notify(setting) %>
+  </p>
+</div>
+
+<div class="setting-item">
+  <h5>
+    ツイートチェック間隔
+    <small class="text-muted">何日ツイートしていなければ通知するか</small>
+  </h5>
+  <p>
+    <%= interval_to_check(setting)  %>
+  </p>
+</div>
+
+<div class="setting-item">
+  <h5>
+    通知する時間
+  </h5>
+  <p>
+    <%= notify_at(setting) %>
+  </p>
+</div>
+
+<div class="setting-item">
+  <%= link_to '編集', edit_setting_path, remote: true, class: "button button-submit icon edit" %>
+</div>

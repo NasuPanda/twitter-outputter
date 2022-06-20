@@ -1,0 +1,4 @@
+// renderで変数を渡すことで要素を動的に変更する
+$("#modal-container").html("<%= j(render 'form', title: "設定の編集") %>")
+// コードからイベントを発火させることでtextboxのサイズを調整
+$("#modal-container").modal("show")

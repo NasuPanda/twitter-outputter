@@ -1,0 +1,37 @@
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header">
+      <%# renderから渡される変数を利用 %>
+      <h5 class="modal-title"><%= title %></h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group field">
+      <%= form_with(model: @setting, remote: true, url: setting_path) do |f| %>
+        <div class="mb-3">
+          <%= f.label :can_notify, "通知機能のON/OFF", class: "form-label mr-3"%>
+          <%= f.check_box :can_notify, {}, true, false %>
+        </div>
+
+        <%# TODO f.check_boxの状態で以下の入力欄が切り替わるようなJavaScriptを書く %>
+        <div class="mb-3">
+          <%= f.label :notify_at, "通知時間", class: "form-label mr-3" %>
+          <%= f.time_select :notify_at, class: "form-control", minute_step: 15 %>
+        </div>
+
+        <div class="mb-3 d-flex flex-column">
+          <%= f.label :interval_to_check, "何日投稿していなければ通知するか", class: "form-label" %>
+          <%= f.number_field :interval_to_check, class: "form-control" %>
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <%# renderから渡される変数を利用して分岐 %>
+            <%= f.button type: :submit, class: "button button-submit" do %>
+              <i class="fa-solid fa-floppy-disk"></i>更新
+            <% end %>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>
