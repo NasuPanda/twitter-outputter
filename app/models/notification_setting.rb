@@ -5,15 +5,19 @@ class NotificationSetting < ApplicationRecord
   validates :notify_at, presence: true, if: Proc.new { |setting| setting.can_notify? }
   validate :interval_to_check_should_be_within_a_month, if: Proc.new { |setting| setting.can_notify? }
 
-  # ツイート有無を確認する期間
+  # ツイート有無を確認する期間 N日前/今日かつ時刻がnotify_atのTimeWithZoneを返す
   def check_tweet_existence_range
+    return unless can_notify?
+
     min_day = interval_to_check.days.ago
     max_day = Time.current
     return min_day.change(min: notify_min, hour: notify_hour), max_day.change(min: notify_min, hour: notify_hour)
   end
 
-  # ツイート有無を確認するタイミング
+  # ツイート有無を確認するタイミング N日後かつ時刻がnotify_atのTimeWithZoneを返す
   def check_tweet_existence_time
+    return unless can_notify?
+
     interval_to_check.days.from_now.change(min: notify_min, hour: notify_hour)
   end
 

@@ -12,7 +12,6 @@ RSpec.describe User, type: :model do
     }
   end
 
-
   describe 'attribute: external_user_id' do
     let(:user) { FactoryBot.build(:user) }
 
@@ -168,6 +167,32 @@ RSpec.describe User, type: :model do
 
     it 'Tweet出来ること' do
       expect{ authenticated_user.post_tweet('Post from Twitter API') }.not_to raise_error
+    end
+  end
+
+  describe '#most_recent_tweet' do
+    let(:user) { FactoryBot.create(:user, :with_authentication) }
+    before do
+    end
+
+    context 'ツイートが存在する場合' do
+      it 'ツイートを取得出来ること' do
+        twitter_client_mock = double('TwitterClient')
+        allow(user).to receive(:twitter_client).and_return(twitter_client_mock)
+        allow(twitter_client_mock).to receive(:user_timeline).and_return(['tweet'])
+
+        expect(user.most_recent_tweet).to be_present
+      end
+    end
+
+    context 'ツイートが存在しない場合' do
+      it 'ツイートを取得出来ないこと' do
+        twitter_client_mock = double('TwitterClient')
+        allow(user).to receive(:twitter_client).and_return(twitter_client_mock)
+        allow(twitter_client_mock).to receive(:user_timeline).and_return([])
+
+        expect(user.most_recent_tweet).to be_nil
+      end
     end
   end
 

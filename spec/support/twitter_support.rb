@@ -2,8 +2,9 @@ module TwitterSupport
   # TwitterAPIをモック化
   def twitter_mock_from_instance(user)
     twitter_client_mock = double('TwitterClient')
-    # 文字列を受け取り
+    # 文字列を受け取る
     allow(twitter_client_mock).to receive(:update!).with(instance_of(String)).and_return('tweet')
+    allow(twitter_client_mock).to receive(:user_timeline).and_return(['tweet'])
     allow(user).to receive(:twitter_client).and_return(twitter_client_mock)
   end
 
@@ -13,6 +14,7 @@ module TwitterSupport
   def twitter_mock
     twitter_client_mock = double('TwitterClient')
     allow(twitter_client_mock).to receive(:update!).and_return('tweet')
+    allow(twitter_client_mock).to receive(:user_timeline).and_return(['tweet'])
     allow_any_instance_of(User).to receive(:twitter_client).and_return(twitter_client_mock)
   end
 end
