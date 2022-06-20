@@ -8,21 +8,22 @@
     <div class="modal-body">
       <div class="form-group field">
       <%= form_with(model: @setting, remote: true, url: setting_path) do |f| %>
-        <div class="mb-3">
+        <div class="mb-5 d-flex flex-column">
           <%= f.label :can_notify, "通知機能のON/OFF", class: "form-label mr-3"%>
-          <%= f.check_box :can_notify, {}, true, false %>
+          <%= f.check_box :can_notify %>
         </div>
 
         <%# TODO f.check_boxの状態で以下の入力欄が切り替わるようなJavaScriptを書く %>
-        <div class="mb-3">
-          <%= f.label :notify_at, "通知時間", class: "form-label mr-3" %>
-          <%= f.time_select :notify_at, class: "form-control", minute_step: 15 %>
+        <div class="mb-5 d-flex flex-column">
+          <%= f.label :interval_to_check, "ツイートチェック間隔", class: "can-change-color form-label" %>
+          <%= f.number_field :interval_to_check, class: "can-change-color form-control" %>
         </div>
 
-        <div class="mb-3 d-flex flex-column">
-          <%= f.label :interval_to_check, "何日投稿していなければ通知するか", class: "form-label" %>
-          <%= f.number_field :interval_to_check, class: "form-control" %>
+        <div class="d-flex flex-column">
+          <%= f.label :notify_at, "通知時間", class: "can-change-color form-label mr-3" %>
+          <div class="can-change-color"><%= f.time_select :notify_at, class: "form-control", minute_step: 15 %></div>
         </div>
+
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
           <%# renderから渡される変数を利用して分岐 %>
@@ -35,3 +36,5 @@
     </div>
   </div>
 </div>
+
+<%= javascript_pack_tag 'pages/setting' %>

@@ -13,3 +13,27 @@
 .button {
   max-width: 150px;
 }
+
+input[type=checkbox] {
+	transform: scale(2);
+	margin: 0 0 0 8px;
+}
+
+input[type=number] {
+  max-width: 100px;
+}
+
+select {
+  width: 50px;
+  height: 2.0em;
+}
+
+/* ------------------------------------------------------------------------ */
+/* イベント用 */
+/* ------------------------------------------------------------------------ */
+.disabled-color {
+  color: #D8D2CB;
+  input, select {
+    color: #D8D2CB;
+  }
+}

@@ -1,4 +1,6 @@
 // renderで変数を渡すことで要素を動的に変更する
 $("#modal-container").html("<%= j(render 'form', title: "設定の編集") %>")
-// コードからイベントを発火させることでtextboxのサイズを調整
+// コードからイベントを発火させることでcheckboxの状態に応じてスタイルを変更
+document.querySelector("input[type=checkbox]").dispatchEvent(new Event("change"));
+
 $("#modal-container").modal("show")
