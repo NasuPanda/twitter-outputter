@@ -50,14 +50,20 @@ class User < ApplicationRecord
     tags.where(is_tagged: true)
   end
 
+  # ツイートする
   def post_tweet(text)
-    client = twitter_client
-    client.update!(text)
-    # TODO 失敗した場合はキャッチする
-    # returns
-    # Twitter::Tweet (成功した場合)
-    # raises
-    # Twitter::Error::Unauthorized, Twitter::Error::DuplicateStatus
+    twitter_client.update!(text)
+  end
+
+  # 指定期間内にツイートしているか判定する
+  def most_recent_tweet
+    # https://www.rubydoc.info/gems/twitter/5.16.0/Twitter/REST/Timelines#user_timeline-instance_method
+    tweets = twitter_client.user_timeline(
+      self.authentication.uid.to_i,
+      options = { count: 1 }
+    )
+    return if tweets.empty?
+    tweets[0]
   end
 
   def self.find_or_create_by_auth_hash(auth_hash)
