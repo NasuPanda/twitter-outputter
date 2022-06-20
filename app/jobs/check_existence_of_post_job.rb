@@ -4,16 +4,15 @@ class CheckExistenceOfPostJob < ApplicationJob
   after_perform { |job| perform_again(job) }
 
   # TODO
-  # テストを書く
   # Setting#update時にジョブを走らせる
+    # NOTE: 前回のJobIDを保持する必要があるのでSettingがJobモデルを持つか, Settingモデルにjob_idカラムを付け足すか
     # 通知機能がONになったらという分岐が必要
     # OFFならば削除する
-    # 前回のJobIDを保持する必要があるのでJobモデルを持つか, Settingモデルにjob_idカラムを付け足すか
   # ジョブの実行結果によってはOneSignalで通知する
 
   def perform(user)
     tweet = user.most_recent_tweet
-    if tweet && check_tweet_existence(user, tweet)
+    if tweet && tweet_exist?(user, tweet)
       # 何もしない
       puts 'tweet exist!'
     else
@@ -33,7 +32,7 @@ class CheckExistenceOfPostJob < ApplicationJob
     end
 
     # 特定期間にツイートが存在するかチェック
-    def check_tweet_existence(user, tweet)
+    def tweet_exist?(user, tweet)
       tweet.created_at.in_time_zone('Tokyo').between?(
         *user.notification_setting.check_tweet_existence_range
       )
