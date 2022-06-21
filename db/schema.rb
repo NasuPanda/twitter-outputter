@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_19_061924) do
+ActiveRecord::Schema.define(version: 2022_06_21_115808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(version: 2022_06_19_061924) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_authentications_on_user_id"
+  end
+
+  create_table "check_tweet_jobs", force: :cascade do |t|
+    t.string "job_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "notification_setting_id", null: false
+    t.index ["notification_setting_id"], name: "index_check_tweet_jobs_on_notification_setting_id"
   end
 
   create_table "notification_settings", force: :cascade do |t|
@@ -72,6 +80,7 @@ ActiveRecord::Schema.define(version: 2022_06_19_061924) do
     t.index ["external_user_id"], name: "index_users_on_external_user_id", unique: true
   end
 
+  add_foreign_key "check_tweet_jobs", "notification_settings"
   add_foreign_key "notification_settings", "users"
   add_foreign_key "posts", "users"
   add_foreign_key "scheduled_post_jobs", "posts"
