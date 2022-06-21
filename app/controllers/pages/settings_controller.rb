@@ -10,6 +10,9 @@ class Pages::SettingsController < ApplicationController
   end
 
   def update
+    # TODO
+      # 通知機能がONになったらジョブを走らせる
+      # OFFならば削除する
     @setting = current_user.notification_setting
     if @setting.update(setting_params)
       respond_to do |format|

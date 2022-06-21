@@ -3,13 +3,6 @@ class CheckExistenceOfPostJob < ApplicationJob
 
   after_perform { |job| perform_again(job) }
 
-  # TODO
-  # Setting#update時にジョブを走らせる
-    # NOTE: 前回のJobIDを保持する必要があるのでSettingがJobモデルを持つか, Settingモデルにjob_idカラムを付け足すか
-    # 通知機能がONになったらという分岐が必要
-    # OFFならば削除する
-  # ジョブの実行結果によってはOneSignalで通知する
-
   def perform(user)
     tweet = user.most_recent_tweet
     if tweet && tweet_exist?(user, tweet)
