@@ -3,8 +3,9 @@ class CreateNotification
 
   API_URI = 'https://onesignal.com/api/v1/notifications'.freeze
 
-  def self.call(*args)
-    new(*args).call
+  # インスタンスを生成してcallする
+  def self.call(...)
+    new(...).call
   end
 
   def initialize(contents:, type:, external_user_id:)
@@ -14,9 +15,7 @@ class CreateNotification
   end
 
   def call
-    puts "call!! * ** * * * * *  * * * "
-    response = HTTParty.post(API_URI, headers: headers, body: body)
-    puts response
+    HTTParty.post(API_URI, headers: headers, body: body)
   end
 
   private
@@ -25,19 +24,19 @@ class CreateNotification
 
   def headers
     {
-      'Authorization' => "Basic #{Rails.application.credentials.one_signal[:rest_api_key]}",
-      'Content-Type'  => 'application/json'
+      'Authorization': "Basic #{Rails.application.credentials.one_signal[:rest_api_key]}",
+      'Content-Type': 'application/json'
     }
   end
 
   def body
     {
-      'app_id' => '7f94c2e3-f773-44f0-b8ea-c8ee9adbcfed',
-      'url'    => '127.0.0.1:3000',
-      'data'   => { 'type': type },
-      "channel_for_external_user_ids" => "push",
-      'include_external_user_ids' => [external_user_id],
-      'contents' => contents
+      'app_id': '7f94c2e3-f773-44f0-b8ea-c8ee9adbcfed',
+      'url': '127.0.0.1:3000',
+      'data': { 'type': type },
+      "channel_for_external_user_ids": "push",
+      'include_external_user_ids': [external_user_id],
+      'contents': contents
     }.to_json
   end
 end
