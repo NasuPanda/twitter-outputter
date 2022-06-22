@@ -154,4 +154,175 @@ RSpec.describe NotificationSetting, type: :model do
       end
     end
   end
+
+  describe '#set_check_tweet_job' do
+    context 'can_notifyがtrueのとき' do
+      let!(:setting) { FactoryBot.create(:notification_setting, can_notify: true) }
+
+      it 'CheckTweetJobが作成されること' do
+        # ジョブのモック化
+        job_mock = double('PostJob')
+        allow(job_mock).to receive(:provider_job_id).and_return('random_job_id')
+        allow_any_instance_of(NotificationSetting).to receive(:perform_later_check_tweet_job).and_return(job_mock)
+
+        expect {
+          setting.set_check_tweet_job
+        }.to change{ CheckTweetJob.count }.by(1)
+      end
+
+      it 'ジョブがキューに入ること' do
+        # ジョブをモック化すると振る舞いが変わってしまうのでモック化しない
+        expect {
+          setting.set_check_tweet_job
+        }.to enqueue_job(CheckExistenceOfPostJob).on_queue(:check_post)
+      end
+    end
+
+    context 'can_notifyがfalseのとき' do
+      let!(:setting) { FactoryBot.create(:notification_setting, can_notify: false) }
+
+      it 'CheckTweetJobが作成されないこと' do
+        # ジョブのモック化
+        job_mock = double('PostJob')
+        allow(job_mock).to receive(:provider_job_id).and_return('random_job_id')
+        allow_any_instance_of(NotificationSetting).to receive(:perform_later_check_tweet_job).and_return(job_mock)
+
+        expect {
+          setting.set_check_tweet_job
+        }.to_not change{ CheckTweetJob.count }
+      end
+
+      it 'ジョブがキューに入らないこと' do
+        # ジョブをモック化すると振る舞いが変わってしまうのでモック化しない
+        expect {
+          setting.set_check_tweet_job
+        }.to_not enqueue_job(CheckExistenceOfPostJob).on_queue(:check_post)
+      end
+    end
+  end
+
+  describe '#update_check_tweet_job' do
+    context 'can_notifyがtrueかつCheckTweetJobを持つとき' do
+      let!(:setting) {
+        FactoryBot.create(:notification_setting, :with_job, can_notify: true)
+      }
+
+      it 'CheckTweetJobが更新されること' do
+        # ジョブのモック化
+        job_mock = double('PostJob')
+        allow(job_mock).to receive(:provider_job_id).and_return('random_job_id')
+        allow_any_instance_of(NotificationSetting).to receive(:perform_later_check_tweet_job).and_return(job_mock)
+        expect {
+          setting.update_check_tweet_job
+        }.to change{ setting.reload.check_tweet_job.job_id }
+      end
+    end
+
+    context 'CheckTweetJobを持つがcan_notifyがfalseのとき' do
+      let!(:setting) {
+        FactoryBot.create(:notification_setting, :with_job, can_notify: false)
+      }
+
+      it 'CheckTweetJobが更新されないこと' do
+        # ジョブのモック化
+        job_mock = double('PostJob')
+        allow(job_mock).to receive(:provider_job_id).and_return('random_job_id')
+        allow_any_instance_of(NotificationSetting).to receive(:perform_later_check_tweet_job).and_return(job_mock)
+
+        expect {
+          setting.update_check_tweet_job
+        }.to_not change{ setting.reload.check_tweet_job.job_id }
+      end
+
+      it 'ジョブがキューに入らないこと' do
+        expect {
+          setting.update_check_tweet_job
+        }.to_not enqueue_job(CheckExistenceOfPostJob).on_queue(:check_post)
+      end
+    end
+
+    context 'can_notifyがtrueだがCheckTweetJobを持たないとき' do
+      let!(:setting) {
+        FactoryBot.create(:notification_setting, can_notify: true)
+      }
+
+      it '実行後CheckTweetJobを持たないこと' do
+        # ジョブのモック化
+        job_mock = double('PostJob')
+        allow(job_mock).to receive(:provider_job_id).and_return('random_job_id')
+        allow_any_instance_of(NotificationSetting).to receive(:perform_later_check_tweet_job).and_return(job_mock)
+
+        setting.update_check_tweet_job
+        expect(setting.reload.check_tweet_job).to be_nil
+      end
+
+      it 'ジョブがキューに入らないこと' do
+        expect {
+          setting.update_check_tweet_job
+        }.to_not enqueue_job(CheckExistenceOfPostJob).on_queue(:check_post)
+      end
+    end
+  end
+
+  describe '#cancel_check_tweet_job' do
+    context 'can_notifyがfalseかつCheckTweetJobを持つとき' do
+      let!(:setting) {
+        FactoryBot.create(:notification_setting, :with_job, can_notify: false)
+      }
+
+      it 'CheckTweetJobが削除されること' do
+        expect {
+          setting.cancel_check_tweet_job
+        }.to change{ CheckTweetJob.count }.by(-1)
+      end
+    end
+
+    context 'CheckTweetJobを持つがcan_notifyがtrueのとき' do
+      let!(:setting) {
+        FactoryBot.create(:notification_setting, :with_job, can_notify: true)
+      }
+
+      it 'CheckTweetJobが削除されないこと' do
+        expect {
+          setting.cancel_check_tweet_job
+        }.to_not change{ CheckTweetJob.count }
+      end
+    end
+
+    context 'can_notifyがfalseだがCheckTweetJobを持たないとき' do
+      let!(:setting) {
+        FactoryBot.create(:notification_setting, can_notify: false)
+      }
+
+      it 'returnすること' do
+        expect(setting.cancel_check_tweet_job).to be_nil
+      end
+    end
+  end
+
+  describe '#job_action' do
+    context 'can_notifyがtrueかつCheckTweetJobを持つとき' do
+      let(:setting) { FactoryBot.create(:notification_setting, :with_job, can_notify: true) }
+
+      it 'updateを返すこと' do
+        expect(setting.job_action).to eq('update')
+      end
+    end
+
+    context 'can_notifyがtrueかつCheckTweetJobを持たないとき' do
+      let(:setting) { FactoryBot.create(:notification_setting, can_notify: true) }
+
+      it 'createを返すこと' do
+        expect(setting.job_action).to eq('create')
+      end
+    end
+
+    context 'can_notifyがfalseかつCheckTweetJobを持つとき' do
+      let(:setting) { FactoryBot.create(:notification_setting, :with_job, can_notify: false) }
+
+      it 'destroyを返すこと' do
+        expect(setting.job_action).to eq('destroy')
+      end
+    end
+  end
 end

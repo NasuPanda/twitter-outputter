@@ -26,8 +26,8 @@ class NotificationSetting < ApplicationRecord
   # ジョブをセットする
   def set_check_tweet_job
     return unless can_notify?
-
     job = perform_later_check_tweet_job
+
     self.create_check_tweet_job(job_id: job.provider_job_id)
   end
 
@@ -47,18 +47,14 @@ class NotificationSetting < ApplicationRecord
   end
 
   # ジョブの状態(can_notify, CheckTweetJobの状態に応じて変更)
+  # 通知ONかつジョブが登録されている:   update
+  # 通知OFFかつジョブが登録されている:  destroy
+  # 通知ONかつジョブが登録されていない: create
   def job_action
-    if can_notify?
-      if self.check_tweet_job
-        # 通知ONかつジョブが登録されている
-        'update'
-      else
-        # 通知ONかつジョブが登録されていない
-        'create'
-      end
+    if self.check_tweet_job
+      can_notify? ? 'update' : 'destroy'
     else
-      # 通知OFF
-      'destroy'
+      'create' unless self.check_tweet_job
     end
   end
 
