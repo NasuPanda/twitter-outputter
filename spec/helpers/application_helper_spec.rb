@@ -67,4 +67,94 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe 'error_messages_with_prefix' do
+    let(:post) { FactoryBot.create(:post) }
+
+    context 'モデルがエラーメッセージを1つ持つとき' do
+      before { post.errors[:content] << 'が無効です' }
+
+      it '長さ2の配列を返すこと' do
+        error_messages = helper.error_messages_with_prefix(post, '投稿に失敗しました')
+        expect(error_messages.size).to eq(2)
+      end
+
+      it '配列の最初の要素がprefixとして渡したメッセージであること' do
+        prefix = '投稿に失敗しました'
+        error_messages = helper.error_messages_with_prefix(post, prefix)
+        expect(error_messages.first).to eq(prefix)
+      end
+
+      it 'model.errors.full_messagesの要素を含むこと' do
+        error_messages = helper.error_messages_with_prefix(post, '投稿に失敗しました')
+        post.errors.full_messages.each do |message|
+          expect(error_messages).to be_include(message)
+        end
+      end
+    end
+
+    context 'モデルがエラーメッセージを2つ持つとき' do
+      before do
+        post.errors[:content] << 'が無効です'
+        post.errors[:post_at] << 'が無効です'
+      end
+
+      it '長さ3の配列を返すこと' do
+        error_messages = helper.error_messages_with_prefix(post, '投稿に失敗しました')
+        expect(error_messages.size).to eq(3)
+      end
+
+      it '配列の最初の要素がprefixとして渡したメッセージであること' do
+        prefix = '投稿に失敗しました'
+        error_messages = helper.error_messages_with_prefix(post, prefix)
+        expect(error_messages.first).to eq(prefix)
+      end
+
+      it 'model.errors.full_messagesの要素を含むこと' do
+        error_messages = helper.error_messages_with_prefix(post, '投稿に失敗しました')
+        post.errors.full_messages.each do |message|
+          expect(error_messages).to be_include(message)
+        end
+      end
+    end
+
+    context 'モデルがエラーメッセージを持たないとき' do
+      it '長さ1の配列を返すこと' do
+        error_messages = helper.error_messages_with_prefix(post, '投稿に失敗しました')
+        expect(error_messages.size).to eq(1)
+      end
+
+      it '配列の要素がprefixとして渡したメッセージであること' do
+        prefix = '投稿に失敗しました'
+        error_messages = helper.error_messages_with_prefix(post, prefix)
+        expect(error_messages.first).to eq(prefix)
+      end
+    end
+
+    context 'Post以外のモデルのとき' do
+      let(:tag) { FactoryBot.create(:tag) }
+
+      context 'モデルがエラーメッセージを1つ持つとき' do
+        before { tag.errors[:name] << 'が無効です' }
+
+        it '長さ2の配列を返すこと' do
+          error_messages = helper.error_messages_with_prefix(tag, '投稿に失敗しました')
+          expect(error_messages.size).to eq(2)
+        end
+
+        it '配列の最初の要素がprefixとして渡したメッセージであること' do
+          prefix = '投稿に失敗しました'
+          error_messages = helper.error_messages_with_prefix(tag, prefix)
+          expect(error_messages.first).to eq(prefix)
+        end
+
+        it 'model.errors.full_messagesの要素を含むこと' do
+          error_messages = helper.error_messages_with_prefix(tag, '投稿に失敗しました')
+          tag.errors.full_messages.each do |message|
+            expect(error_messages).to be_include(message)
+          end
+        end
+      end
+    end
+  end
 end
