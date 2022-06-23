@@ -6,6 +6,10 @@ FactoryBot.define do
       after(:create) { |user| user.authentication = FactoryBot.create(:authentication) }
     end
 
+    trait :with_notification_setting do
+      after(:create) { |user| user.notification_setting = FactoryBot.create(:notification_setting) }
+    end
+
     trait :with_tag do
       after(:create) { |user| user.tags << FactoryBot.create(:tag) }
     end
