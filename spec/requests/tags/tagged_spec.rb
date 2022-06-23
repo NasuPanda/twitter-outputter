@@ -12,9 +12,7 @@ RSpec.describe 'Tags::Tagged', type: :request do
     let(:other_user) { FactoryBot.create(:user, :with_authentication) }
 
     context 'ログインユーザのとき' do
-      before do
-        sign_in_as(user)
-      end
+      before { sign_in_as(user) }
 
       it '正常なレスポンスを返すこと' do
         post tagged_index_path(id: tag.id), xhr: true
@@ -42,9 +40,7 @@ RSpec.describe 'Tags::Tagged', type: :request do
     end
 
     context '正しくないユーザのとき' do
-      before do
-        sign_in_as(other_user)
-      end
+      before { sign_in_as(other_user) }
 
       it '404エラーが返ること' do
         post tagged_index_path(id: tag.id), xhr: true
@@ -59,9 +55,7 @@ RSpec.describe 'Tags::Tagged', type: :request do
     end
 
     context 'Ajax以外のリクエストのとき' do
-      before do
-        sign_in_as(user)
-      end
+      before { sign_in_as(user) }
 
       it '404エラーが返ること' do
         post tagged_index_path(id: tag.id)
@@ -75,9 +69,7 @@ RSpec.describe 'Tags::Tagged', type: :request do
     let(:other_user) { FactoryBot.create(:user, :with_authentication) }
 
     context 'ログインユーザのとき' do
-      before do
-        sign_in_as(user)
-      end
+      before { sign_in_as(user) }
 
       it '正常なレスポンスを返すこと' do
         delete tagged_path(tagged_tag), xhr: true
@@ -105,9 +97,7 @@ RSpec.describe 'Tags::Tagged', type: :request do
     end
 
     context '正しくないユーザのとき' do
-      before do
-        sign_in_as(other_user)
-      end
+      before { sign_in_as(other_user) }
 
       it '404エラーが返ること' do
         delete tagged_path(tagged_tag), xhr: true
@@ -122,9 +112,7 @@ RSpec.describe 'Tags::Tagged', type: :request do
     end
 
     context 'Ajax以外のリクエストのとき' do
-      before do
-        sign_in_as(user)
-      end
+      before { sign_in_as(user) }
 
       it '404エラーが返ること' do
         delete tagged_path(tagged_tag)

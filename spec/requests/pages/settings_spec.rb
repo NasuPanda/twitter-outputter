@@ -5,7 +5,7 @@ RSpec.describe "Pages::Settings", type: :request do
     let(:user) { FactoryBot.create(:user, :with_authentication, :with_notification_setting) }
 
     context 'ログインしているとき' do
-      before { sign_in_as(user) }
+          before { sign_in_as(user) }
 
       it "正常なレスポンスを返すこと" do
         get setting_path
@@ -25,7 +25,7 @@ RSpec.describe "Pages::Settings", type: :request do
     let(:user) { FactoryBot.create(:user, :with_authentication, :with_notification_setting) }
 
     context 'ログインしているとき' do
-      before { sign_in_as(user) }
+          before { sign_in_as(user) }
 
       it "正常なレスポンスを返すこと" do
         get edit_setting_path, xhr: true
@@ -47,7 +47,7 @@ RSpec.describe "Pages::Settings", type: :request do
     let!(:valid_params) { FactoryBot.attributes_for(:notification_setting) }
 
     context 'ログインしているとき' do
-      before { sign_in_as(user) }
+          before { sign_in_as(user) }
 
       context '有効なパラメータの場合' do
         it "正常なレスポンスを返すこと" do

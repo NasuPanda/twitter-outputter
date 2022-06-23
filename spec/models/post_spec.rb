@@ -178,9 +178,7 @@ RSpec.describe Post, type: :model do
     let(:draft) { FactoryBot.build(:post, :draft) }
     let(:scheduled_post) { FactoryBot.build(:post, :scheduled) }
 
-    before do
-      travel_to(Time.current)
-    end
+    before { travel_to(Time.current) }
 
     context '下書きのとき' do
       it '投稿済に変更されること' do

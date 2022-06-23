@@ -10,9 +10,7 @@ RSpec.describe 'Posts::Drafts', type: :request do
     include_context '下書きを持つ認証済のユーザ'
 
     context 'ログインユーザのとき' do
-      before do
-        sign_in_as(user)
-      end
+    before { sign_in_as(user) }
 
       it '正常なレスポンスを返すこと' do
         get drafts_path
@@ -32,9 +30,7 @@ RSpec.describe 'Posts::Drafts', type: :request do
     include_context '下書きを持つ認証済のユーザ'
 
     context 'ログインユーザのとき' do
-      before do
-        sign_in_as(user)
-      end
+    before { sign_in_as(user) }
 
       context '有効なパラメータの場合' do
         it '作成されること' do
@@ -95,9 +91,7 @@ RSpec.describe 'Posts::Drafts', type: :request do
     let(:other_user) { FactoryBot.create(:user, :with_authentication) }
 
     context 'ログインユーザのとき' do
-      before do
-        sign_in_as(user)
-      end
+    before { sign_in_as(user) }
 
       it '正常なレスポンスを返すこと' do
         get edit_draft_path(draft), xhr: true
@@ -113,9 +107,7 @@ RSpec.describe 'Posts::Drafts', type: :request do
     end
 
     context '正しくないユーザのとき' do
-      before do
-        sign_in_as(other_user)
-      end
+    before { sign_in_as(other_user) }
 
       it '404エラーが返ること' do
         get edit_draft_path(draft), xhr: true
@@ -124,14 +116,12 @@ RSpec.describe 'Posts::Drafts', type: :request do
     end
   end
 
-  describe 'POST /drafts/:id/edit' do
+  describe 'PUT /drafts/:id/edit' do
     include_context '下書きを持つ認証済のユーザ'
     let(:other_user) { FactoryBot.create(:user, :with_authentication) }
 
     context 'ログインユーザのとき' do
-      before do
-        sign_in_as(user)
-      end
+      before { sign_in_as(user) }
 
       context '有効なパラメータの場合' do
         it '更新されること' do
@@ -189,9 +179,7 @@ RSpec.describe 'Posts::Drafts', type: :request do
     end
 
     context '正しくないユーザのとき' do
-      before do
-        sign_in_as(other_user)
-      end
+      before { sign_in_as(other_user) }
 
       it '404エラーが返ること' do
         put draft_path(draft), xhr: true, params: { post: { content: 'updated' } }
@@ -243,9 +231,7 @@ RSpec.describe 'Posts::Drafts', type: :request do
       end
 
       context '正しくないユーザのとき' do
-        before do
-          sign_in_as(other_user)
-        end
+        before { sign_in_as(other_user) }
 
         it '404エラーが返ること' do
           delete draft_path(draft, to: 'published'), xhr: true
@@ -262,14 +248,10 @@ RSpec.describe 'Posts::Drafts', type: :request do
 
     context 'to scheduled' do
       context 'ログインユーザのとき' do
-        before do
-          sign_in_as(user)
-        end
+        before { sign_in_as(user) }
 
         context '投稿日時が有効なとき' do
-          before do
-            draft.update(post_at: 1.days.from_now)
-          end
+          before { draft.update(post_at: 1.days.from_now) }
 
           it '投稿の予約に成功すること' do
             expect {
@@ -290,9 +272,7 @@ RSpec.describe 'Posts::Drafts', type: :request do
         end
 
         context '投稿日時が無効なとき' do
-          before do
-            draft.update(post_at: nil)
-          end
+          before { draft.update(post_at: nil) }
 
           it '投稿の予約に失敗すること' do
             expect {

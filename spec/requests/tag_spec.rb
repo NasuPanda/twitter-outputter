@@ -10,9 +10,7 @@ RSpec.describe 'Tags', type: :request do
     let(:user) { FactoryBot.create(:user, :with_authentication) }
 
     context 'ログインユーザのとき' do
-      before do
-        sign_in_as(user)
-      end
+    before { sign_in_as(user) }
 
       it '正常なレスポンスが返ること' do
         # NOTE: Ajaxなので xhr: true を付けること
@@ -36,9 +34,7 @@ RSpec.describe 'Tags', type: :request do
     }
 
     context 'ログインユーザのとき' do
-      before do
-        sign_in_as(user)
-      end
+      before { sign_in_as(user) }
 
       it '作成できること' do
         expect {
@@ -66,9 +62,7 @@ RSpec.describe 'Tags', type: :request do
     let(:other_user) { FactoryBot.create(:user, :with_authentication) }
 
     context 'ログインユーザのとき' do
-      before do
-        sign_in_as(user)
-      end
+      before { sign_in_as(user) }
 
       it '正常なレスポンスが返ること' do
         get edit_tag_path(tag), xhr: true
@@ -84,9 +78,7 @@ RSpec.describe 'Tags', type: :request do
     end
 
     context '正しくないユーザのとき' do
-      before do
-        sign_in_as(other_user)
-      end
+      before { sign_in_as(other_user) }
 
       it '404エラーが返ること' do
         get edit_tag_path(tag), xhr: true
@@ -103,9 +95,7 @@ RSpec.describe 'Tags', type: :request do
     }
 
     context 'ログインユーザのとき' do
-      before do
-        sign_in_as(user)
-      end
+      before { sign_in_as(user) }
 
       it '更新できること' do
         patch tag_path(tag), xhr: true, params: tag_params
@@ -126,9 +116,7 @@ RSpec.describe 'Tags', type: :request do
     end
 
     context '正しくないユーザのとき' do
-      before do
-        sign_in_as(other_user)
-      end
+      before { sign_in_as(other_user) }
 
       it '404エラーが返ること' do
         patch tag_path(tag), xhr: true, params: tag_params
@@ -147,9 +135,7 @@ RSpec.describe 'Tags', type: :request do
     let(:other_user) { FactoryBot.create(:user, :with_authentication) }
 
     context 'ログインユーザのとき' do
-      before do
-        sign_in_as(user)
-      end
+      before { sign_in_as(user) }
 
       it '削除できること' do
         expect {
@@ -172,9 +158,7 @@ RSpec.describe 'Tags', type: :request do
     end
 
     context '正しくないユーザのとき' do
-      before do
-        sign_in_as(other_user)
-      end
+      before { sign_in_as(other_user) }
 
       it '404エラーが返ること' do
         delete tag_path(tag), xhr: true

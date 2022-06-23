@@ -10,9 +10,7 @@ RSpec.describe 'Posts::Publisheds', type: :request do
     include_context '公開済の投稿を持つ認証済のユーザ'
 
     context 'ログインユーザのとき' do
-      before do
-        sign_in_as(user)
-      end
+    before { sign_in_as(user) }
 
       it '正常なレスポンスを返すこと' do
         get published_index_path
@@ -33,7 +31,6 @@ RSpec.describe 'Posts::Publisheds', type: :request do
     context 'ログインユーザのとき' do
       before do
         sign_in_as(user)
-        # twitterAPIをモック化
         twitter_mock
       end
 

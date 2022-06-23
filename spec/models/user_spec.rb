@@ -161,9 +161,7 @@ RSpec.describe User, type: :model do
 
   describe '#post_tweet' do
     let(:authenticated_user) { FactoryBot.create(:user, :with_authentication) }
-    before do
-      twitter_mock_from_instance(authenticated_user)
-    end
+    before { twitter_mock_from_instance(authenticated_user) }
 
     it 'Tweet出来ること' do
       expect{ authenticated_user.post_tweet('Post from Twitter API') }.not_to raise_error
@@ -172,8 +170,6 @@ RSpec.describe User, type: :model do
 
   describe '#most_recent_tweet' do
     let(:user) { FactoryBot.create(:user, :with_authentication) }
-    before do
-    end
 
     context 'ツイートが存在する場合' do
       it 'ツイートを取得出来ること' do

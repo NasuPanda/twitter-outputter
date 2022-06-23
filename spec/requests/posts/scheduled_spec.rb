@@ -10,9 +10,7 @@ RSpec.describe 'Posts::Scheduleds', type: :request do
     include_context '予約投稿を持つ認証済のユーザ'
 
     context 'ログインユーザのとき' do
-      before do
-        sign_in_as(user)
-      end
+    before { sign_in_as(user) }
 
       it '正常なレスポンスを返すこと' do
         get scheduled_index_path
@@ -33,9 +31,7 @@ RSpec.describe 'Posts::Scheduleds', type: :request do
     let(:valid_params) { FactoryBot.attributes_for(:post, :scheduled) }
 
     context 'ログインユーザのとき' do
-      before do
-        sign_in_as(user)
-      end
+      before { sign_in_as(user) }
 
       context '有効なパラメータの場合' do
         it '作成されること' do
@@ -156,9 +152,7 @@ RSpec.describe 'Posts::Scheduleds', type: :request do
     let(:other_user) { FactoryBot.create(:user, :with_authentication) }
 
     context 'ログインユーザのとき' do
-      before do
-        sign_in_as(user)
-      end
+      before { sign_in_as(user) }
 
       it '正常なレスポンスを返すこと' do
         get edit_scheduled_path(scheduled_post), xhr: true
@@ -174,9 +168,7 @@ RSpec.describe 'Posts::Scheduleds', type: :request do
     end
 
     context '正しくないユーザのとき' do
-      before do
-        sign_in_as(other_user)
-      end
+      before { sign_in_as(other_user) }
 
       it '404エラーが返ること' do
         get edit_scheduled_path(scheduled_post), xhr: true
@@ -191,9 +183,7 @@ RSpec.describe 'Posts::Scheduleds', type: :request do
     let(:valid_params) { FactoryBot.attributes_for(:post, :scheduled) }
 
     context 'ログインユーザのとき' do
-      before do
-        sign_in_as(user)
-      end
+      before { sign_in_as(user) }
 
       context '有効なパラメータの場合' do
         it '更新されること' do
@@ -290,9 +280,7 @@ RSpec.describe 'Posts::Scheduleds', type: :request do
     end
 
     context '正しくないユーザのとき' do
-      before do
-        sign_in_as(other_user)
-      end
+      before { sign_in_as(other_user) }
 
       it '404エラーが返ること' do
         put scheduled_path(scheduled_post), xhr: true, params: valid_params
@@ -315,7 +303,6 @@ RSpec.describe 'Posts::Scheduleds', type: :request do
       context 'ログインユーザのとき' do
         before do
           sign_in_as(user)
-          # TwitterAPIのモック化
           twitter_mock
         end
 
@@ -345,9 +332,7 @@ RSpec.describe 'Posts::Scheduleds', type: :request do
       end
 
       context '正しくないユーザのとき' do
-        before do
-          sign_in_as(other_user)
-        end
+        before { sign_in_as(other_user) }
 
         it '404エラーが返ること' do
           delete scheduled_path(scheduled_post, to: 'published'), xhr: true
@@ -364,9 +349,7 @@ RSpec.describe 'Posts::Scheduleds', type: :request do
 
     context 'to draft' do
       context 'ログインユーザのとき' do
-        before do
-          sign_in_as(user)
-        end
+        before { sign_in_as(user) }
 
         it '下書きになること' do
           expect {
@@ -394,9 +377,7 @@ RSpec.describe 'Posts::Scheduleds', type: :request do
       end
 
       context '正しくないユーザのとき' do
-        before do
-          sign_in_as(other_user)
-        end
+        before { sign_in_as(other_user) }
 
         it '404エラーが返ること' do
           delete scheduled_path(scheduled_post, to: 'draft'), xhr: true

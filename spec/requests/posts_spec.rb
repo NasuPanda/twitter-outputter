@@ -7,9 +7,7 @@ RSpec.describe 'Posts', type: :request do
       let!(:draft) { FactoryBot.create(:post, :draft, user: user) }
 
       context 'ログインユーザのとき' do
-        before do
-          sign_in_as(user)
-        end
+        before { sign_in_as(user) }
 
         it '正常なレスポンスを返すこと' do
           delete post_path(draft, from: :draft), xhr: true
@@ -43,10 +41,7 @@ RSpec.describe 'Posts', type: :request do
 
       context '正しくないユーザのとき' do
         let(:other_user) { FactoryBot.create(:user, :with_authentication) }
-
-        before do
-          sign_in_as(other_user)
-        end
+        before { sign_in_as(other_user) }
 
         it '404エラーが返ること' do
           delete post_path(draft, from: :draft), xhr: true
@@ -66,9 +61,7 @@ RSpec.describe 'Posts', type: :request do
       let!(:scheduled_post) { FactoryBot.create(:post, :scheduled, user: user) }
 
       context 'ログインユーザのとき' do
-        before do
-          sign_in_as(user)
-        end
+        before { sign_in_as(user) }
 
         it '正常なレスポンスを返すこと' do
           delete post_path(scheduled_post, from: :scheduled), xhr: true
@@ -102,9 +95,7 @@ RSpec.describe 'Posts', type: :request do
 
       context '正しくないユーザのとき' do
         let(:other_user) { FactoryBot.create(:user, :with_authentication) }
-        before do
-          sign_in_as(other_user)
-        end
+        before { sign_in_as(other_user) }
 
         it '404エラーが返ること' do
           delete post_path(scheduled_post, from: :scheduled), xhr: true

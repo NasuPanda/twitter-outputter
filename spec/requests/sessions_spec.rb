@@ -53,9 +53,7 @@ RSpec.describe 'Sessions', type: :request do
   end
 
   describe 'DELETE /logout' do
-    before do
-      sign_in_as(user)
-    end
+    before { sign_in_as(user) }
 
     it 'ログアウト出来ること' do
       delete logout_path
