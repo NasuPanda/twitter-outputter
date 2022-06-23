@@ -1,7 +1,7 @@
 class CheckExistenceOfPostJob < ApplicationJob
   queue_as :check_post
 
-  # after_perform { |job| perform_again(job) }
+  after_perform { |job| perform_again(job) }
 
   def perform(user)
     tweet = user.most_recent_tweet

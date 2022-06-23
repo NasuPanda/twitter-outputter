@@ -13,7 +13,7 @@ RSpec.describe CheckExistenceOfPostJob, type: :job do
       }.to enqueue_job(CheckExistenceOfPostJob).on_queue(:check_post)
     end
 
-    describe 'ジョブ実行のテスト' do
+    context 'ツイートが特定期間に存在するとき' do
       before do
         allow_any_instance_of(User).to receive(:most_recent_tweet).and_return('recent tweet')
         allow_any_instance_of(CheckExistenceOfPostJob).to receive(:tweet_exist_in_period?).and_return(true)
@@ -52,17 +52,66 @@ RSpec.describe CheckExistenceOfPostJob, type: :job do
         CheckExistenceOfPostJob
         .set(wait_until: notification_setting.check_tweet_existence_time)
         .perform_later(user)
-      currently_queued_job = enqueued_jobs.first
+        currently_queued_job = enqueued_jobs.first
 
-      expect {
+        expect {
+          perform_enqueued_jobs(
+            only: ->(job) {
+              job['job_id'] == currently_queued_job['job_id'] }
+          )
+        }.to enqueue_job.at(notification_setting.check_tweet_existence_time)
+      end
+
+      it 'CreateNotification.callが呼ばれないこと' do
+        allow(CreateNotification).to receive(:call)
+
+        CheckExistenceOfPostJob
+        .set(wait_until: notification_setting.check_tweet_existence_time)
+        .perform_later(user)
+        currently_queued_job = enqueued_jobs.first
+
         perform_enqueued_jobs(
           only: ->(job) {
             job['job_id'] == currently_queued_job['job_id'] }
         )
-      }.to enqueue_job.at(notification_setting.check_tweet_existence_time)
+        expect(CreateNotification).to_not have_received(:call)
       end
     end
 
+    context 'ツイートが特定期間に存在しないとき' do
+      before do
+        allow_any_instance_of(User).to receive(:most_recent_tweet).and_return(nil)
+        allow_any_instance_of(CheckExistenceOfPostJob).to receive(:tweet_exist_in_period?).and_return(false)
+        allow(CreateNotification).to receive(:call)
+      end
+
+      it 'perform後にジョブがキューに追加されること' do
+        CheckExistenceOfPostJob
+        .set(wait_until: notification_setting.check_tweet_existence_time)
+        .perform_later(user)
+        currently_queued_job = enqueued_jobs.first
+
+        expect {
+          perform_enqueued_jobs(
+            only: ->(job) {
+              job['job_id'] == currently_queued_job['job_id'] }
+          )
+        }.to enqueue_job(CheckExistenceOfPostJob).on_queue(:check_post)
+      end
+
+      it 'CreateNotification.callが1回呼ばれること' do
+        CheckExistenceOfPostJob
+        .set(wait_until: notification_setting.check_tweet_existence_time)
+        .perform_later(user)
+        currently_queued_job = enqueued_jobs.first
+
+        perform_enqueued_jobs(
+          only: ->(job) {
+            job['job_id'] == currently_queued_job['job_id'] }
+        )
+        expect(CreateNotification).to have_received(:call).once
+      end
+    end
 
     after do
       clear_enqueued_jobs
