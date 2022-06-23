@@ -15,8 +15,8 @@
 
         <%# TODO f.check_boxの状態で以下の入力欄が切り替わるようなJavaScriptを書く %>
         <div class="mb-5 d-flex flex-column">
-          <%= f.label :interval_to_check, "ツイートチェック間隔", class: "can-change-color form-label" %>
-          <%= f.number_field :interval_to_check, class: "can-change-color form-control" %>
+          <%= f.label :interval_to_check, "ツイートチェック間隔 (日)", class: "can-change-color form-label" %>
+          <%= f.number_field :interval_to_check, class: "can-change-color form-control", min: 1, max: 30 %>
         </div>
 
         <div class="d-flex flex-column">

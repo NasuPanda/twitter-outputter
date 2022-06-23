@@ -12,14 +12,7 @@ class Pages::SettingsController < ApplicationController
   def update
     @setting = current_user.notification_setting
     if @setting.update(setting_params)
-      case @setting.job_action
-      when 'update'
-        @setting.update_check_tweet_job
-      when 'create'
-        @setting.set_check_tweet_job
-      when 'destroy'
-        @setting.cancel_check_tweet_job
-      end
+      @setting.send("#{@setting.job_action}_check_tweet_job")
 
       respond_to do |format|
         format.html { redirect_to setting_url, notice: '設定の更新に成功しました' }

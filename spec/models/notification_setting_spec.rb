@@ -312,16 +312,16 @@ RSpec.describe NotificationSetting, type: :model do
     context 'can_notifyがtrueかつCheckTweetJobを持たないとき' do
       let(:setting) { FactoryBot.create(:notification_setting, can_notify: true) }
 
-      it 'createを返すこと' do
-        expect(setting.job_action).to eq('create')
+      it 'setを返すこと' do
+        expect(setting.job_action).to eq('set')
       end
     end
 
     context 'can_notifyがfalseかつCheckTweetJobを持つとき' do
       let(:setting) { FactoryBot.create(:notification_setting, :with_job, can_notify: false) }
 
-      it 'destroyを返すこと' do
-        expect(setting.job_action).to eq('destroy')
+      it 'cancelを返すこと' do
+        expect(setting.job_action).to eq('cancel')
       end
     end
   end

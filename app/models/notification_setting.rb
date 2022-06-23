@@ -48,13 +48,13 @@ class NotificationSetting < ApplicationRecord
 
   # ジョブの状態(can_notify, CheckTweetJobの状態に応じて変更)
   # 通知ONかつジョブが登録されている:   update
-  # 通知OFFかつジョブが登録されている:  destroy
-  # 通知ONかつジョブが登録されていない: create
+  # 通知OFFかつジョブが登録されている:  cancel
+  # 通知ONかつジョブが登録されていない: set
   def job_action
     if self.check_tweet_job
-      can_notify? ? 'update' : 'destroy'
+      can_notify? ? 'update' : 'cancel'
     else
-      'create' unless self.check_tweet_job
+      'set' unless self.check_tweet_job
     end
   end
 
