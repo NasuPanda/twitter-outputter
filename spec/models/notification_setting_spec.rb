@@ -46,9 +46,9 @@ RSpec.describe NotificationSetting, type: :model do
       end
     end
 
-    context '-1のとき' do
+    context '0のとき' do
       it 'バリデーションに失敗すること' do
-        setting.interval_to_check = -1
+        setting.interval_to_check = 0
         expect(setting).to be_invalid
       end
     end

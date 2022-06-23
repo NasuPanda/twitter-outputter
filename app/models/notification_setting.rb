@@ -61,8 +61,8 @@ class NotificationSetting < ApplicationRecord
   private
     # バリデーション(can_notifyのとき) : interval_to_checkが0~30の間であること
     def interval_to_check_should_be_within_a_month
-      unless interval_to_check.between?(0, 30)
-        errors[:interval_to_check] << 'は 0 ~ 30 日の間で設定してください'
+      unless interval_to_check.between?(1, 30)
+        errors[:interval_to_check] << 'は 1 ~ 30 日の間で設定してください'
       end
     end
 
