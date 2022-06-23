@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
+  include ApplicationHelper
   include SessionsHelper
 
+  # ApplicationHelperのメソッド
+  helper_method %i[error_messages_with_prefix]
+  # SessionsHelperのメソッド
   helper_method %i[current_user logged_in?]
 
   private
@@ -9,11 +13,5 @@ class ApplicationController < ActionController::Base
       unless logged_in?
         redirect_to root_url, alert: 'ログインしてください'
       end
-    end
-
-    # モデルの持つエラーメッセージにprefixを付けて返す(非破壊)
-    def error_messages_with_prefix(model, prefix)
-      error_messages = model.errors.full_messages.dup
-      error_messages.prepend(prefix)
     end
 end
