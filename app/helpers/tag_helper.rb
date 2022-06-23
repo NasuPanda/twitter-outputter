@@ -4,6 +4,6 @@ module TagHelper
   end
 
   def tagged_tag_id(tag)
-    return "tagged_tag-#{tag.id}"
+    return "tagged-tag-#{tag.id}"
   end
 end

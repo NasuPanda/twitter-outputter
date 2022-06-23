@@ -31,7 +31,7 @@ module LoginSupport
         get "/auth/twitter/callback"
       # それ以外ならエラー
       else
-        raise NotImprementedError.new
+        raise NotImplementedError.new
       end
     end
 
