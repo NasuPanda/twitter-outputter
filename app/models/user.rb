@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :tags, dependent: :destroy
   accepts_nested_attributes_for :authentication
+  # Userは必ずNotificationSettingを持つ
+  after_create :create_notification_setting
 
   def get_or_create_external_user_id
     return self.external_user_id if self.external_user_id
