@@ -1,9 +1,7 @@
 <div class="col" id=<%= post_id(draft) %>>
   <div class="card">
     <div class="card-body">
-      <p class="card-text">
-        <%= draft.content %>
-      </p>
+      <%= render('shared/card_text', post: draft) %>
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <%= link_to "編集", edit_draft_path(draft), class: "button button-submit icon edit", remote: true %>
         <%# NOTE: draft → scheduled or published はパラメータにより分岐させる %>

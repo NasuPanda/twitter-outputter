@@ -1,9 +1,7 @@
 <div class="col" id=<%= post_id(post) %>>
   <div class="card">
     <div class="card-body">
-      <p class="card-text">
-        <%= post.content %>
-      </p>
+      <%= render('shared/card_text', post: post) %>
     </div>
     <div class="card-footer text-muted">
       <p class="mb-0">投稿日時: <%= render('shared/time_ago', datetime: post.post_at) %></p>
