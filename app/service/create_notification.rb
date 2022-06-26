@@ -32,7 +32,7 @@ class CreateNotification
   def body
     {
       'app_id': '7f94c2e3-f773-44f0-b8ea-c8ee9adbcfed',
-      'url': '127.0.0.1:3000',
+      'url': 'https://twitter-outputter.herokuapp.com/',
       'data': { 'type': type },
       "channel_for_external_user_ids": "push",
       'include_external_user_ids': [external_user_id],
