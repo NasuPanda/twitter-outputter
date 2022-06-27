@@ -23,6 +23,7 @@ ja:
       post:
         content: 投稿内容
         post_at: 投稿日時
+        images: 画像
       tag:
         name: タグ名
       notification_setting:

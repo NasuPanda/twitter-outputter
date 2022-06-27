@@ -1,0 +1,8 @@
+// 実行前に空にしておく
+$("#alert-message").empty()
+
+<% if @error_messages.blank? %>
+  $("#<%= image_id(@image) %>").remove();
+<% else %>
+  alert("<%= join_words_with_newline(@error_messages) %>");
+<% end %>

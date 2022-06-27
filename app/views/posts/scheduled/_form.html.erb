@@ -10,7 +10,7 @@
     <div class="modal-body">
       <div class="form-group field">
         <%= form_with(model: @scheduled_post, url: scheduled_path(@scheduled_post), remote: true) do |f| %>
-  
+
           <%= f.label :name, "投稿内容", class: "form-label"%>
           <div class="flex-textarea-container mb-3">
             <div class="flex-textarea-dummy" aria-hidden="true"></div>
@@ -20,8 +20,17 @@
             <%= count_down_twitter_text(@scheduled_post.content) %>
           </p>
 
-          <%= f.label :post_at, '投稿予定日時', class: 'form-label' %>
-          <%= f.datetime_field :post_at, class: 'form-control' %>
+          <%# 画像の個別削除 %>
+          <%= render('posts/attached_images_form', post: @draft) %>
+
+          <div class="form-group">
+            <%= f.label :images, '画像の添付', class: 'form-label' %>
+            <%= f.file_field :images, class: 'form-control-file', multiple: true %>
+          </div>
+          <div class="form-group">
+            <%= f.label :post_at, '投稿予定日時', class: 'form-label' %>
+            <%= f.datetime_field :post_at, class: 'form-control' %>
+          </div>
 
           <div id="post-form-submit-container" class="d-grid gap-2 d-md-flex mt-3 justify-content-md-end">
             <%= f.button type: :submit, class: "button button-submit" do %>

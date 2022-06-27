@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   # postそのものを削除する
   def destroy
-    @post = current_user.posts.find(params[:id])
+    @post = current_user.posts.find(post_params[:id])
 
     # from 下書き/予約投稿 で分岐する
     if params[:from] == 'draft'
@@ -18,7 +18,7 @@ class PostsController < ApplicationController
   private
 
     def post_params
-      params.require(:post).permit(:content, :post_at)
+      params.permit(:id)
     end
 
     # 下書きを削除する

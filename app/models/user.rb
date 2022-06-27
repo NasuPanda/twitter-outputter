@@ -54,7 +54,13 @@ class User < ApplicationRecord
 
   # ツイートする
   def post_tweet(text)
+    # if post.have_image?
+      # duplicate status を検知したいので画像が無ければ !付きメソッド を使う
+      # update! (duplicate status を検知するため)
     twitter_client.update!(text)
+    img = File.open("/Users/westen/rdev/twitter-outputter/twitter_outputter/app/assets/images/1MB.png")
+
+    twitter_client.update_with_media(text, img)
   end
 
   # 指定期間内にツイートしているか判定する
