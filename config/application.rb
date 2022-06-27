@@ -53,5 +53,7 @@ module TwitterOutputter
     config.active_job.queue_adapter = :sidekiq
     # ActiveStorageの画像処理にlibvipsを使う
     config.active_storage.variant_processor = :vips
+    # ActiveStorageで複数添付時に上書きしない
+    config.active_storage.replace_on_assign_to_many = false
   end
 end
