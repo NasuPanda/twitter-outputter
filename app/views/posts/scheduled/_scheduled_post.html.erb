@@ -2,6 +2,7 @@
   <div class="card">
     <div class="card-body">
       <%= render('shared/card_text', post: scheduled_post) %>
+      <%= render('posts/attached_images', post: scheduled_post) %>
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <%= link_to "編集", edit_scheduled_path(scheduled_post), class: "button button-submit icon edit", remote: true %>
         <%# NOTE: scheduled → draft or published はパラメータにより分岐させる %>
