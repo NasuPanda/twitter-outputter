@@ -1,8 +1,8 @@
 <% if post.images.attached? %>
   <% post.images.each do |img| %>
-    <div id=<%= image_id(img) %>>
+    <div id=<%= image_id(img) %> class="image-deletable-container" >
       <%= image_tag(img.variant(resize_to_fit: [100, 100]), class: 'card-img-bottom mb-3') %>
-      <%= link_to "削除", image_path(img, post_id: post.id), method: :delete, remote: true, class: "button button-danger icon trash"%>
+      <%= link_to "", image_path(img, post_id: post.id), method: :delete, remote: true, class: "fa-solid fa-xmark"%>
     </div>
   <% end %>
 <% end %>

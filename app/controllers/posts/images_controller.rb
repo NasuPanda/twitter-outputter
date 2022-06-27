@@ -3,8 +3,6 @@ class Posts::ImagesController < ApplicationController
 
   # 画像を削除する
   def destroy
-    pp current_user.posts.find(188)
-    pp "params: #{image_params}"
     post = current_user.posts.find(image_params[:post_id])
     @image = post.images.find(image_params[:id])
 

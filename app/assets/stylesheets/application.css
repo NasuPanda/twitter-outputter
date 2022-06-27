@@ -245,3 +245,27 @@
   margin-bottom: 10px;
   padding: 10px;
 }
+
+/* ------------------------------------------------------------------------ */
+/* 画像の個別削除 */
+/* ------------------------------------------------------------------------ */
+.image-deletable-container {
+  position: relative;
+  margin: 20px;
+}
+
+.image-deletable-container a {
+  position: absolute;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #D8D2CB;
+  border-radius: 5px;
+  font-size: 1.5em;
+  top: -10px;
+  right: -10px;
+  padding: 5px;
+}
+
+.image-deletable-container a:hover {
+  color: #EEEEEE;
+}
