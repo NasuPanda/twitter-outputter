@@ -30,7 +30,7 @@ class Posts::PublishedController < ApplicationController
   private
 
     def post_params
-      params.require(:post).permit(:content)
+      params.require(:post).permit(:content, images: [])
     end
 
     def build_published_post

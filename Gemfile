@@ -28,6 +28,8 @@ gem 'omniauth-rails_csrf_protection'
 gem 'twitter'
 # Tweetの長さ測定,有効性の検証
 gem 'twitter-text'
+# 画像処理
+gem "image_processing", ">= 1.2"
 # apiを叩く
 gem 'httparty'
 # バックグラウンドジョブ

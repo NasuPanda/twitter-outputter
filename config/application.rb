@@ -51,5 +51,7 @@ module TwitterOutputter
     config.active_model.i18n_customize_full_message = true
     # jobのアダプタにsidekiqを使う
     config.active_job.queue_adapter = :sidekiq
+    # ActiveStorageの画像処理にlibvipsを使う
+    config.active_storage.variant_processor = :vips
   end
 end

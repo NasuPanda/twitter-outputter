@@ -63,7 +63,7 @@ class Posts::ScheduledController < ApplicationController
   private
 
     def scheduled_params
-      params.require(:post).permit(:content, :post_at)
+      params.require(:post).permit(:content, :post_at, images: [])
     end
 
     # paramsを元にPostを生成する

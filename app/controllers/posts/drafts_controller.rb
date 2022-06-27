@@ -62,7 +62,7 @@ class Posts::DraftsController < ApplicationController
   private
 
     def draft_params
-      params.require(:post).permit(:content, :post_at)
+      params.require(:post).permit(:content, :post_at, images: [])
     end
 
     # TODO sendメソッドでDRYにできそう
