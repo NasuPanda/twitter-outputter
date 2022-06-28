@@ -24,6 +24,9 @@ Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f 
 
 # OmniAuthをテストモードへ
 OmniAuth.config.test_mode = true
+# active storage validations
+# https://github.com/igorkasyanchuk/active_storage_validations#test-matchers
+require 'active_storage_validations/matchers'
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
@@ -68,4 +71,8 @@ RSpec.configure do |config|
   config.include ActiveSupport::Testing::TimeHelpers
   # ActiveJobのテスト用
   config.include ActiveJob::TestHelper
+  # ActiveStorageValidationsのテスト用
+  config.include ActiveStorageValidations::Matchers
+  # テストスイート実行後に添付ファイルを削除
+  config.after(:suite) { FileUtils.rm_rf(ActiveStorage::Blob.service.root) }
 end

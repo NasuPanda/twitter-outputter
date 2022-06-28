@@ -146,6 +146,125 @@ RSpec.describe Post, type: :model do
     end
   end
 
+  describe 'has_many_attacehd: images' do
+    let(:post) { FactoryBot.create(:post) }
+
+    context '5MBの画像が添付されたとき' do
+      it 'バリデーションに成功すること' do
+        post.images.attach(
+          io: File.open("#{Rails.root}/spec/fixtures/5MB.png"),
+          filename: 'test_5MB.png',
+          content_type: 'image/png'
+        )
+        expect(post).to be_valid
+      end
+    end
+
+    context '10MBの画像が添付されたとき' do
+      it 'バリデーションに失敗すること' do
+        post.images.attach(
+          io: File.open("#{Rails.root}/spec/fixtures/10MB.png"),
+          filename: 'test_10MB.png',
+          content_type: 'image/png'
+        )
+        expect(post).to be_invalid
+      end
+    end
+
+    context 'jpeg形式の画像が添付されたとき' do
+      it 'バリデーションに成功すること' do
+        post.images.attach(
+          io: File.open("#{Rails.root}/spec/fixtures/150x150.jpeg"),
+          filename: 'test_150x150.jpeg',
+          content_type: 'image/jpeg'
+        )
+        expect(post).to be_valid
+      end
+    end
+
+    context 'png, jpeg, gif, webp以外のcontent-typeのファイルが添付されたとき' do
+      it 'バリデーションに失敗すること' do
+        post.images.attach(
+          io: File.open("#{Rails.root}/spec/fixtures/dummy.txt"),
+          filename: 'test.txt',
+          content_type: 'text/plain'
+        )
+      end
+    end
+
+    context '1枚の画像が添付されたとき' do
+      it 'バリデーションに成功すること' do
+        post.images.attach(
+          io: File.open("#{Rails.root}/spec/fixtures/1MB.png"),
+          filename: 'test_5MB.png',
+          content_type: 'image/png'
+        )
+        expect(post).to be_valid
+      end
+    end
+
+    context '4枚の画像が添付されたとき' do
+      it 'バリデーションに成功すること' do
+        images = %w(400x400 600x400 1200x900 1900x1900)
+        images.each do |img_name|
+          post.images.attach(
+            io: File.open("#{Rails.root}/spec/fixtures/#{img_name}.png"),
+            filename: "test_#{img_name}.png",
+            content_type: 'image/png'
+          )
+        end
+        expect(post).to be_valid
+      end
+    end
+
+    context '5枚の画像が添付されたとき' do
+      it 'バリデーションに失敗すること' do
+        images = %w(400x400 600x400 800x600 1200x900 1900x1900)
+        images.each do |img_name|
+          post.images.attach(
+            io: File.open("#{Rails.root}/spec/fixtures/#{img_name}.png"),
+            filename: "test_#{img_name}.png",
+            content_type: 'image/png'
+          )
+        end
+        expect(post).to be_invalid
+      end
+    end
+
+    context '横2100, 縦2100の画像が添付されたとき' do
+      it 'バリデーションに失敗すること' do
+        post.images.attach(
+          io: File.open("#{Rails.root}/spec/fixtures/2100x2100.png"),
+          filename: 'test_2100x2100.png',
+          content_type: 'image/png'
+        )
+        expect(post).to be_invalid
+      end
+    end
+
+    context '横900, 縦1200の画像が添付されたとき' do
+      it 'バリデーションに成功すること' do
+        post.images.attach(
+          io: File.open("#{Rails.root}/spec/fixtures/1200x900.png"),
+          filename: 'test_1200x900.png',
+          content_type: 'image/png'
+        )
+        expect(post).to be_valid
+      end
+    end
+
+    context '横1900, 縦1900の画像が添付されたとき' do
+      it 'バリデーションに成功すること' do
+        post.images.attach(
+          io: File.open("#{Rails.root}/spec/fixtures/1900x1900.png"),
+          filename: '1900x1900.png',
+          content_type: 'image/png'
+        )
+        expect(post).to be_valid
+      end
+    end
+  end
+
   describe 'belongs_to: User' do
     let!(:user_with_post) { FactoryBot.create(:user, :with_post) }
 

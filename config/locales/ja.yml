@@ -58,7 +58,6 @@ ja:
       too_short: は%{count}文字以上で入力してください
       wrong_length: は%{count}文字で入力してください
       # ActiveStorageValidations: https://github.com/igorkasyanchuk/active_storage_validations#internationalization-i18n
-      # file_size_out_of_range: "にファイルサイズ%{file_size}のファイルが渡されました 許容値を超えています"
       limit_out_of_range: "は%{max}枚までにしてください"
       content_type_invalid: "に無効な形式のファイルが渡されました 次のいずれかにしてください: %{authorized_types}"
       image_metadata_missing: "が無効です"
