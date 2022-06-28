@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :tags, dependent: :destroy
   accepts_nested_attributes_for :authentication
   # Userは必ずNotificationSettingを持つ
-  after_create :create_notification_setting
+  after_create :create_notification_setting, if: Proc.new { notification_setting.present? }
 
   def get_or_create_external_user_id
     return self.external_user_id if self.external_user_id
@@ -54,13 +54,14 @@ class User < ApplicationRecord
 
   # ツイートする
   def post_tweet(text)
-    # if post.have_image?
-      # duplicate status を検知したいので画像が無ければ !付きメソッド を使う
-      # update! (duplicate status を検知するため)
+    # if post.images.attached?
+      # post.images.each do |img|
+      #   twitter_client.update_with_media(text, img)
+      # end
+    # else
+      # twitter_client.update!(post.content)
+    # end
     twitter_client.update!(text)
-    img = File.open("/Users/westen/rdev/twitter-outputter/twitter_outputter/app/assets/images/1MB.png")
-
-    twitter_client.update_with_media(text, img)
   end
 
   # 指定期間内にツイートしているか判定する
