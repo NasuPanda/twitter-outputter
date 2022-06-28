@@ -3,6 +3,7 @@ class Post < ApplicationRecord
   class PublishedToScheduledError < StandardError; end
   include OrderableByTimestamp              # タイムタンプで並び替えるため
   include Twitter::TwitterText::Validation  # Twitterのバリデーションのため
+  AUTHORIZED_CONTENT_TYPES = %i[png jpg gif webp]
   enum status: { draft: 0, scheduled: 1, published: 2 }
 
   has_many_attached :images
@@ -10,6 +11,11 @@ class Post < ApplicationRecord
   belongs_to :user
 
   validates :content, presence: true, uniqueness: { scope: :user_id }
+  validates :images,
+    content_type: AUTHORIZED_CONTENT_TYPES,
+    size: { less_than_or_equal_to: 5.megabytes, message: 'は5MB以下にしてください' },
+    dimension: { width: { max: 2000 }, height: { max: 2000 } },
+    limit: { min: 1, max: 4 }
   validate :content_should_be_valid_twitter_text, if: Proc.new { |post| post.content.present? }
   validate :post_at_cannot_be_blank_if_scheduled_or_published
   validate :post_at_should_be_on_or_after_now, if: Proc.new { |post| post.scheduled? }

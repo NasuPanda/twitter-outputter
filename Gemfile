@@ -29,7 +29,10 @@ gem 'twitter'
 # Tweetの長さ測定,有効性の検証
 gem 'twitter-text'
 # 画像処理
-gem "image_processing", ">= 1.2"
+gem 'image_processing', '>= 1.2'
+# ActiveStorageのバリデーション
+# https://github.com/igorkasyanchuk/active_storage_validations
+gem 'active_storage_validations'
 # apiを叩く
 gem 'httparty'
 # バックグラウンドジョブ

@@ -24,7 +24,7 @@
           <%= render('posts/attached_images_form', post: @draft) %>
 
           <div class="form-group">
-            <%= f.label :images, '画像の添付', class: 'form-label' %>
+            <%= f.label :images, '画像の添付( 4枚以下 )', class: 'form-label' %>
             <%= f.file_field :images, class: 'form-control-file', multiple: true %>
           </div>
           <div class="form-group">
