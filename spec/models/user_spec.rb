@@ -160,12 +160,23 @@ RSpec.describe User, type: :model do
   end
 
   describe '#post_tweet' do
-    let(:authenticated_user) { FactoryBot.create(:user, :with_authentication) }
-    let(:post) { FactoryBot.create(:post) }
+    let!(:authenticated_user) { FactoryBot.create(:user, :with_authentication) }
     before { twitter_mock_from_instance(authenticated_user) }
 
-    it 'Tweet出来ること' do
-      expect{ authenticated_user.post_tweet(post) }.not_to raise_error
+    context '画像を持たないPostのとき' do
+      let(:post_without_image) { FactoryBot.create(:post, user: authenticated_user) }
+      it '通常の投稿をすること' do
+        authenticated_user.post_tweet(post_without_image)
+        expect(authenticated_user).to have_received(:post_tweet_without_media)
+      end
+    end
+
+    context '画像が添付されたPostのとき' do
+      let(:post_with_image) { FactoryBot.create(:post, :with_image, user: authenticated_user) }
+      it '画像付き投稿をすること' do
+        authenticated_user.post_tweet(post_with_image)
+        expect(authenticated_user).to have_received(:post_tweet_with_media)
+      end
     end
   end
 

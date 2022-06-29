@@ -25,5 +25,15 @@ FactoryBot.define do
     trait :with_failure_job do
       after(:create) { |post| FactoryBot.create(:scheduled_post_job, :failure, post: post) }
     end
+
+    trait :with_image do
+      after(:create) do |post|
+      post.images.attach(
+        Rack::Test::UploadedFile.new(
+          "#{Rails.root}/spec/fixtures/400x400.png", 'image/png'
+        )
+      )
+      end
+    end
   end
 end

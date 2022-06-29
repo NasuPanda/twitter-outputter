@@ -59,7 +59,7 @@ class User < ApplicationRecord
       post_tweet_with_media(post)
     # 画像が添付されていなければ通常のツイート
     else
-      twitter_client.update!(post.content)
+      post_tweet_without_media(post)
     end
   end
 
@@ -125,7 +125,12 @@ class User < ApplicationRecord
       end
     end
 
-    # 画像付き投稿する
+    # 通常の投稿
+    def post_tweet_without_media(post)
+      twitter_client.update!(post.content)
+    end
+
+    # 画像付き投稿
     def post_tweet_with_media(post)
       download_all_attachments(post.images) do |images|
         twitter_client.update_with_media(post.content, images)
