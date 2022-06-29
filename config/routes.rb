@@ -18,7 +18,9 @@ Rails.application.routes.draw do
     resources :drafts,    only: %i[index create edit update destroy]
     resources :scheduled, only: %i[index create edit update destroy]
     resources :published, only: %i[index create]
-    resources :images,    only: %i[destroy]
+  end
+  namespace :posts do
+    resources :images, only: %i[destroy]
   end
 
   resources :tags, only: %i[new create edit update destroy], constraints: OnlyAjaxConstraints.new
