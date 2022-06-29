@@ -21,7 +21,7 @@
           </p>
 
           <%# 画像の個別削除 %>
-          <%= render('posts/attached_images_form', post: @draft) %>
+          <%= render('posts/attached_images_form', post: @scheduled_post) %>
 
           <div class="form-group">
             <%= f.label :images, '画像の添付( 4枚以下 )', class: 'form-label' %>
