@@ -161,10 +161,11 @@ RSpec.describe User, type: :model do
 
   describe '#post_tweet' do
     let(:authenticated_user) { FactoryBot.create(:user, :with_authentication) }
+    let(:post) { FactoryBot.create(:post) }
     before { twitter_mock_from_instance(authenticated_user) }
 
     it 'Tweet出来ること' do
-      expect{ authenticated_user.post_tweet('Post from Twitter API') }.not_to raise_error
+      expect{ authenticated_user.post_tweet(post) }.not_to raise_error
     end
   end
 

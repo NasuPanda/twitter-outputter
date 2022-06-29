@@ -53,15 +53,14 @@ class User < ApplicationRecord
   end
 
   # ツイートする
-  def post_tweet(text)
-    # if post.images.attached?
-      # post.images.each do |img|
-      #   twitter_client.update_with_media(text, img)
-      # end
-    # else
-      # twitter_client.update!(post.content)
-    # end
-    twitter_client.update!(text)
+  def post_tweet(post)
+    # 画像が添付されていれば画像付きツイートを実行
+    if post.images.attached?
+      post_tweet_with_media(post)
+    # 画像が添付されていなければ通常のツイート
+    else
+      twitter_client.update!(post.content)
+    end
   end
 
   # 指定期間内にツイートしているか判定する
@@ -125,4 +124,30 @@ class User < ApplicationRecord
         config.access_token_secret = self.authentication.decrypted_access_token_secret
       end
     end
+
+    # 画像付き投稿する
+    def post_tweet_with_media(post)
+      download_all_attachments(post.images) do |images|
+        twitter_client.update_with_media(post.content, images)
+      end
+    end
+
+  # 全ての画像をダウンロードする
+  # NOTE: 実行したい処理のブロックを引数に取る
+  # ActiveStorage::Attachment.open(=blob.open)でTempfileを生成。
+  # このTempfileはブロックを抜けた段階で削除されてしまう。 参考: https://api.rubyonrails.org/classes/ActiveStorage/Blob.html#method-i-open
+  # Tempfileを一括ダウンロード・使用したい場合、ブロックからブロックを呼び出す(再帰的に)等してブロック内の処理を終了させないようにする必要がある。
+  def download_all_attachments(attachments, downloaded_files = [], &block)
+    # attachmentsが空ならブロックにdownloaded_filesを渡して実行
+    if attachments.empty?
+      yield downloaded_files
+      return
+    end
+
+    # downloaded_filesにTempfileが代入されていき、attachmentsから要素が取り出されていく。
+    attachments.first.open do |file|
+      downloaded_files << file
+      send(__method__, attachments[1..attachments.length - 1], downloaded_files, &block)
+    end
+  end
 end

@@ -17,7 +17,7 @@ class ReservePostJob < ApplicationJob
 
   def post_tweet(user, post)
     begin
-      user.post_tweet(post.content)
+      user.post_tweet(post)
     # 重複した投稿の場合
     rescue Twitter::Error::DuplicateStatus
       post.scheduled_post_job.failure!
