@@ -246,4 +246,84 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  # private method なので sendメソッドを使ってテストする
+  describe '#download_all_attachments' do
+    context '添付画像が1枚のとき' do
+      let(:user) { FactoryBot.create(:user) }
+      let(:post_with_an_image) { FactoryBot.create(:post, :with_image, user: user) }
+
+      it '長さ1の配列が返ること' do
+        user.send(:download_all_attachments, post_with_an_image.images) do |images|
+          expect(images.size).to eq(1)
+        end
+      end
+
+      it '各要素がTempfileオブジェクトのインスタンスであること' do
+        user.send(:download_all_attachments, post_with_an_image.images) do |images|
+          images.each { |image| expect(image).to be_a(Tempfile) }
+        end
+      end
+    end
+
+    context '添付画像が2枚のとき' do
+      let(:user) { FactoryBot.create(:user) }
+      let(:post_with_two_images) { FactoryBot.create(:post, user: user) }
+      before {
+        1.step(2) { |n| post_with_two_images.images.attach(fixture_file_upload("#{n}.png")) }
+      }
+
+      it '長さ2の配列が返ること' do
+        user.send(:download_all_attachments, post_with_two_images.images) do |images|
+          expect(images.size).to eq(2)
+        end
+      end
+
+      it '各要素がTempfileオブジェクトのインスタンスであること' do
+        user.send(:download_all_attachments, post_with_two_images.images) do |images|
+          images.each { |image| expect(image).to be_a(Tempfile) }
+        end
+      end
+    end
+
+    context '添付画像が3枚のとき' do
+      let(:user) { FactoryBot.create(:user) }
+      let(:post_with_three_images) { FactoryBot.create(:post, user: user) }
+      before {
+        1.step(3) { |n| post_with_three_images.images.attach(fixture_file_upload("#{n}.png")) }
+      }
+
+      it '長さ3の配列が返ること' do
+        user.send(:download_all_attachments, post_with_three_images.images) do |images|
+          expect(images.size).to eq(3)
+        end
+      end
+
+      it '各要素がTempfileオブジェクトのインスタンスであること' do
+        user.send(:download_all_attachments, post_with_three_images.images) do |images|
+          images.each { |image| expect(image).to be_a(Tempfile) }
+        end
+      end
+    end
+
+    context '添付画像が4枚のとき' do
+      let(:user) { FactoryBot.create(:user) }
+      let(:post_with_four_images) { FactoryBot.create(:post, user: user) }
+      before {
+        1.step(4) { |n| post_with_four_images.images.attach(fixture_file_upload("#{n}.png")) }
+      }
+
+      it '長さ4の配列が返ること' do
+        user.send(:download_all_attachments, post_with_four_images.images) do |images|
+          expect(images.size).to eq(4)
+        end
+      end
+
+      it '各要素がTempfileオブジェクトのインスタンスであること' do
+        user.send(:download_all_attachments, post_with_four_images.images) do |images|
+          images.each { |image| expect(image).to be_a(Tempfile) }
+        end
+      end
+    end
+  end
 end
